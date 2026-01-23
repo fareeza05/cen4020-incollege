@@ -1,1 +1,3 @@
-tbd
+- Create feature branches from this branch
+- Merge features into this branch
+- All features to be completed before merge to  main (only happens each Epic)
