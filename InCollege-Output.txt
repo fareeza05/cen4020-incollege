@@ -1,0 +1,22 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+jawaad
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Abcdef1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+jawaad
+Password:
+Abcdef1!
+You have successfully logged in
