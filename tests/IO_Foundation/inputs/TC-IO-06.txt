@@ -1,0 +1,4 @@
+log i
+1
+jawaad
+Abcdef1!
