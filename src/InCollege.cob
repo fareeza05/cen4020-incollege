@@ -148,7 +148,18 @@ LOGIN-FLOW.
         IF WS-FOUND = "Y"
             MOVE "You have successfully logged in" TO WS-OUT-LINE
             PERFORM PRINT-LINE
-            MOVE "Y" TO WS-DONE
+
+            MOVE SPACES TO WS-OUT-LINE
+            STRING "Welcome, "
+                   FUNCTION TRIM(WS-USER-IN)
+                   "!"
+              INTO WS-OUT-LINE
+            END-STRING
+            PERFORM PRINT-LINE
+
+            PERFORM POST-LOGIN-MENU
+
+            EXIT PARAGRAPH
         ELSE
             MOVE "Incorrect username/password, please try again" TO WS-OUT-LINE
             PERFORM PRINT-LINE
@@ -198,7 +209,8 @@ CREATE-ACCOUNT-FLOW.
 
 CHECK-CREDENTIALS.
     MOVE "N" TO WS-FOUND
-    PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > WS-ACC-COUNT OR WS-FOUND = "Y"
+    PERFORM VARYING WS-I FROM 1 BY 1
+        UNTIL WS-I > WS-ACC-COUNT OR WS-FOUND = "Y"
         IF WS-USER-IN = WS-ACC-USER(WS-I)
            AND WS-PASS-IN = WS-ACC-PASS(WS-I)
             MOVE "Y" TO WS-FOUND
@@ -207,7 +219,8 @@ CHECK-CREDENTIALS.
 
 CHECK-USERNAME-UNIQUE.
     MOVE "N" TO WS-FOUND
-    PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > WS-ACC-COUNT OR WS-FOUND = "Y"
+    PERFORM VARYING WS-I FROM 1 BY 1
+        UNTIL WS-I > WS-ACC-COUNT OR WS-FOUND = "Y"
         IF WS-USER-IN = WS-ACC-USER(WS-I)
             MOVE "Y" TO WS-FOUND
         END-IF
@@ -257,6 +270,73 @@ SAVE-ACCOUNTS.
     END-PERFORM
     CLOSE ACC-FILE.
 
+POST-LOGIN-MENU.
+    MOVE SPACE TO WS-MENU-CHOICE
+    PERFORM UNTIL WS-MENU-CHOICE = "4"
+        MOVE "1. Search for a job" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "2. Find someone you know" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "3. Learn a new skill" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "4. Logout" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+
+        MOVE "Enter your choice:" TO WS-PROMPT
+        MOVE "M" TO WS-DEST-KIND
+        PERFORM PRINT-PROMPT-AND-READ
+
+        EVALUATE WS-MENU-CHOICE
+            WHEN "1"
+                MOVE "Job search is under construction." TO WS-OUT-LINE
+                PERFORM PRINT-LINE
+            WHEN "2"
+                MOVE "Find someone you know is under construction." TO WS-OUT-LINE
+                PERFORM PRINT-LINE
+            WHEN "3"
+                PERFORM LEARN-A-NEW-SKILL
+            WHEN "4"
+                EXIT PERFORM
+            WHEN OTHER
+                MOVE "Invalid choice. Please enter 1-4." TO WS-OUT-LINE
+                PERFORM PRINT-LINE
+        END-EVALUATE
+    END-PERFORM.
+
+LEARN-A-NEW-SKILL.
+    MOVE SPACE TO WS-MENU-CHOICE
+    PERFORM UNTIL WS-MENU-CHOICE = "6"
+        MOVE "Learn a New Skill:" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "1. Skill 1" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "2. Skill 2" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "3. Skill 3" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "4. Skill 4" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "5. Skill 5" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "6. Go Back" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+
+        MOVE "Enter your choice:" TO WS-PROMPT
+        MOVE "M" TO WS-DEST-KIND
+        PERFORM PRINT-PROMPT-AND-READ
+
+        EVALUATE WS-MENU-CHOICE
+            WHEN "1" THRU "5"
+                MOVE "This feature is under construction." TO WS-OUT-LINE
+                PERFORM PRINT-LINE
+            WHEN "6"
+                EXIT PERFORM
+            WHEN OTHER
+                MOVE "Invalid choice. Please enter 1-6." TO WS-OUT-LINE
+                PERFORM PRINT-LINE
+        END-EVALUATE
+    END-PERFORM.
+
 PRINT-PROMPT-AND-READ.
     MOVE WS-PROMPT TO WS-OUT-LINE
     PERFORM PRINT-LINE
@@ -282,10 +362,16 @@ GET-NEXT-INPUT.
     READ IN-FILE
         AT END
             MOVE "Y" TO WS-IN-EOF
-            MOVE SPACES TO WS-TOKEN
+            PERFORM EXIT-AT-EOF
         NOT AT END
             MOVE IN-REC TO WS-TOKEN
     END-READ.
+
+EXIT-AT-EOF.
+    MOVE "Input file ended. Exiting program." TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+    PERFORM CLOSE-FILES
+    STOP RUN.
 
 PRINT-LINE.
     DISPLAY WS-OUT-LINE
@@ -295,3 +381,4 @@ PRINT-LINE.
 CLOSE-FILES.
     CLOSE IN-FILE
     CLOSE OUT-FILE.
+
