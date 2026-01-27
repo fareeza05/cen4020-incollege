@@ -1,0 +1,51 @@
+# -------------------------
+# COBOL Project Build Files
+# -------------------------
+*.o
+*.so
+*.dll
+*.exe
+program
+a.out
+
+# GnuCOBOL intermediate files
+*.lst
+*.mod
+*.int
+
+# -------------------------
+# Runtime Generated Output
+# -------------------------
+out/
+data/InCollege-Output.txt    # produced by the program 
+
+# -------------------------
+# Input Variants You Don't Want Committed
+# -------------------------
+data/inputs/*
+!data/inputs/README.md
+
+# -------------------------
+# Logs
+# -------------------------
+*.log
+log/
+
+# -------------------------
+# VS Code
+# -------------------------
+.vscode/
+.vscode/*
+!.vscode/settings.json     
+
+# -------------------------
+# macOS / Windows Trash Files
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Docker
+# -------------------------
+*.pid
+docker-compose.override.yml

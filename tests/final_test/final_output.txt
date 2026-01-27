@@ -1,0 +1,70 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+Maia
+That username already exists. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+#Software1
+Invalid selection. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+Maia
+Password:
+#Software1
+You have successfully logged in
+Welcome, Maia!
+1. Search for a job
+2. Find someone you know
+3. Learn a new skill
+4. Logout
+Enter your choice:
+2
+Find someone you know is under construction.
+1. Search for a job
+2. Find someone you know
+3. Learn a new skill
+4. Logout
+Enter your choice:
+3
+Learn a New Skill:
+1. Skill 1
+2. Skill 2
+3. Skill 3
+4. Skill 4
+5. Skill 5
+6. Go Back
+Enter your choice:
+1
+This feature is under construction.
+Learn a New Skill:
+1. Skill 1
+2. Skill 2
+3. Skill 3
+4. Skill 4
+5. Skill 5
+6. Go Back
+Enter your choice:
+5
+This feature is under construction.
+Learn a New Skill:
+1. Skill 1
+2. Skill 2
+3. Skill 3
+4. Skill 4
+5. Skill 5
+6. Go Back
+Enter your choice:
+Input file ended. Exiting program.
