@@ -12,6 +12,10 @@ FILE-CONTROL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-ACC-STATUS.
+     
+    SELECT PROF-FILE ASSIGN TO "data/InCollege-Profiles.txt"
+        ORGANIZATION IS LINE SEQUENTIAL
+        FILE STATUS IS WS-PROF-STATUS.
 
 DATA DIVISION.
 FILE SECTION.
@@ -26,6 +30,17 @@ FD  ACC-FILE.
 01  ACC-REC.
     05 ACC-USER            PIC X(20).
     05 ACC-PASS            PIC X(12).
+
+FD  PROF-FILE.
+01  PROF-REC
+    05 PROF-USER           PIC X(20).
+    05 PROF-FNAME          PIC X(20).
+    05 PROF-LNAME          PIC X(20).
+    05 PROF-UNIV           PIC X(30).
+    05 PROF-MAJOR          PIC X(20).
+    05 PROF-GRAD           PIC 9(4).
+    05 PROF-ABOUT          PIC X(200).
+
 
 WORKING-STORAGE SECTION.
 
@@ -65,11 +80,27 @@ WORKING-STORAGE SECTION.
     05 WS-HAS-SPECIAL       PIC X VALUE "N".
     05 WS-CHAR              PIC X VALUE SPACE.
 
+01  WS-PROF-STATUS           PIC XX VALUE "00".
+01  WS-PROF-EOF               PIC X VALUE "N".
+
+01  WS-PROFILES.
+    05 WS-PROF-COUNT         PIC 9 VALUE 0.
+    05 WS-PROF-TABLE OCCURS 5 TIMES.
+       10 WS-PROF-USER       PIC X(20).
+       10 WS-PROF-FNAME      PIC X(20).
+       10 WS-PROF-LNAME      PIC X(20).
+       10 WS-PROF-UNIV       PIC X(30).
+       10 WS-PROF-MAJOR      PIC X(20).
+       10 WS-PROF-GRAD       PIC 9(4).
+       10 WS-PROF-ABOUT      PIC X(200).
+
+
 PROCEDURE DIVISION.
 
 MAIN.
     PERFORM INIT-FILES
     PERFORM LOAD-ACCOUNTS
+    PERFORM LOAD-PROFILES
     PERFORM MENU-LOOP
     PERFORM CLOSE-FILES
     STOP RUN.
@@ -86,6 +117,15 @@ INIT-FILES.
         CLOSE ACC-FILE
         OPEN INPUT ACC-FILE
         MOVE "00" TO WS-ACC-STATUS
+    END-IF.
+
+    OPEN INPUT PROF-FILE
+    IF WS-PROF-STATUS = "35"
+       CLOSE PROF-FILE
+       OPEN OUTPUT PROF-FILE
+       CLOSE PROF-FILE
+       OPEN INPUT PROF-FILE
+       MOVE "00" TO WS-PROF-STATUS
     END-IF.
 
 LOAD-ACCOUNTS.
@@ -105,6 +145,24 @@ LOAD-ACCOUNTS.
         END-READ
     END-PERFORM
     CLOSE ACC-FILE.
+ 
+LOAD-PROFILES.
+    MOVE 0 TO WS-PROF-COUNT
+    MOVE "N" TO WS-PROF-EOF
+
+    PERFORM UNTIL WS-PROF-EOF = "Y"
+        READ PROF-FILE
+            AT END
+                MOVE "Y" TO WS-PROF-EOF
+            NOT AT END
+                IF WS-PROF-COUNT < 5
+                    ADD 1 TO WS-PROF-COUNT
+                    MOVE PROF-USER TO WS-PROF-USER(WS-PROF-COUNT)
+                END-IF
+        END-READ
+    END-PERFORM
+    CLOSE PROF-FILE.
+   
 
 MENU-LOOP.
     PERFORM UNTIL WS-DONE = "Y"
@@ -272,14 +330,18 @@ SAVE-ACCOUNTS.
 
 POST-LOGIN-MENU.
     MOVE SPACE TO WS-MENU-CHOICE
-    PERFORM UNTIL WS-MENU-CHOICE = "4"
-        MOVE "1. Search for a job" TO WS-OUT-LINE
+    PERFORM UNTIL WS-MENU-CHOICE = "6"
+        MOVE "1. Create/edit my profile" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "2. Find someone you know" TO WS-OUT-LINE
+        MOVE "2. View my profile" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "3. Learn a new skill" TO WS-OUT-LINE
+        MOVE "3. Search for a job" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "4. Logout" TO WS-OUT-LINE
+        MOVE "4. Find someone you know" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "5. Learn a new skill" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "6. Logout" TO WS-OUT-LINE
         PERFORM PRINT-LINE
 
         MOVE "Enter your choice:" TO WS-PROMPT
@@ -288,17 +350,21 @@ POST-LOGIN-MENU.
 
         EVALUATE WS-MENU-CHOICE
             WHEN "1"
+               PERFORM CREATE-OR-EDIT-ACCOUNT
+            WHEN "2"
+               PERFORM VIEW-ACCOUNT
+            WHEN "3"
                 MOVE "Job search is under construction." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
-            WHEN "2"
+            WHEN "4"
                 MOVE "Find someone you know is under construction." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
-            WHEN "3"
+            WHEN "5"
                 PERFORM LEARN-A-NEW-SKILL
-            WHEN "4"
+            WHEN "6"
                 EXIT PERFORM
             WHEN OTHER
-                MOVE "Invalid choice. Please enter 1-4." TO WS-OUT-LINE
+                MOVE "Invalid choice. Please enter 1-5." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
         END-EVALUATE
     END-PERFORM.
@@ -336,6 +402,12 @@ LEARN-A-NEW-SKILL.
                 PERFORM PRINT-LINE
         END-EVALUATE
     END-PERFORM.
+
+CREATE-OR-EDIT-ACCOUNT
+
+       EXIT PERFORM
+
+VIEW-ACCOUNT
 
 PRINT-PROMPT-AND-READ.
     MOVE WS-PROMPT TO WS-OUT-LINE
