@@ -88,11 +88,11 @@ WORKING-STORAGE SECTION.
 01  WS-PROFILES.
     05 WS-PROF-COUNT         PIC 9 VALUE 0.
     05 WS-PROF-TABLE OCCURS 5 TIMES.
-       10 WS-PROF-USER       PIC X(20).
-       10 WS-PROF-FNAME      PIC X(20).
-       10 WS-PROF-LNAME      PIC X(20).
-       10 WS-PROF-UNIV       PIC X(30).
-       10 WS-PROF-MAJOR      PIC X(20).
+       10 WS-PROF-USER       PIC X(30).
+       10 WS-PROF-FNAME      PIC X(30).
+       10 WS-PROF-LNAME      PIC X(30).
+       10 WS-PROF-UNIV       PIC X(40).
+       10 WS-PROF-MAJOR      PIC X(30).
        10 WS-PROF-GRAD       PIC 9(4).
        10 WS-PROF-ABOUT      PIC X(200).
 
@@ -451,31 +451,84 @@ CREATE-OR-EDIT-ACCOUNT.
     END-IF
 
     *> First Name
-    MOVE "Enter First Name:" TO WS-PROMPT
+    MOVE "Enter First Name: (Required)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
+      
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN = 0
+        MOVE "Error: First Name is required. Keeping existing value." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    IF WS-LEN > 30
+        MOVE "Error: First Name cannot exceed 30 characters. Keeping existing value." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF 
+
     MOVE WS-TOKEN TO WS-PROF-FNAME(WS-J)
 
     *> Last Name
-    MOVE "Enter Last Name:" TO WS-PROMPT
+    MOVE "Enter Last Name: (Required)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
+
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN = 0
+        MOVE "Error: Last Name is required. Keeping existing value." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    IF WS-LEN > 30
+        MOVE "Error: Last Name cannot exceed 30 characters. Keeping existing value." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF 
+
     MOVE WS-TOKEN TO WS-PROF-LNAME(WS-J)
 
-    *> Major
-    MOVE "Enter Major:" TO WS-PROMPT
-    MOVE "X" TO WS-DEST-KIND
-    PERFORM PRINT-PROMPT-AND-READ
-    MOVE WS-TOKEN TO WS-PROF-MAJOR(WS-J)
-
     *> University
-    MOVE "Enter University:" TO WS-PROMPT
+    MOVE "Enter University/College Attended: (Required)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
+
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN = 0
+        MOVE "Error: University/College is required. Keeping existing value." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    IF WS-LEN > 40
+        MOVE "Error: University name cannot exceed 40 characters. Keeping existing value." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF 
+
     MOVE WS-TOKEN TO WS-PROF-UNIV(WS-J)
 
+    *> Major
+    MOVE "Enter Major: (Required)" TO WS-PROMPT
+    MOVE "X" TO WS-DEST-KIND
+    PERFORM PRINT-PROMPT-AND-READ
+
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN = 0
+        MOVE "Error: Major is required. Keeping existing value." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    IF WS-LEN > 30
+        MOVE "Error: First Name cannot exceed 30 characters. Keeping existing value." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF 
+
+    MOVE WS-TOKEN TO WS-PROF-MAJOR(WS-J)
+
+
     *> Graduation Year (YYYY)
-    MOVE "Enter Graduation Year (YYYY):" TO WS-PROMPT
+    MOVE "Enter Graduation Year (YYYY): (Required)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
     IF WS-TOKEN(1:4) IS NUMERIC
@@ -486,7 +539,7 @@ CREATE-OR-EDIT-ACCOUNT.
     END-IF
 
     *> About (short bio)
-    MOVE "Enter About (short bio):" TO WS-PROMPT
+    MOVE "Enter About (short bio): (Optional)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
     MOVE WS-TOKEN TO WS-PROF-ABOUT(WS-J)
