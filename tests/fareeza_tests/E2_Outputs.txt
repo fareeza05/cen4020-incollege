@@ -1,0 +1,75 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+testuser
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Password1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+testuser
+Password:
+Password1!
+You have successfully logged in
+Welcome, testuser!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+1
+Enter First Name: (Required)
+Alice
+Enter Last Name: (Required)
+Smith
+Enter University/College Attended: (Required)
+University of South Florida
+Enter Major: (Required)
+Computer Science
+Enter Graduation Year (YYYY): (Required)
+2026
+Enter About (short bio): (Optional)
+I am a CS student interested in software engineering.
+Profile saved.
+Press Enter to return to menu.
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+2
+----- PROFILE -----
+Username: testuser
+Name: Alice Smith
+Graduation Year: 2026
+Major: Computer Science
+University: University of South Florida
+About: I am a CS student interested in software engineering.
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+6
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Input file ended. Exiting program.
