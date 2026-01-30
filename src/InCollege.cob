@@ -548,6 +548,12 @@ CREATE-OR-EDIT-ACCOUNT.
 
     MOVE "Profile saved." TO WS-OUT-LINE
     PERFORM PRINT-LINE
+
+    MOVE "Press Enter to return to menu." TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+
+    PERFORM GET-NEXT-INPUT  *> consumes one line from input file
+
     EXIT PARAGRAPH.
 
 
