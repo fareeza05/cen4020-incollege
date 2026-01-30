@@ -7,7 +7,7 @@ INPUT-OUTPUT SECTION.
 FILE-CONTROL.
     SELECT IN-FILE ASSIGN TO "tests/fareeza_tests/E2_inputs.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "tests/fareeza_tests/E2_Outputs.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
