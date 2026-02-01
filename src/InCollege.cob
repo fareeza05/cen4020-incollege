@@ -41,6 +41,19 @@ FD  PROF-FILE.
     05 PROF-GRAD           PIC 9(4).
     05 PROF-ABOUT          PIC X(200).
 
+    05 PROF-EXP-COUNT      PIC 9.
+    05 PROF-EXPERIENCE OCCURS 3 TIMES.
+        10 PROF-EXP-TITLE  PIC X(50).
+        10 PROF-EXP-COMP   PIC X(50).
+        10 PROF-EXP-DATES  PIC X(30).
+        10 PROF-EXP-DESC   PIC X(100).
+
+    05 PROF-EDU-COUNT      PIC 9.
+    05 PROF-EDUCATION OCCURS 3 TIMES.
+        10 PROF-EDU-DEGREE PIC X(50).
+        10 PROF-EDU-SCHOOL PIC X(50).
+        10 PROF-EDU-YEARS  PIC X(20).
+
 
 WORKING-STORAGE SECTION.
 
@@ -95,6 +108,19 @@ WORKING-STORAGE SECTION.
        10 WS-PROF-MAJOR      PIC X(30).
        10 WS-PROF-GRAD       PIC 9(4).
        10 WS-PROF-ABOUT      PIC X(200).
+
+       10 WS-PROF-EXP-COUNT  PIC 9.
+       10 WS-PROF-EXP OCCURS 3 TIMES.
+          15 WS-EXP-TITLE    PIC X(50).
+          15 WS-EXP-COMP     PIC X(50).
+          15 WS-EXP-DATES    PIC X(30).
+          15 WS-EXP-DESC     PIC X(100).
+
+       10 WS-PROF-EDU-COUNT  PIC 9.
+       10 WS-PROF-EDU OCCURS 3 TIMES.
+          15 WS-EDU-DEGREE   PIC X(50).
+          15 WS-EDU-SCHOOL   PIC X(50).
+          15 WS-EDU-YEARS    PIC X(20).
 
 
 PROCEDURE DIVISION.
@@ -166,6 +192,30 @@ LOAD-PROFILES.
                     MOVE PROF-MAJOR     TO WS-PROF-MAJOR(WS-PROF-COUNT)
                     MOVE PROF-UNIV      TO WS-PROF-UNIV(WS-PROF-COUNT)
                     MOVE PROF-ABOUT     TO WS-PROF-ABOUT(WS-PROF-COUNT)
+
+                    MOVE PROF-EXP-COUNT
+                        TO WS-PROF-EXP-COUNT(WS-PROF-COUNT)
+                    MOVE PROF-EDU-COUNT
+                        TO WS-PROF-EDU-COUNT(WS-PROF-COUNT)
+
+                    PERFORM VARYING WS-J FROM 1 BY 1 UNTIL WS-J > 3
+                        MOVE PROF-EXP-TITLE(WS-J)
+                            TO WS-EXP-TITLE(WS-PROF-COUNT, WS-J)
+                        MOVE PROF-EXP-COMP(WS-J)
+                            TO WS-EXP-COMP(WS-PROF-COUNT, WS-J)
+                        MOVE PROF-EXP-DATES(WS-J)
+                            TO WS-EXP-DATES(WS-PROF-COUNT, WS-J)
+                        MOVE PROF-EXP-DESC(WS-J)
+                            TO WS-EXP-DESC(WS-PROF-COUNT, WS-J)
+
+                        MOVE PROF-EDU-DEGREE(WS-J)
+                            TO WS-EDU-DEGREE(WS-PROF-COUNT, WS-J)
+                        MOVE PROF-EDU-SCHOOL(WS-J)
+                            TO WS-EDU-SCHOOL(WS-PROF-COUNT, WS-J)
+                        MOVE PROF-EDU-YEARS(WS-J)
+                            TO WS-EDU-YEARS(WS-PROF-COUNT, WS-J)
+                    END-PERFORM
+      
                 END-IF
         END-READ
     END-PERFORM
@@ -664,4 +714,5 @@ PRINT-LINE.
 CLOSE-FILES.
     CLOSE IN-FILE
     CLOSE OUT-FILE.
+
 
