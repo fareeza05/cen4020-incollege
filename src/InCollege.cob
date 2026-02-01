@@ -483,6 +483,20 @@ SAVE-PROFILES.
         MOVE WS-PROF-MAJOR(WS-I)     TO PROF-MAJOR
         MOVE WS-PROF-UNIV(WS-I)      TO PROF-UNIV
         MOVE WS-PROF-ABOUT(WS-I)     TO PROF-ABOUT
+        MOVE WS-PROF-EXP-COUNT(WS-I) TO PROF-EXP-COUNT
+        MOVE WS-PROF-EDU-COUNT(WS-I) TO PROF-EDU-COUNT
+
+        PERFORM VARYING WS-J FROM 1 BY 1 UNTIL WS-J > 3
+               MOVE WS-EXP-TITLE(WS-I, WS-J) TO PROF-EXP-TITLE(WS-J)
+               MOVE WS-EXP-COMP(WS-I, WS-J)  TO PROF-EXP-COMP(WS-J)
+               MOVE WS-EXP-DATES(WS-I, WS-J) TO PROF-EXP-DATES(WS-J)
+               MOVE WS-EXP-DESC(WS-I, WS-J)  TO PROF-EXP-DESC(WS-J)
+
+               MOVE WS-EDU-DEGREE(WS-I, WS-J) TO PROF-EDU-DEGREE(WS-J)
+               MOVE WS-EDU-SCHOOL(WS-I, WS-J) TO PROF-EDU-SCHOOL(WS-J)
+               MOVE WS-EDU-YEARS(WS-I, WS-J)  TO PROF-EDU-YEARS(WS-J)       
+        END-PERFORM
+
         WRITE PROF-REC
     END-PERFORM
     CLOSE PROF-FILE.
@@ -597,6 +611,65 @@ CREATE-OR-EDIT-ACCOUNT.
     PERFORM PRINT-PROMPT-AND-READ
     MOVE WS-TOKEN TO WS-PROF-ABOUT(WS-J)
 
+    *> Experience (optional, up to 3)
+    MOVE 0 TO WS-PROF-EXP-COUNT(WS-J)
+
+    PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > 3
+           MOVE "Add Experience (optional, enter DONE to finish):"
+                  TO WS-PROMPT
+           MOVE "X" TO WS-DEST-KIND
+           PERFORM PRINT-PROMPT-AND-READ
+           IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
+                  EXIT PERFORM
+           END-IF
+
+           ADD 1 TO WS-PROF-EXP-COUNT(WS-J)
+
+           MOVE "Experience Title:" TO WS-PROMPT
+           PERFORM PRINT-PROMPT-AND-READ
+           MOVE WS-TOKEN TO WS-EXP-TITLE(WS-J, WS-I)
+
+           MOVE "Company/Organization:" TO WS-PROMPT
+           PERFORM PRINT-PROMPT-AND-READ
+           MOVE WS-TOKEN TO WS-EXP-COMP(WS-J, WS-I)
+
+           MOVE "Dates:" TO WS-PROMPT
+           PERFORM PRINT-PROMPT-AND-READ
+           MOVE WS-TOKEN TO WS-EXP-DATES(WS-J, WS-I)
+
+           MOVE "Description (optional):" TO WS-PROMPT
+           PERFORM PRINT-PROMPT-AND-READ
+           MOVE WS-TOKEN TO WS-EXP-DESC(WS-J, WS-I)
+    END-PERFORM  
+
+    *> Education (optional, up to 3)
+    MOVE 0 TO WS-PROF-EDU-COUNT(WS-J)
+
+    PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > 3
+           MOVE "Add Education (optional, enter DONE to finish):"
+                  TO WS-PROMPT
+           MOVE "X" TO WS-DEST-KIND
+           PERFORM PRINT-PROMPT-AND-READ  
+
+           IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
+                  EXIT PERFORM
+           END-IF
+
+           ADD 1 TO WS-PROF-EDU-COUNT(WS-J)
+
+           MOVE "Degree:" TO WS-PROMPT
+           PERFORM PRINT-PROMPT-AND-READ
+           MOVE WS-TOKEN TO WS-EDU-DEGREE(WS-J, WS-I)
+
+           MOVE "University/College:" TO WS-PROMPT
+           PERFORM PRINT-PROMPT-AND-READ
+           MOVE WS-TOKEN TO WS-EDU-SCHOOL(WS-J, WS-I)
+
+           MOVE "Years Attended:" TO WS-PROMPT
+           PERFORM PRINT-PROMPT-AND-READ
+           MOVE WS-TOKEN TO WS-EDU-YEARS(WS-J, WS-I)
+    END-PERFORM      
+      
     PERFORM SAVE-PROFILES
 
     MOVE "Profile saved." TO WS-OUT-LINE
@@ -714,5 +787,6 @@ PRINT-LINE.
 CLOSE-FILES.
     CLOSE IN-FILE
     CLOSE OUT-FILE.
+
 
 
