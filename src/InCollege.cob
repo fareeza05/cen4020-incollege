@@ -7,7 +7,7 @@ INPUT-OUTPUT SECTION.
 FILE-CONTROL.
     SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "out/InColege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -607,13 +607,6 @@ CREATE-OR-EDIT-ACCOUNT.
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
 
-    IF WS-TOKEN IS NOT NUMERIC 
-       MOVE "Error: Graduation year must be numeric. Exiting program." TO WS-OUT-LINE
-       PERFORM PRINT-LINE
-       PERFORM CLOSE-FILES
-       STOP RUN
-     END-IF
-
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
     IF WS-LEN = 0
@@ -630,8 +623,21 @@ CREATE-OR-EDIT-ACCOUNT.
        STOP RUN
     END-IF
 
+    IF FUNCTION TRIM(WS-TOKEN) IS NOT NUMERIC 
+       MOVE "Error: Graduation year must be numeric. Exiting program." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+       PERFORM CLOSE-FILES
+       STOP RUN
+    END-IF
 
-     MOVE WS-TOKEN(1:4) TO WS-PROF-GRAD(WS-J)
+    IF WS-TOKEN < "1900" OR WS-TOKEN > "2100"
+    MOVE "Error: Graduation Year must be between 1900 and 2100." TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+    PERFORM CLOSE-FILES
+    STOP RUN
+    END-IF
+
+    MOVE WS-TOKEN(1:4) TO WS-PROF-GRAD(WS-J)
 
     *> About (short bio)
     MOVE "Enter About (short bio): (Optional)" TO WS-PROMPT
