@@ -1,0 +1,12 @@
+1
+testuser
+Password1!
+1
+Persist
+User
+USF
+CS
+2026
+
+X
+6

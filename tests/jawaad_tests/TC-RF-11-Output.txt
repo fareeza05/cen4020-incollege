@@ -17,8 +17,39 @@ Welcome, testuser!
 5. Learn a new skill
 6. Logout
 Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+John
+Enter Last Name: (Required)
+Doe
+Enter University/College Attended: (Required)
+USF
+Enter Major: (Required)
+CS
+Enter Graduation Year (YYYY): (Required)
+0000
+Enter About (short bio): (Optional)
+
+Profile saved.
+Press 'X' to return to menu.
+X
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
 2
-No profile found for this user.
+----- PROFILE -----
+Name: John Doe
+Graduation Year: 0000
+Major: CS
+University: USF
+About:
+-------------------
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
