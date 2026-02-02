@@ -1,0 +1,67 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+jim_anderson
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+#Anderson1
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+jim_anderso
+Password:
+#Anderson1
+Incorrect username/password, please try again
+Username:
+1
+Password:
+jim_anderson
+Incorrect username/password, please try again
+Username:
+#Anderson
+Password:
+1
+Incorrect username/password, please try again
+Username:
+jim_anders
+Password:
+#Anderson1
+Incorrect username/password, please try again
+Username:
+1
+Password:
+jim_anderson
+Incorrect username/password, please try again
+Username:
+#Anderso
+Password:
+1
+Incorrect username/password, please try again
+Username:
+jim_ander
+Password:
+#Anderson1
+Incorrect username/password, please try again
+Username:
+1
+Password:
+jim_anderson
+Incorrect username/password, please try again
+Username:
+#Anders
+Password:
+1
+Incorrect username/password, please try again
+Username:
+jim_anderson
+Password:
+#Anderson1
+You have successfully logged in
