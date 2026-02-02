@@ -1,0 +1,31 @@
+2
+MaiaTest
+#Software1
+1
+MaiaTest
+#Software1
+1
+Maia
+Ryan
+University of South Florida
+Computer Science
+2027
+
+ADD
+123456
+Software Intern
+99999
+Tech Company
+Summer 2024
+This description is intentionally made very long to exceed one hundred characters so the program should reject or truncate it.
+DONE
+ADD
+12345
+Bachelor of Science
+67890
+USF
+ABCD-ABCD
+2024-2027
+DONE
+X
+2

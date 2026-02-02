@@ -1,0 +1,17 @@
+2
+MaiaTest
+#Software1
+1
+MaiaTest
+#Software1
+1
+Maia
+Ryan
+University of South Florida
+Computer Science
+2027
+This About Me is intentionally written to exceed two hundred characters so that we can verify the input validation is working correctly and the system either rejects it, truncates it, or prompts the user again to enter a shorter description.
+DONE
+DONE
+X
+2
