@@ -17,19 +17,12 @@ Welcome, testuser!
 5. Learn a new skill
 6. Logout
 Enter your choice:
-2
-No profile found for this user.
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
-6
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
-Input file ended. Exiting program.
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+John
+Enter Last Name: (Required)
+Doe
+Enter University/College Attended: (Required)
+
+Error: University/College is required. Exiting program.

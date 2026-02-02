@@ -28,5 +28,5 @@ USF
 Enter Major: (Required)
 CS
 Enter Graduation Year (YYYY): (Required)
-gradyear
-Error: Graduation year must be numeric. Exiting program.
+
+Error: Graduation year is required. Exiting program.

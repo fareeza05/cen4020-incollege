@@ -18,7 +18,13 @@ Welcome, testuser!
 6. Logout
 Enter your choice:
 2
-No profile found for this user.
+----- PROFILE -----
+Name: Persist User
+Graduation Year: 2026
+Major: CS
+University: USF
+About:
+-------------------
 1. Create/edit my profile
 2. View my profile
 3. Search for a job

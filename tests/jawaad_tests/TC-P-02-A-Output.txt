@@ -31,46 +31,25 @@ Enter Graduation Year (YYYY): (Required)
 2026
 Enter About (short bio): (Optional)
 
-Profile saved.
-Press 'X' to return to menu.
+Add Experience (optional, enter DONE to finish):
 X
--------------------
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
+Experience Title:
 1
------ CREATE/EDIT PROFILE -----
-Enter First Name: (Required)
+Company/Organization:
 Beta
-Enter Last Name: (Required)
+Dates:
 User
-Enter University/College Attended: (Required)
+Description (optional):
 USF
-Enter Major: (Required)
+Add Experience (optional, enter DONE to finish):
 IT
-Enter Graduation Year (YYYY): (Required)
+Experience Title:
 2027
-Enter About (short bio): (Optional)
+Company/Organization:
 
-Profile saved.
-Press 'X' to return to menu.
+Dates:
 X
--------------------
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
+Description (optional):
 6
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
+Add Experience (optional, enter DONE to finish):
 Input file ended. Exiting program.

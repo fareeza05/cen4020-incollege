@@ -29,38 +29,4 @@ Enter Major: (Required)
 CS
 Enter Graduation Year (YYYY): (Required)
 12345
-Enter About (short bio): (Optional)
-
-Profile saved.
-Press 'X' to return to menu.
-X
--------------------
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
-2
------ PROFILE -----
-Name: John Doe
-Graduation Year: 1234
-Major: CS
-University: USF
-About:
--------------------
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
-6
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
-Input file ended. Exiting program.
+Error: Graduation year must be exactly 4 digits (YYYY). Exiting program.
