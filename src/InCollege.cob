@@ -87,6 +87,8 @@ WORKING-STORAGE SECTION.
 01  WS-TEMP.
     05 WS-I                 PIC 9(3) VALUE 0.
     05 WS-J                 PIC 9(3) VALUE 0.
+
+    05 WS-K                 PIC 9(3) VALUE 0.
     05 WS-FOUND             PIC X VALUE "N".
     05 WS-VALID             PIC X VALUE "N".
     05 WS-LEN               PIC 9(3) VALUE 0.
@@ -147,14 +149,16 @@ INIT-FILES.
         MOVE "00" TO WS-ACC-STATUS
     END-IF.
 
+    *> Profiles file: try read existing; if missing, create empty
     OPEN INPUT PROF-FILE
     IF WS-PROF-STATUS = "35"
        CLOSE PROF-FILE
        OPEN OUTPUT PROF-FILE
        CLOSE PROF-FILE
-       OPEN INPUT PROF-FILE
-       MOVE "00" TO WS-PROF-STATUS
+    ELSE
+        CLOSE PROF-FILE
     END-IF.
+
 
 LOAD-ACCOUNTS.
     MOVE 0 TO WS-ACC-COUNT
@@ -177,6 +181,8 @@ LOAD-ACCOUNTS.
 LOAD-PROFILES.
     MOVE 0 TO WS-PROF-COUNT
     MOVE "N" TO WS-PROF-EOF
+
+    OPEN INPUT PROF-FILE
 
     PERFORM UNTIL WS-PROF-EOF = "Y"
         READ PROF-FILE
@@ -486,16 +492,17 @@ SAVE-PROFILES.
         MOVE WS-PROF-EXP-COUNT(WS-I) TO PROF-EXP-COUNT
         MOVE WS-PROF-EDU-COUNT(WS-I) TO PROF-EDU-COUNT
 
-        PERFORM VARYING WS-J FROM 1 BY 1 UNTIL WS-J > 3
-               MOVE WS-EXP-TITLE(WS-I, WS-J) TO PROF-EXP-TITLE(WS-J)
-               MOVE WS-EXP-COMP(WS-I, WS-J)  TO PROF-EXP-COMP(WS-J)
-               MOVE WS-EXP-DATES(WS-I, WS-J) TO PROF-EXP-DATES(WS-J)
-               MOVE WS-EXP-DESC(WS-I, WS-J)  TO PROF-EXP-DESC(WS-J)
+    PERFORM VARYING WS-K FROM 1 BY 1 UNTIL WS-K > 3
+        MOVE WS-EXP-TITLE(WS-I, WS-K) TO PROF-EXP-TITLE(WS-K)
+        MOVE WS-EXP-COMP(WS-I, WS-K)  TO PROF-EXP-COMP(WS-K)
+        MOVE WS-EXP-DATES(WS-I, WS-K) TO PROF-EXP-DATES(WS-K)
+        MOVE WS-EXP-DESC(WS-I, WS-K)  TO PROF-EXP-DESC(WS-K)
+       
+        MOVE WS-EDU-DEGREE(WS-I, WS-K) TO PROF-EDU-DEGREE(WS-K)
+        MOVE WS-EDU-SCHOOL(WS-I, WS-K) TO PROF-EDU-SCHOOL(WS-K)
+        MOVE WS-EDU-YEARS(WS-I, WS-K)  TO PROF-EDU-YEARS(WS-K)
+   END-PERFORM
 
-               MOVE WS-EDU-DEGREE(WS-I, WS-J) TO PROF-EDU-DEGREE(WS-J)
-               MOVE WS-EDU-SCHOOL(WS-I, WS-J) TO PROF-EDU-SCHOOL(WS-J)
-               MOVE WS-EDU-YEARS(WS-I, WS-J)  TO PROF-EDU-YEARS(WS-J)       
-        END-PERFORM
 
         WRITE PROF-REC
     END-PERFORM
@@ -524,14 +531,16 @@ CREATE-OR-EDIT-ACCOUNT.
       
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
-        MOVE "Error: First Name is required. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: First Name is required. Exiting program" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF
     IF WS-LEN > 30
-        MOVE "Error: First Name cannot exceed 30 characters. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: First Name cannot exceed 30 characters. Exiting program" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF 
 
     MOVE WS-TOKEN TO WS-PROF-FNAME(WS-J)
@@ -543,14 +552,16 @@ CREATE-OR-EDIT-ACCOUNT.
 
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
-        MOVE "Error: Last Name is required. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: Last Name is required. Exiting program" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF
     IF WS-LEN > 30
-        MOVE "Error: Last Name cannot exceed 30 characters. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: Last Name cannot exceed 30 characters. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF 
 
     MOVE WS-TOKEN TO WS-PROF-LNAME(WS-J)
@@ -562,14 +573,16 @@ CREATE-OR-EDIT-ACCOUNT.
 
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
-        MOVE "Error: University/College is required. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: University/College is required. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF
     IF WS-LEN > 40
-        MOVE "Error: University name cannot exceed 40 characters. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: University name cannot exceed 40 characters. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF 
 
     MOVE WS-TOKEN TO WS-PROF-UNIV(WS-J)
@@ -581,14 +594,16 @@ CREATE-OR-EDIT-ACCOUNT.
 
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
-        MOVE "Error: Major is required. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: Major is required. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF
     IF WS-LEN > 30
-        MOVE "Error: First Name cannot exceed 30 characters. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: First Name cannot exceed 30 characters. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF 
 
     MOVE WS-TOKEN TO WS-PROF-MAJOR(WS-J)
@@ -598,12 +613,38 @@ CREATE-OR-EDIT-ACCOUNT.
     MOVE "Enter Graduation Year (YYYY): (Required)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
-    IF WS-TOKEN(1:4) IS NUMERIC
-        MOVE WS-TOKEN(1:4) TO WS-PROF-GRAD(WS-J)
-    ELSE
-        MOVE "Invalid year. Keeping existing value." TO WS-OUT-LINE
-        PERFORM PRINT-LINE
+
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+    IF WS-LEN = 0
+       MOVE "Error: Graduation year is required. Exiting program." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+       PERFORM CLOSE-FILES
+       STOP RUN
     END-IF
+
+    IF WS-LEN NOT = 4
+       MOVE "Error: Graduation year must be exactly 4 digits (YYYY). Exiting program." TO WS-OUT-LINE
+       PERFORM PRINT-LINE 
+       PERFORM CLOSE-FILES
+       STOP RUN
+    END-IF
+
+    IF FUNCTION TRIM(WS-TOKEN) IS NOT NUMERIC 
+       MOVE "Error: Graduation year must be numeric. Exiting program." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+       PERFORM CLOSE-FILES
+       STOP RUN
+    END-IF
+
+    IF WS-TOKEN < "1900" OR WS-TOKEN > "2100"
+    MOVE "Error: Graduation Year must be between 1900 and 2100." TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+    PERFORM CLOSE-FILES
+    STOP RUN
+    END-IF
+
+    MOVE WS-TOKEN(1:4) TO WS-PROF-GRAD(WS-J)
 
     *> About (short bio)
     MOVE "Enter About (short bio): (Optional)" TO WS-PROMPT

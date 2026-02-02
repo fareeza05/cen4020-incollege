@@ -17,13 +17,27 @@ Welcome, testuser!
 5. Learn a new skill
 6. Logout
 Enter your choice:
-2
------ PROFILE -----
-Name: Persist User
-Graduation Year: 2026
-Major: CS
-University: USF
-About:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+Persist
+Enter Last Name: (Required)
+User
+Enter University/College Attended: (Required)
+USF
+Enter Major: (Required)
+CS
+Enter Graduation Year (YYYY): (Required)
+2026
+Enter About (short bio): (Optional)
+
+Add Experience (optional, enter DONE to finish):
+DONE
+Add Education (optional, enter DONE to finish):
+DONE
+Profile saved.
+Press 'X' to return to menu.
+X
 -------------------
 1. Create/edit my profile
 2. View my profile
