@@ -524,14 +524,16 @@ CREATE-OR-EDIT-ACCOUNT.
       
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
-        MOVE "Error: First Name is required. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: First Name is required. Exiting program" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF
     IF WS-LEN > 30
-        MOVE "Error: First Name cannot exceed 30 characters. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: First Name cannot exceed 30 characters. Exiting program" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF 
 
     MOVE WS-TOKEN TO WS-PROF-FNAME(WS-J)
@@ -543,14 +545,16 @@ CREATE-OR-EDIT-ACCOUNT.
 
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
-        MOVE "Error: Last Name is required. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: Last Name is required. Exiting program" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF
     IF WS-LEN > 30
-        MOVE "Error: Last Name cannot exceed 30 characters. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: Last Name cannot exceed 30 characters. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF 
 
     MOVE WS-TOKEN TO WS-PROF-LNAME(WS-J)
@@ -562,14 +566,16 @@ CREATE-OR-EDIT-ACCOUNT.
 
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
-        MOVE "Error: University/College is required. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: University/College is required. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF
     IF WS-LEN > 40
-        MOVE "Error: University name cannot exceed 40 characters. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: University name cannot exceed 40 characters. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF 
 
     MOVE WS-TOKEN TO WS-PROF-UNIV(WS-J)
@@ -581,14 +587,16 @@ CREATE-OR-EDIT-ACCOUNT.
 
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
-        MOVE "Error: Major is required. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: Major is required. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF
     IF WS-LEN > 30
-        MOVE "Error: First Name cannot exceed 30 characters. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Error: First Name cannot exceed 30 characters. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        EXIT PARAGRAPH
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF 
 
     MOVE WS-TOKEN TO WS-PROF-MAJOR(WS-J)
@@ -601,8 +609,10 @@ CREATE-OR-EDIT-ACCOUNT.
     IF WS-TOKEN(1:4) IS NUMERIC
         MOVE WS-TOKEN(1:4) TO WS-PROF-GRAD(WS-J)
     ELSE
-        MOVE "Invalid year. Keeping existing value." TO WS-OUT-LINE
+        MOVE "Invalid year. Exiting program." TO WS-OUT-LINE
         PERFORM PRINT-LINE
+        PERFORM CLOSE-FILES
+        STOP RUN
     END-IF
 
     *> About (short bio)
