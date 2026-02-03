@@ -1,0 +1,64 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+MaiaTest
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+#Software1
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+MaiaTest
+Password:
+#Software1
+You have successfully logged in
+Welcome, MaiaTest!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+Maia
+Enter Last Name: (Required)
+Ryan
+Enter University/College Attended: (Required)
+University of South Florida
+Enter Major: (Required)
+Computer Science
+Enter Graduation Year (YYYY): (Required)
+2027
+Enter About (short bio): (Optional)
+
+Add Experience (optional, enter DONE to finish):
+ADD
+Experience Title:
+OnlyTitle
+Company/Organization:
+DONE
+Dates:
+DONE
+Description (optional):
+ADD
+Add Experience (optional, enter DONE to finish):
+OnlyDegree
+Experience Title:
+DONE
+Company/Organization:
+X
+Dates:
+2
+Description (optional):
+Input file ended. Exiting program.

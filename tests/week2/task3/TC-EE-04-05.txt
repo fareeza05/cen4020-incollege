@@ -26,7 +26,6 @@ Project Lead
 HackUSF
 Fall 2024
 Led a team and shipped a demo.
-DONE
 ADD
 Bachelor of Science
 University of South Florida
@@ -39,6 +38,5 @@ ADD
 Minor in Math
 University of South Florida
 2024-2027
-DONE
 X
 2
