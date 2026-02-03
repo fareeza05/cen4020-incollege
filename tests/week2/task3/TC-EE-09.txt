@@ -27,12 +27,6 @@ Company3
 Spring 2025
 Desc3
 ADD
-Exp4 - DELETE
-Company4- DELETE
-Winter 2025 - DELETE
-Desc4 - DELETE
-DONE
-ADD
 Deg1
 Uni1
 2020-2021
@@ -44,10 +38,4 @@ ADD
 Deg3
 Uni3
 2022-2023
-ADD
-Deg4 - DELETE
-Uni4 - DELETE
-2023-2024 - DELETE
-DONE
 X
-2

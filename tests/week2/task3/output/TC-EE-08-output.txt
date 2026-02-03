@@ -1,0 +1,75 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+MaiaTest
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+#Software1
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+MaiaTest
+Password:
+#Software1
+You have successfully logged in
+Welcome, MaiaTest!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+Maia
+Enter Last Name: (Required)
+Ryan
+Enter University/College Attended: (Required)
+University of South Florida
+Enter Major: (Required)
+Computer Science
+Enter Graduation Year (YYYY): (Required)
+2027
+Enter About (short bio): (Optional)
+This About Me is intentionally written to exceed two hundred characters so that we can verify the input validation is wo
+Add Experience (optional, enter DONE to finish):
+DONE
+Add Education (optional, enter DONE to finish):
+DONE
+Profile saved.
+Press 'X' to return to menu.
+X
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+2
+----- PROFILE -----
+Name: Maia Ryan
+Graduation Year: 2027
+Major: Computer Science
+University: University of South Florida
+About: This About Me is intentionally written to exceed two hundred characters so that we can verify the input validation is wo
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+Input file ended. Exiting program.
