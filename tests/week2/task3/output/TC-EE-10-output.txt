@@ -51,14 +51,52 @@ DONE
 Dates:
 DONE
 Description (optional):
-ADD
-Add Experience (optional, enter DONE to finish):
-OnlyDegree
-Experience Title:
 DONE
-Company/Organization:
+Add Experience (optional, enter DONE to finish):
+DONE
+Add Education (optional, enter DONE to finish):
+ADD
+Degree:
+OnlyDegree
+University/College:
+DONE
+Years Attended:
+DONE
+Add Education (optional, enter DONE to finish):
+DONE
+Profile saved.
+Press 'X' to return to menu.
 X
-Dates:
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
 2
-Description (optional):
+----- PROFILE -----
+Name: Maia Ryan
+Graduation Year: 2027
+Major: Computer Science
+University: University of South Florida
+About:
+Experience:
+    Title: OnlyTitle
+    Company: DONE
+    Dates: DONE
+    Description: DONE
+Education:
+    Degree: OnlyDegree
+    School: DONE
+    Years: DONE
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
 Input file ended. Exiting program.

@@ -98,17 +98,8 @@ Years Attended:
 2024-2027
 Profile saved.
 Press 'X' to return to menu.
-DONE
--------------------
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
 X
-Invalid choice. Please enter 1-5.
+-------------------
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -123,6 +114,29 @@ Graduation Year: 2027
 Major: Computer Science
 University: University of South Florida
 About: About me for week 2.
+Experience:
+    Title: Software Intern
+    Company: Tech Corp
+    Dates: Summer 2024
+    Description: Developed tools for internal testing.
+    Title: Research Assistant
+    Company: USF Lab
+    Dates: Jan 2023 - May 2024
+    Description: Worked on data collection and analysis.
+    Title: Project Lead
+    Company: HackUSF
+    Dates: Fall 2024
+    Description: Led a team and shipped a demo.
+Education:
+    Degree: Bachelor of Science
+    School: University of South Florida
+    Years: 2024-2027
+    Degree: Certificate in AI
+    School: Online Program
+    Years: 2025-2025
+    Degree: Minor in Math
+    School: University of South Florida
+    Years: 2024-2027
 -------------------
 1. Create/edit my profile
 2. View my profile

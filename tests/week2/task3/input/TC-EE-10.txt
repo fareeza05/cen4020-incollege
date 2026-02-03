@@ -15,8 +15,12 @@ ADD
 OnlyTitle
 DONE
 DONE
+DONE
+DONE
 ADD
 OnlyDegree
+DONE
+DONE
 DONE
 X
 2
