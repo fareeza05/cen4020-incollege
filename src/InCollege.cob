@@ -123,6 +123,11 @@ WORKING-STORAGE SECTION.
           15 WS-EDU-SCHOOL   PIC X(50).
           15 WS-EDU-YEARS    PIC X(20).
 
+01  WS-SEARCH.
+    05 WS-SEARCH-NAME      PIC X(120) VALUE SPACES.
+    05 WS-FULL-NAME        PIC X(120) VALUE SPACES.
+    05 WS-SEARCH-IDX       PIC 9(3) VALUE 0.
+
 
 PROCEDURE DIVISION.
 
@@ -421,8 +426,7 @@ POST-LOGIN-MENU.
                 MOVE "Job search is under construction." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
             WHEN "4"
-                MOVE "Find someone you know is under construction." TO WS-OUT-LINE
-                PERFORM PRINT-LINE
+                PERFORM SEARCH-USER
             WHEN "5"
                 PERFORM LEARN-A-NEW-SKILL
             WHEN "6"
@@ -867,6 +871,155 @@ VIEW-PROFILE.
     PERFORM PRINT-LINE
 
     EXIT PARAGRAPH.
+
+SEARCH-USER.
+    MOVE "Enter the full name of the person you are looking for:"
+        TO WS-PROMPT
+    MOVE "X" TO WS-DEST-KIND
+    PERFORM PRINT-PROMPT-AND-READ
+
+    MOVE FUNCTION TRIM(WS-TOKEN) TO WS-SEARCH-NAME
+    MOVE 0 TO WS-SEARCH-IDX
+    MOVE "N" TO WS-FOUND
+
+    PERFORM VARYING WS-I FROM 1 BY 1
+        UNTIL WS-I > WS-PROF-COUNT OR WS-FOUND = "Y"
+
+        MOVE SPACES TO WS-FULL-NAME
+        STRING FUNCTION TRIM(WS-PROF-FNAME(WS-I))
+               " "
+               FUNCTION TRIM(WS-PROF-LNAME(WS-I))
+          INTO WS-FULL-NAME
+        END-STRING
+
+        IF FUNCTION TRIM(WS-FULL-NAME) =
+           FUNCTION TRIM(WS-SEARCH-NAME)
+            MOVE "Y" TO WS-FOUND
+            MOVE WS-I TO WS-SEARCH-IDX
+        END-IF
+    END-PERFORM
+
+    IF WS-FOUND = "Y"
+        PERFORM DISPLAY-FOUND-PROFILE
+    ELSE
+        MOVE "No one by that name could be found."
+            TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+    END-IF.
+
+DISPLAY-FOUND-PROFILE.
+    MOVE "--- Found User Profile ---" TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+
+    *> Name
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Name: "
+           FUNCTION TRIM(WS-PROF-FNAME(WS-SEARCH-IDX)) " "
+           FUNCTION TRIM(WS-PROF-LNAME(WS-SEARCH-IDX))
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    *> University
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "University: "
+           FUNCTION TRIM(WS-PROF-UNIV(WS-SEARCH-IDX))
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    *> Major
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Major: "
+           FUNCTION TRIM(WS-PROF-MAJOR(WS-SEARCH-IDX))
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    *> Graduation Year
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Graduation Year: "
+           WS-PROF-GRAD(WS-SEARCH-IDX)
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    *> About Me
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "About Me: "
+           FUNCTION TRIM(WS-PROF-ABOUT(WS-SEARCH-IDX))
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    *> Experience
+    IF WS-PROF-EXP-COUNT(WS-SEARCH-IDX) = 0
+        MOVE "Experience: None" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+    ELSE
+        MOVE "Experience:" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        PERFORM VARYING WS-K FROM 1 BY 1
+            UNTIL WS-K > WS-PROF-EXP-COUNT(WS-SEARCH-IDX)
+
+            MOVE SPACES TO WS-OUT-LINE
+            STRING "    Title: " FUNCTION TRIM(WS-EXP-TITLE(WS-SEARCH-IDX, WS-K))
+              INTO WS-OUT-LINE
+            END-STRING
+            PERFORM PRINT-LINE
+
+            MOVE SPACES TO WS-OUT-LINE
+            STRING "    Company: " FUNCTION TRIM(WS-EXP-COMP(WS-SEARCH-IDX, WS-K))
+              INTO WS-OUT-LINE
+            END-STRING
+            PERFORM PRINT-LINE
+
+            MOVE SPACES TO WS-OUT-LINE
+            STRING "    Dates: " FUNCTION TRIM(WS-EXP-DATES(WS-SEARCH-IDX, WS-K))
+              INTO WS-OUT-LINE
+            END-STRING
+            PERFORM PRINT-LINE
+
+            MOVE SPACES TO WS-OUT-LINE
+            STRING "    Description: " FUNCTION TRIM(WS-EXP-DESC(WS-SEARCH-IDX, WS-K))
+              INTO WS-OUT-LINE
+            END-STRING
+            PERFORM PRINT-LINE
+        END-PERFORM
+    END-IF
+
+    *> Education
+    IF WS-PROF-EDU-COUNT(WS-SEARCH-IDX) = 0
+        MOVE "Education: None" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+    ELSE
+        MOVE "Education:" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        PERFORM VARYING WS-K FROM 1 BY 1
+            UNTIL WS-K > WS-PROF-EDU-COUNT(WS-SEARCH-IDX)
+
+            MOVE SPACES TO WS-OUT-LINE
+            STRING "    Degree: " FUNCTION TRIM(WS-EDU-DEGREE(WS-SEARCH-IDX, WS-K))
+              INTO WS-OUT-LINE
+            END-STRING
+            PERFORM PRINT-LINE
+
+            MOVE SPACES TO WS-OUT-LINE
+            STRING "    School: " FUNCTION TRIM(WS-EDU-SCHOOL(WS-SEARCH-IDX, WS-K))
+              INTO WS-OUT-LINE
+            END-STRING
+            PERFORM PRINT-LINE
+
+            MOVE SPACES TO WS-OUT-LINE
+            STRING "    Years: " FUNCTION TRIM(WS-EDU-YEARS(WS-SEARCH-IDX, WS-K))
+              INTO WS-OUT-LINE
+            END-STRING
+            PERFORM PRINT-LINE
+        END-PERFORM
+    END-IF
+
+    MOVE "------------------------" TO WS-OUT-LINE
+    PERFORM PRINT-LINE.
 
 
 PRINT-PROMPT-AND-READ.

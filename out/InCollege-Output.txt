@@ -17,16 +17,40 @@ Welcome, testuser!
 5. Learn a new skill
 6. Logout
 Enter your choice:
-1
------ CREATE/EDIT PROFILE -----
-Enter First Name: (Required)
-John
-Enter Last Name: (Required)
-Doe
-Enter University/College Attended: (Required)
-USF
-Enter Major: (Required)
-CS
-Enter Graduation Year (YYYY): (Required)
-9999
-Error: Graduation Year must be between 1900 and 2100.
+4
+Enter the full name of the person you are looking for:
+Persist User
+--- Found User Profile ---
+Name: Persist User
+University: USF
+Major: CS
+Graduation Year: 2026
+About Me:
+Experience: None
+Education: None
+------------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+4
+Enter the full name of the person you are looking for:
+Nonexistent Person
+No one by that name could be found.
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+6
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Input file ended. Exiting program.
