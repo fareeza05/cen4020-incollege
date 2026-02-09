@@ -7,7 +7,7 @@ INPUT-OUTPUT SECTION.
 FILE-CONTROL.
     SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "data/InCollege-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -86,6 +86,8 @@ WORKING-STORAGE SECTION.
 01  WS-TEMP.
     05 WS-I                 PIC 9(3) VALUE 0.
     05 WS-J                 PIC 9(3) VALUE 0.
+
+    05 WS-CANCEL-ITEM       PIC X VALUE "N".
 
     05 WS-HAS-LETTER        PIC X VALUE "N".
     05 WS-CH                PIC X VALUE SPACE.
@@ -793,6 +795,14 @@ CREATE-OR-EDIT-ACCOUNT.
            *> Title
            MOVE "Experience Title:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+               SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+               MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               EXIT PERFORM
+           END-IF
+
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
            IF WS-LEN = 0 
@@ -823,6 +833,13 @@ CREATE-OR-EDIT-ACCOUNT.
            MOVE "Company/Organization:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
 
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
+
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
            IF WS-LEN = 0 
@@ -852,11 +869,24 @@ CREATE-OR-EDIT-ACCOUNT.
            *> DATES
            MOVE "Dates:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
            MOVE WS-TOKEN TO WS-EXP-DATES(WS-J, WS-I)
 
           *> DESCRIPTION
            MOVE "Description (optional):" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
@@ -889,8 +919,16 @@ CREATE-OR-EDIT-ACCOUNT.
 
            ADD 1 TO WS-PROF-EDU-COUNT(WS-J)
 
+           *>Degree
            MOVE "Degree:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Education incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
@@ -918,8 +956,16 @@ CREATE-OR-EDIT-ACCOUNT.
 
            MOVE WS-TOKEN TO WS-EDU-DEGREE(WS-J, WS-I)
 
+           *>University/College
            MOVE "University/College:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Education incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
@@ -946,8 +992,16 @@ CREATE-OR-EDIT-ACCOUNT.
                END-IF
            MOVE WS-TOKEN TO WS-EDU-SCHOOL(WS-J, WS-I)
 
+           *> Years
            MOVE "Years Attended:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Education incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
 
            MOVE "Y" TO WS-VALID
            PERFORM VALIDATE-YEARS-RANGE
