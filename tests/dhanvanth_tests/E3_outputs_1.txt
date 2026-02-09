@@ -36,8 +36,16 @@ Education:
 Enter your choice:
 4
 Enter the full name of the person you are looking for:
-John Doe
-No one by that name could be found.
+Persist User
+--- Found User Profile ---
+Name: Persist User
+University: USF
+Major: CS
+Graduation Year: 2026
+About Me:
+Experience: None
+Education: None
+------------------------
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
