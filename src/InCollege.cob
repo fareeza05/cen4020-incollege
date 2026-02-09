@@ -786,6 +786,16 @@ CREATE-OR-EDIT-ACCOUNT.
                   TO WS-PROMPT
            MOVE "X" TO WS-DEST-KIND
            PERFORM PRINT-PROMPT-AND-READ
+
+
+           IF WS-TOKEN NOT = "ADD"
+           MOVE "Error: Enter ADD to add an experience or DONE to finish. Exiting program."
+               TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF
+           
            IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
                   EXIT PERFORM
            END-IF
@@ -911,7 +921,15 @@ CREATE-OR-EDIT-ACCOUNT.
            MOVE "Add Education (optional, enter DONE to finish):"
                   TO WS-PROMPT
            MOVE "X" TO WS-DEST-KIND
-           PERFORM PRINT-PROMPT-AND-READ  
+           PERFORM PRINT-PROMPT-AND-READ
+           
+           IF WS-TOKEN NOT = "ADD"
+               MOVE "Error: Enter ADD to add education or DONE to finish. Exiting program."
+                   TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF  
 
            IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
                   EXIT PERFORM
