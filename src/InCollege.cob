@@ -21,7 +21,7 @@ DATA DIVISION.
 FILE SECTION.
 
 FD  IN-FILE.
-01  IN-REC                 PIC X(120).
+01  IN-REC                 PIC X(500).
 
 FD  OUT-FILE.
 01  OUT-REC                PIC X(200).
@@ -66,7 +66,7 @@ WORKING-STORAGE SECTION.
 01  WS-CURR-USER            PIC X(20) VALUE SPACES.
 
 01  WS-INPUT.
-    05 WS-TOKEN             PIC X(120) VALUE SPACES.
+    05 WS-TOKEN             PIC X(300) VALUE SPACES.
     05 WS-MENU-CHOICE       PIC X VALUE SPACE.
     05 WS-USER-IN           PIC X(20) VALUE SPACES.
     05 WS-PASS-IN           PIC X(12) VALUE SPACES.
@@ -734,6 +734,15 @@ CREATE-OR-EDIT-ACCOUNT.
     MOVE "Enter About (short bio): (Optional)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
+
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN > 200
+       MOVE "Error: About section cannot exceed 200 characters. Exiting program." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+       PERFORM CLOSE-FILES
+       STOP RUN   
+    END-IF 
+
     MOVE WS-TOKEN TO WS-PROF-ABOUT(WS-J)
 
     *> Experience (optional, up to 3)
