@@ -90,6 +90,9 @@ WORKING-STORAGE SECTION.
     05 WS-HAS-LETTER        PIC X VALUE "N".
     05 WS-CH                PIC X VALUE SPACE.
 
+    05 WS-YEAR1             PIC 9(4) VALUE 0.
+    05 WS-YEAR2             PIC 9(4) VALUE 0.
+
 
     05 WS-K                 PIC 9(3) VALUE 0.
     05 WS-FOUND             PIC X VALUE "N".
@@ -543,6 +546,51 @@ CHECK-HAS-LETTER.
         END-IF
     END-PERFORM.
 
+VALIDATE-YEARS-RANGE.
+    *> WS-TOKEN holds the input
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+    IF WS-LEN NOT = 9
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(5:1) NOT = "-"
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(1:4) IS NOT NUMERIC
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(6:4) IS NOT NUMERIC
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE WS-TOKEN(1:4) TO WS-YEAR1
+    MOVE WS-TOKEN(6:4) TO WS-YEAR2
+
+    *> optional sanity checks (recommended)
+    IF WS-YEAR1 < 1900 OR WS-YEAR1 > 2100
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-YEAR2 < 1900 OR WS-YEAR2 > 2100
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-YEAR2 < WS-YEAR1
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE "Y" TO WS-VALID.
+
 
 CREATE-OR-EDIT-ACCOUNT.
 
@@ -798,14 +846,74 @@ CREATE-OR-EDIT-ACCOUNT.
 
            MOVE "Degree:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN = 0 
+               MOVE "Error: Degree is required. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF 
+
+           IF WS-LEN > 50
+               MOVE "Error: Degree cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
+
+           PERFORM CHECK-HAS-LETTER
+               IF WS-HAS-LETTER = "N"
+                   MOVE "Error: Degree cannot be numbers only. Exiting program" TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+                   PERFORM CLOSE-FILES
+                   STOP RUN 
+               END-IF
+
            MOVE WS-TOKEN TO WS-EDU-DEGREE(WS-J, WS-I)
 
            MOVE "University/College:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN = 0 
+               MOVE "Error: University/College is required. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF 
+
+           IF WS-LEN > 50
+               MOVE "Error: University/College cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
+
+           PERFORM CHECK-HAS-LETTER
+               IF WS-HAS-LETTER = "N"
+                   MOVE "Error: University/College cannot be numbers only. Exiting program" TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+                   PERFORM CLOSE-FILES
+                   STOP RUN 
+               END-IF
            MOVE WS-TOKEN TO WS-EDU-SCHOOL(WS-J, WS-I)
 
            MOVE "Years Attended:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           MOVE "Y" TO WS-VALID
+           PERFORM VALIDATE-YEARS-RANGE
+           
+           IF WS-VALID = "N"
+               MOVE "Error: Years Attended must be in YYYY-YYYY format (digits only). Exiting program."
+                   TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF
            MOVE WS-TOKEN TO WS-EDU-YEARS(WS-J, WS-I)
     END-PERFORM      
       

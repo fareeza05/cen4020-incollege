@@ -6,9 +6,14 @@ Enter choice (1 or 2):
 2
 Create a username:
 MaiaTest
-Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+That username already exists. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
 #Software1
-Account created successfully.
+Invalid selection. Please try again.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -51,5 +56,15 @@ Tech Company
 Dates:
 Summer 2024
 Description (optional):
-This description is intentionally made very long to exceed one hundred characters so the program should reject or trunca
-Description cannot exceed 100 characters. Exiting program.
+This description is intentionally made very long to excee
+Add Experience (optional, enter DONE to finish):
+DONE
+Add Education (optional, enter DONE to finish):
+ADD
+Degree:
+Bachelor of Science
+University/College:
+USF
+Years Attended:
+2024-22
+Error: Years Attended must be in YYYY-YYYY format (digits only). Exiting program.
