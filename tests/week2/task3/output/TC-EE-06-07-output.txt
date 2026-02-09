@@ -52,27 +52,4 @@ Dates:
 Summer 2024
 Description (optional):
 This description is intentionally made very long to exceed one hundred characters so the program should reject or trunca
-Add Experience (optional, enter DONE to finish):
-DONE
-Add Education (optional, enter DONE to finish):
-ADD
-Degree:
-Bachelor of Science
-University/College:
-USF
-Years Attended:
-2024-2027
-Add Education (optional, enter DONE to finish):
-DONE
-Profile saved.
-Press 'X' to return to menu.
-X
--------------------
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
-Input file ended. Exiting program.
+Description cannot exceed 100 characters. Exiting program.

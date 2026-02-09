@@ -87,6 +87,10 @@ WORKING-STORAGE SECTION.
     05 WS-I                 PIC 9(3) VALUE 0.
     05 WS-J                 PIC 9(3) VALUE 0.
 
+    05 WS-HAS-LETTER        PIC X VALUE "N".
+    05 WS-CH                PIC X VALUE SPACE.
+
+
     05 WS-K                 PIC 9(3) VALUE 0.
     05 WS-FOUND             PIC X VALUE "N".
     05 WS-VALID             PIC X VALUE "N".
@@ -528,6 +532,18 @@ SAVE-PROFILES.
     END-PERFORM
     CLOSE PROF-FILE.
 
+CHECK-HAS-LETTER.
+    MOVE "N" TO WS-HAS-LETTER
+    PERFORM VARYING WS-J FROM 1 BY 1 UNTIL WS-J > WS-LEN
+        MOVE WS-TOKEN(WS-J:1) TO WS-CH
+        IF (WS-CH >= "A" AND WS-CH <= "Z")
+           OR (WS-CH >= "a" AND WS-CH <= "z")
+            MOVE "Y" TO WS-HAS-LETTER
+            EXIT PERFORM
+        END-IF
+    END-PERFORM.
+
+
 CREATE-OR-EDIT-ACCOUNT.
 
     MOVE "----- CREATE/EDIT PROFILE -----" TO WS-OUT-LINE
@@ -686,20 +702,82 @@ CREATE-OR-EDIT-ACCOUNT.
 
            ADD 1 TO WS-PROF-EXP-COUNT(WS-J)
 
+           *> Title
            MOVE "Experience Title:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN = 0 
+               MOVE "Error: Experience Title is required. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF 
+
+           IF WS-LEN > 50
+               MOVE "Error: Experience Title cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
+
+           PERFORM CHECK-HAS-LETTER
+               IF WS-HAS-LETTER = "N"
+                   MOVE "Error: Experience Title cannot be numbers only. Exiting program" TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+                   PERFORM CLOSE-FILES
+                   STOP RUN 
+               END-IF
+
            MOVE WS-TOKEN TO WS-EXP-TITLE(WS-J, WS-I)
 
+           *> Organization/Company
            MOVE "Company/Organization:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN = 0 
+               MOVE "Error: Company/Organization is required. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF 
+
+           IF WS-LEN > 50
+               MOVE "Error: Company/Organization cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
+
+           PERFORM CHECK-HAS-LETTER
+               IF WS-HAS-LETTER = "N"
+                   MOVE "Error: Company/Organization cannot be numbers only. Exiting program" TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+                   PERFORM CLOSE-FILES
+                   STOP RUN 
+               END-IF
+
            MOVE WS-TOKEN TO WS-EXP-COMP(WS-J, WS-I)
 
+           *> DATES
            MOVE "Dates:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
            MOVE WS-TOKEN TO WS-EXP-DATES(WS-J, WS-I)
 
+          *> DESCRIPTION
            MOVE "Description (optional):" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN > 100
+               MOVE "Description cannot exceed 100 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
            MOVE WS-TOKEN TO WS-EXP-DESC(WS-J, WS-I)
     END-PERFORM  
 
