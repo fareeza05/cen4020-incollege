@@ -424,6 +424,16 @@ POST-LOGIN-MENU.
         MOVE "M" TO WS-DEST-KIND
         PERFORM PRINT-PROMPT-AND-READ
 
+        PERFORM VALIDATE-MENU-1-6
+        IF WS-VALID = "N"
+           MOVE "Error: Menu choice must be a single digit 1-6. Exiting program" to WS-OUT-LINE
+           PERFORM PRINT-LINE
+           PERFORM CLOSE-FILES
+           STOP RUN  
+        END-IF
+
+        MOVE WS-TOKEN(1:1) TO WS-MENU-CHOICE
+
         EVALUATE WS-MENU-CHOICE
             WHEN "1"
                PERFORM CREATE-OR-EDIT-ACCOUNT
@@ -439,7 +449,7 @@ POST-LOGIN-MENU.
             WHEN "6"
                 EXIT PERFORM
             WHEN OTHER
-                MOVE "Invalid choice. Please enter 1-5." TO WS-OUT-LINE
+                MOVE "Invalid choice. Please enter 1-6." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
         END-EVALUATE
     END-PERFORM.
@@ -590,6 +600,27 @@ VALIDATE-YEARS-RANGE.
     END-IF
 
     MOVE "Y" TO WS-VALID.
+
+VALIDATE-MENU-1-6.
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+    IF WS-LEN NOT = 1
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(1:1) IS NOT NUMERIC
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "6"
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE "Y" TO WS-VALID.
+
 
 
 CREATE-OR-EDIT-ACCOUNT.
