@@ -867,7 +867,12 @@ CREATE-OR-EDIT-ACCOUNT.
                STOP RUN 
            END-IF
            MOVE WS-TOKEN TO WS-EXP-DESC(WS-J, WS-I)
-    END-PERFORM  
+    END-PERFORM 
+
+    IF WS-PROF-EXP-COUNT(WS-J) = 3
+       MOVE "Note: Maximum of 3 experiences reached." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+    END-IF 
 
     *> Education (optional, up to 3)
     MOVE 0 TO WS-PROF-EDU-COUNT(WS-J)
@@ -955,7 +960,12 @@ CREATE-OR-EDIT-ACCOUNT.
                STOP RUN
            END-IF
            MOVE WS-TOKEN TO WS-EDU-YEARS(WS-J, WS-I)
-    END-PERFORM      
+    END-PERFORM  
+
+    IF WS-PROF-EXP-COUNT(WS-J) = 3
+       MOVE "Note: Maximum of 3 experiences reached." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+    END-IF     
       
     PERFORM SAVE-PROFILES
 

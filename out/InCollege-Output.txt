@@ -17,18 +17,138 @@ Welcome, testuser!
 5. Learn a new skill
 6. Logout
 Enter your choice:
-4
-Enter the full name of the person you are looking for:
-Persist User
---- Found User Profile ---
-Name: Persist User
-University: USF
-Major: CS
-Graduation Year: 2026
-About Me:
-Experience: None
-Education: None
-------------------------
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+Alex
+Enter Last Name: (Required)
+Smith
+Enter University/College Attended: (Required)
+Generic University
+Enter Major: (Required)
+Information Systems
+Enter Graduation Year (YYYY): (Required)
+2025
+Enter About (short bio): (Optional)
+This is a short bio that stays within limits.
+Add Experience (optional, enter DONE to finish):
+
+Experience Title:
+Role One
+Company/Organization:
+Company One
+Dates:
+2020-2021
+Description (optional):
+Did useful work
+Add Experience (optional, enter DONE to finish):
+
+Experience Title:
+Role Two
+Company/Organization:
+Company Two
+Dates:
+2021-2022
+Description (optional):
+Learned important skills
+Add Experience (optional, enter DONE to finish):
+
+Experience Title:
+Role Three
+Company/Organization:
+Company Three
+Dates:
+2022-2023
+Description (optional):
+Led small projects
+Note: Maximum of 3 experiences reached.
+Add Education (optional, enter DONE to finish):
+
+Degree:
+Degree One
+University/College:
+School One
+Years Attended:
+2018-2020
+Add Education (optional, enter DONE to finish):
+
+Degree:
+Degree Two
+University/College:
+School Two
+Years Attended:
+2020-2022
+Add Education (optional, enter DONE to finish):
+
+Degree:
+Degree Three
+University/College:
+School Three
+Years Attended:
+2022-2025
+Note: Maximum of 3 experiences reached.
+Profile saved.
+Press 'X' to return to menu.
+X
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+2
+----- PROFILE -----
+Name: Alex Smith
+Graduation Year: 2025
+Major: Information Systems
+University: Generic University
+About: This is a short bio that stays within limits.
+Experience:
+    Title: Role One
+    Company: Company One
+    Dates: 2020-2021
+    Description: Did useful work
+    Title: Role Two
+    Company: Company Two
+    Dates: 2021-2022
+    Description: Learned important skills
+    Title: Role Three
+    Company: Company Three
+    Dates: 2022-2023
+    Description: Led small projects
+Education:
+    Degree: Degree One
+    School: School One
+    Years: 2018-2020
+    Degree: Degree Two
+    School: School Two
+    Years: 2020-2022
+    Degree: Degree Three
+    School: School Three
+    Years: 2022-2025
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+6
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+jawaad
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, jawaad!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -38,8 +158,37 @@ Education: None
 Enter your choice:
 4
 Enter the full name of the person you are looking for:
-Nonexistent Person
-No one by that name could be found.
+Alex Smith
+--- Found User Profile ---
+Name: Alex Smith
+University: Generic University
+Major: Information Systems
+Graduation Year: 2025
+About Me: This is a short bio that stays within limits.
+Experience:
+    Title: Role One
+    Company: Company One
+    Dates: 2020-2021
+    Description: Did useful work
+    Title: Role Two
+    Company: Company Two
+    Dates: 2021-2022
+    Description: Learned important skills
+    Title: Role Three
+    Company: Company Three
+    Dates: 2022-2023
+    Description: Led small projects
+Education:
+    Degree: Degree One
+    School: School One
+    Years: 2018-2020
+    Degree: Degree Two
+    School: School Two
+    Years: 2020-2022
+    Degree: Degree Three
+    School: School Three
+    Years: 2022-2025
+------------------------
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
