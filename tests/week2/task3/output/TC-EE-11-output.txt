@@ -33,39 +33,5 @@ Welcome, MaiaTest!
 5. Learn a new skill
 6. Logout
 Enter your choice:
-1
------ CREATE/EDIT PROFILE -----
-Enter First Name: (Required)
-Maia
-Enter Last Name: (Required)
-Ryan
-Enter University/College Attended: (Required)
-University of South Florida
-Enter Major: (Required)
-Computer Science
-Enter Graduation Year (YYYY): (Required)
-2027
-Enter About (short bio): (Optional)
-
-Add Experience (optional, enter DONE to finish):
-ADD
-Experience Title:
-OnlyTitle
-Company/Organization:
-DONE
-Experience Incomplete. Returning to menu.
-Add Education (optional, enter DONE to finish):
-DONE
-Profile saved.
-Press 'X' to return to menu.
-DONE
--------------------
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
-DONE
+7
 Error: Menu choice must be a single digit 1-6. Exiting program
