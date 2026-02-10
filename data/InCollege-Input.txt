@@ -38,9 +38,3 @@ School Three
 X
 2
 6
-1
-jawaad
-Abcdef1!
-4
-Alex Smith
-6
