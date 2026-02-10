@@ -5,15 +5,10 @@ Please choose an option:
 Enter choice (1 or 2):
 2
 Create a username:
-bug4d
-That username already exists. Please try again.
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
+user3
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
 Abcdef1!
-Invalid selection. Please try again.
+Account created successfully.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -21,11 +16,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-bug4d
+user3
 Password:
 Abcdef1!
 You have successfully logged in
-Welcome, bug4d!
+Welcome, user3!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -36,22 +31,17 @@ Enter your choice:
 1
 ----- CREATE/EDIT PROFILE -----
 Enter First Name: (Required)
-John
+Jane
 Enter Last Name: (Required)
-Tester
+Smith
 Enter University/College Attended: (Required)
-USF
+University of South Florida
 Enter Major: (Required)
-CS
+Information Technology
 Enter Graduation Year (YYYY): (Required)
-2024
+2026
 Enter About (short bio): (Optional)
 
 Add Experience (optional, enter DONE to finish):
-ADD
-Experience Title:
-DONE
-Experience Incomplete. Returning to menu.
-Add Education (optional, enter DONE to finish):
-
-Error: Enter ADD to add education or DONE to finish. Exiting program.
+degree
+Error: Enter ADD to add an experience or DONE to finish. Exiting program.

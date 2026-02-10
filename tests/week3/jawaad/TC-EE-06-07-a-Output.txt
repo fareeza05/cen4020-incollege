@@ -5,15 +5,10 @@ Please choose an option:
 Enter choice (1 or 2):
 2
 Create a username:
-bug4d
-That username already exists. Please try again.
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
-Abcdef1!
-Invalid selection. Please try again.
+MaiaTest
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+#Software1
+Account created successfully.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -21,11 +16,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-bug4d
+MaiaTest
 Password:
-Abcdef1!
+#Software1
 You have successfully logged in
-Welcome, bug4d!
+Welcome, MaiaTest!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -36,22 +31,25 @@ Enter your choice:
 1
 ----- CREATE/EDIT PROFILE -----
 Enter First Name: (Required)
-John
+Maia
 Enter Last Name: (Required)
-Tester
+Ryan
 Enter University/College Attended: (Required)
-USF
+University of South Florida
 Enter Major: (Required)
-CS
+Computer Science
 Enter Graduation Year (YYYY): (Required)
-2024
+2027
 Enter About (short bio): (Optional)
 
 Add Experience (optional, enter DONE to finish):
 ADD
 Experience Title:
-DONE
-Experience Incomplete. Returning to menu.
-Add Education (optional, enter DONE to finish):
-
-Error: Enter ADD to add education or DONE to finish. Exiting program.
+Software Intern
+Company/Organization:
+Tech Company
+Dates:
+Summer 2024
+Description (optional):
+This description is intentionally made very long to exceed one hundred characters so the program should reject or truncate it.
+Description cannot exceed 100 characters. Exiting program.

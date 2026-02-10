@@ -5,15 +5,10 @@ Please choose an option:
 Enter choice (1 or 2):
 2
 Create a username:
-bug4d
-That username already exists. Please try again.
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
+user2
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
 Abcdef1!
-Invalid selection. Please try again.
+Account created successfully.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -21,11 +16,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-bug4d
+user2
 Password:
 Abcdef1!
 You have successfully logged in
-Welcome, bug4d!
+Welcome, user2!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -38,11 +33,11 @@ Enter your choice:
 Enter First Name: (Required)
 John
 Enter Last Name: (Required)
-Tester
+Doe
 Enter University/College Attended: (Required)
-USF
+University of South Florida
 Enter Major: (Required)
-CS
+Computer Science
 Enter Graduation Year (YYYY): (Required)
 2024
 Enter About (short bio): (Optional)
@@ -50,8 +45,33 @@ Enter About (short bio): (Optional)
 Add Experience (optional, enter DONE to finish):
 ADD
 Experience Title:
-DONE
-Experience Incomplete. Returning to menu.
-Add Education (optional, enter DONE to finish):
+Software Intern
+Company/Organization:
+TechCorp
+Dates:
+2023-2024
+Description (optional):
 
-Error: Enter ADD to add education or DONE to finish. Exiting program.
+Add Experience (optional, enter DONE to finish):
+ADD
+Experience Title:
+Research Assistant
+Company/Organization:
+USF Lab
+Dates:
+2022-2023
+Description (optional):
+
+Add Experience (optional, enter DONE to finish):
+ADD
+Experience Title:
+Tutor
+Company/Organization:
+Campus Center
+Dates:
+2021-2022
+Description (optional):
+
+Note: Maximum of 3 experiences reached.
+Add Education (optional, enter DONE to finish):
+Input file ended. Exiting program.
