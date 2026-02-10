@@ -6,9 +6,14 @@ Enter choice (1 or 2):
 2
 Create a username:
 MaiaTest
-Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+That username already exists. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
 #Software1
-Account created successfully.
+Invalid selection. Please try again.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -41,35 +46,5 @@ Computer Science
 Enter Graduation Year (YYYY): (Required)
 2027
 Enter About (short bio): (Optional)
-This About Me is intentionally written to exceed two hundred characters so that we can verify the input validation is wo
-Add Experience (optional, enter DONE to finish):
-DONE
-Add Education (optional, enter DONE to finish):
-DONE
-Profile saved.
-Press 'X' to return to menu.
-X
--------------------
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
-2
------ PROFILE -----
-Name: Maia Ryan
-Graduation Year: 2027
-Major: Computer Science
-University: University of South Florida
-About: This About Me is intentionally written to exceed two hundred characters so that we can verify the input validation is wo
--------------------
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. Logout
-Enter your choice:
-Input file ended. Exiting program.
+Testing input validation requires a deliberately long sentence that exceeds the allowed length so the program can detect overflow and report an error instead of silently truncating user text overflowe
+Error: About section cannot exceed 200 characters. Exiting program.

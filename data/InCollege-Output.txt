@@ -32,7 +32,7 @@ Enter Graduation Year (YYYY): (Required)
 Enter About (short bio): (Optional)
 This is a short bio that stays within limits.
 Add Experience (optional, enter DONE to finish):
-
+ADD
 Experience Title:
 Role One
 Company/Organization:
@@ -42,7 +42,7 @@ Dates:
 Description (optional):
 Did useful work
 Add Experience (optional, enter DONE to finish):
-
+ADD
 Experience Title:
 Role Two
 Company/Organization:
@@ -52,7 +52,7 @@ Dates:
 Description (optional):
 Learned important skills
 Add Experience (optional, enter DONE to finish):
-
+ADD
 Experience Title:
 Role Three
 Company/Organization:
@@ -63,7 +63,7 @@ Description (optional):
 Led small projects
 Note: Maximum of 3 experiences reached.
 Add Education (optional, enter DONE to finish):
-
+ADD
 Degree:
 Degree One
 University/College:
@@ -71,7 +71,7 @@ School One
 Years Attended:
 2018-2020
 Add Education (optional, enter DONE to finish):
-
+ADD
 Degree:
 Degree Two
 University/College:
@@ -79,7 +79,7 @@ School Two
 Years Attended:
 2020-2022
 Add Education (optional, enter DONE to finish):
-
+ADD
 Degree:
 Degree Three
 University/College:

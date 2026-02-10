@@ -7,7 +7,7 @@ INPUT-OUTPUT SECTION.
 FILE-CONTROL.
     SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "data/InCollege-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -21,7 +21,7 @@ DATA DIVISION.
 FILE SECTION.
 
 FD  IN-FILE.
-01  IN-REC                 PIC X(120).
+01  IN-REC                 PIC X(500).
 
 FD  OUT-FILE.
 01  OUT-REC                PIC X(200).
@@ -66,7 +66,7 @@ WORKING-STORAGE SECTION.
 01  WS-CURR-USER            PIC X(20) VALUE SPACES.
 
 01  WS-INPUT.
-    05 WS-TOKEN             PIC X(120) VALUE SPACES.
+    05 WS-TOKEN             PIC X(300) VALUE SPACES.
     05 WS-MENU-CHOICE       PIC X VALUE SPACE.
     05 WS-USER-IN           PIC X(20) VALUE SPACES.
     05 WS-PASS-IN           PIC X(12) VALUE SPACES.
@@ -86,6 +86,15 @@ WORKING-STORAGE SECTION.
 01  WS-TEMP.
     05 WS-I                 PIC 9(3) VALUE 0.
     05 WS-J                 PIC 9(3) VALUE 0.
+
+    05 WS-CANCEL-ITEM       PIC X VALUE "N".
+
+    05 WS-HAS-LETTER        PIC X VALUE "N".
+    05 WS-CH                PIC X VALUE SPACE.
+
+    05 WS-YEAR1             PIC 9(4) VALUE 0.
+    05 WS-YEAR2             PIC 9(4) VALUE 0.
+
 
     05 WS-K                 PIC 9(3) VALUE 0.
     05 WS-FOUND             PIC X VALUE "N".
@@ -417,6 +426,16 @@ POST-LOGIN-MENU.
         MOVE "M" TO WS-DEST-KIND
         PERFORM PRINT-PROMPT-AND-READ
 
+        PERFORM VALIDATE-MENU-1-6
+        IF WS-VALID = "N"
+           MOVE "Error: Menu choice must be a single digit 1-6. Exiting program" to WS-OUT-LINE
+           PERFORM PRINT-LINE
+           PERFORM CLOSE-FILES
+           STOP RUN  
+        END-IF
+
+        MOVE WS-TOKEN(1:1) TO WS-MENU-CHOICE
+
         EVALUATE WS-MENU-CHOICE
             WHEN "1"
                PERFORM CREATE-OR-EDIT-ACCOUNT
@@ -432,7 +451,7 @@ POST-LOGIN-MENU.
             WHEN "6"
                 EXIT PERFORM
             WHEN OTHER
-                MOVE "Invalid choice. Please enter 1-5." TO WS-OUT-LINE
+                MOVE "Invalid choice. Please enter 1-6." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
         END-EVALUATE
     END-PERFORM.
@@ -527,6 +546,84 @@ SAVE-PROFILES.
         WRITE PROF-REC
     END-PERFORM
     CLOSE PROF-FILE.
+
+CHECK-HAS-LETTER.
+    MOVE "N" TO WS-HAS-LETTER
+    PERFORM VARYING WS-J FROM 1 BY 1 UNTIL WS-J > WS-LEN
+        MOVE WS-TOKEN(WS-J:1) TO WS-CH
+        IF (WS-CH >= "A" AND WS-CH <= "Z")
+           OR (WS-CH >= "a" AND WS-CH <= "z")
+            MOVE "Y" TO WS-HAS-LETTER
+            EXIT PERFORM
+        END-IF
+    END-PERFORM.
+
+VALIDATE-YEARS-RANGE.
+    *> WS-TOKEN holds the input
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+    IF WS-LEN NOT = 9
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(5:1) NOT = "-"
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(1:4) IS NOT NUMERIC
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(6:4) IS NOT NUMERIC
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE WS-TOKEN(1:4) TO WS-YEAR1
+    MOVE WS-TOKEN(6:4) TO WS-YEAR2
+
+    *> optional sanity checks (recommended)
+    IF WS-YEAR1 < 1900 OR WS-YEAR1 > 2100
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-YEAR2 < 1900 OR WS-YEAR2 > 2100
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-YEAR2 < WS-YEAR1
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE "Y" TO WS-VALID.
+
+VALIDATE-MENU-1-6.
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+    IF WS-LEN NOT = 1
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(1:1) IS NOT NUMERIC
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "6"
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE "Y" TO WS-VALID.
+
+
 
 CREATE-OR-EDIT-ACCOUNT.
 
@@ -670,6 +767,15 @@ CREATE-OR-EDIT-ACCOUNT.
     MOVE "Enter About (short bio): (Optional)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
+
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN > 200
+       MOVE "Error: About section cannot exceed 200 characters. Exiting program." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+       PERFORM CLOSE-FILES
+       STOP RUN   
+    END-IF 
+
     MOVE WS-TOKEN TO WS-PROF-ABOUT(WS-J)
 
     *> Experience (optional, up to 3)
@@ -680,28 +786,133 @@ CREATE-OR-EDIT-ACCOUNT.
                   TO WS-PROMPT
            MOVE "X" TO WS-DEST-KIND
            PERFORM PRINT-PROMPT-AND-READ
+
+
+           IF WS-TOKEN NOT = "ADD"
+           MOVE "Error: Enter ADD to add an experience or DONE to finish. Exiting program."
+               TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF
+           
            IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
                   EXIT PERFORM
            END-IF
 
            ADD 1 TO WS-PROF-EXP-COUNT(WS-J)
 
+           *> Title
            MOVE "Experience Title:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+               SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+               MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               EXIT PERFORM
+           END-IF
+
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN = 0 
+               MOVE "Error: Experience Title is required. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF 
+
+           IF WS-LEN > 50
+               MOVE "Error: Experience Title cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
+
+           PERFORM CHECK-HAS-LETTER
+               IF WS-HAS-LETTER = "N"
+                   MOVE "Error: Experience Title cannot be numbers only. Exiting program" TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+                   PERFORM CLOSE-FILES
+                   STOP RUN 
+               END-IF
+
            MOVE WS-TOKEN TO WS-EXP-TITLE(WS-J, WS-I)
 
+           *> Organization/Company
            MOVE "Company/Organization:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
+
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN = 0 
+               MOVE "Error: Company/Organization is required. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF 
+
+           IF WS-LEN > 50
+               MOVE "Error: Company/Organization cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
+
+           PERFORM CHECK-HAS-LETTER
+               IF WS-HAS-LETTER = "N"
+                   MOVE "Error: Company/Organization cannot be numbers only. Exiting program" TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+                   PERFORM CLOSE-FILES
+                   STOP RUN 
+               END-IF
+
            MOVE WS-TOKEN TO WS-EXP-COMP(WS-J, WS-I)
 
+           *> DATES
            MOVE "Dates:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
            MOVE WS-TOKEN TO WS-EXP-DATES(WS-J, WS-I)
 
+          *> DESCRIPTION
            MOVE "Description (optional):" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
+
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN > 100
+               MOVE "Description cannot exceed 100 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
            MOVE WS-TOKEN TO WS-EXP-DESC(WS-J, WS-I)
-    END-PERFORM  
+    END-PERFORM 
+
+    IF WS-PROF-EXP-COUNT(WS-J) = 3
+       MOVE "Note: Maximum of 3 experiences reached." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+    END-IF 
 
     *> Education (optional, up to 3)
     MOVE 0 TO WS-PROF-EDU-COUNT(WS-J)
@@ -710,7 +921,15 @@ CREATE-OR-EDIT-ACCOUNT.
            MOVE "Add Education (optional, enter DONE to finish):"
                   TO WS-PROMPT
            MOVE "X" TO WS-DEST-KIND
-           PERFORM PRINT-PROMPT-AND-READ  
+           PERFORM PRINT-PROMPT-AND-READ
+           
+           IF WS-TOKEN NOT = "ADD"
+               MOVE "Error: Enter ADD to add education or DONE to finish. Exiting program."
+                   TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF  
 
            IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
                   EXIT PERFORM
@@ -718,18 +937,107 @@ CREATE-OR-EDIT-ACCOUNT.
 
            ADD 1 TO WS-PROF-EDU-COUNT(WS-J)
 
+           *>Degree
            MOVE "Degree:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Education incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
+
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN = 0 
+               MOVE "Error: Degree is required. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF 
+
+           IF WS-LEN > 50
+               MOVE "Error: Degree cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
+
+           PERFORM CHECK-HAS-LETTER
+               IF WS-HAS-LETTER = "N"
+                   MOVE "Error: Degree cannot be numbers only. Exiting program" TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+                   PERFORM CLOSE-FILES
+                   STOP RUN 
+               END-IF
+
            MOVE WS-TOKEN TO WS-EDU-DEGREE(WS-J, WS-I)
 
+           *>University/College
            MOVE "University/College:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Education incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
+
+           COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+           IF WS-LEN = 0 
+               MOVE "Error: University/College is required. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF 
+
+           IF WS-LEN > 50
+               MOVE "Error: University/College cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN 
+           END-IF
+
+           PERFORM CHECK-HAS-LETTER
+               IF WS-HAS-LETTER = "N"
+                   MOVE "Error: University/College cannot be numbers only. Exiting program" TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+                   PERFORM CLOSE-FILES
+                   STOP RUN 
+               END-IF
            MOVE WS-TOKEN TO WS-EDU-SCHOOL(WS-J, WS-I)
 
+           *> Years
            MOVE "Years Attended:" TO WS-PROMPT
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
+              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              MOVE "Education incomplete. Returning to menu." TO WS-OUT-LINE
+              PERFORM PRINT-LINE
+              EXIT PERFORM
+           END-IF
+
+           MOVE "Y" TO WS-VALID
+           PERFORM VALIDATE-YEARS-RANGE
+           
+           IF WS-VALID = "N"
+               MOVE "Error: Years Attended must be in YYYY-YYYY format (digits only). Exiting program."
+                   TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF
            MOVE WS-TOKEN TO WS-EDU-YEARS(WS-J, WS-I)
-    END-PERFORM      
+    END-PERFORM  
+
+    IF WS-PROF-EXP-COUNT(WS-J) = 3
+       MOVE "Note: Maximum of 3 experiences reached." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+    END-IF     
       
     PERFORM SAVE-PROFILES
 

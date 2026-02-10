@@ -1,0 +1,23 @@
+1
+testuser
+Password1!
+1
+Persist
+User
+USF
+CS
+2026
+Aspiring dev
+
+Software Intern
+Example Company
+May 2025-Aug 2025
+Built stuff
+DONE
+
+BS Computer Science
+University of South Florida
+2022-2026
+DONE
+X
+6

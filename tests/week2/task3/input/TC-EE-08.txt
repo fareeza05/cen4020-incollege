@@ -10,7 +10,7 @@ Ryan
 University of South Florida
 Computer Science
 2027
-This About Me is intentionally written to exceed two hundred characters so that we can verify the input validation is working correctly and the system either rejects it, truncates it, or prompts the user again to enter a shorter description.
+Testing input validation requires a deliberately long sentence that exceeds the allowed length so the program can detect overflow and report an error instead of silently truncating user text overflowed
 DONE
 DONE
 X
