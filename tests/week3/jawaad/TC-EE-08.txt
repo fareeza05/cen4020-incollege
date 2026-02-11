@@ -1,0 +1,17 @@
+2
+MaiaTest
+#Software1
+1
+MaiaTest
+#Software1
+1
+Maia
+Ryan
+University of South Florida
+Computer Science
+2027
+Testing input validation requires a deliberately long sentence that exceeds the allowed length so the program can detect overflow and report an error instead of silently truncating user text overflowed
+DONE
+DONE
+X
+2

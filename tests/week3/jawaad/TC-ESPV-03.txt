@@ -1,0 +1,45 @@
+2
+r1edgeuser
+Password1!
+1
+r1edgeuser
+Password1!
+1
+Alice
+Johnson
+University of South Florida
+Cybersecurity
+2027
+Short about section.
+ADD
+Intern
+CompanyOne
+2020-2021
+Did a lot.
+ADD
+Analyst
+CompanyTwo
+2021-2022
+Did analysis.
+ADD
+Engineer
+CompanyThree
+2022-2023
+Built systems.
+DONE
+ADD
+Bachelors
+USF
+2018-2022
+ADD
+Masters
+USF
+2022-2024
+ADD
+PhD
+USF
+2024-2028
+DONE
+X
+2
+6

@@ -1,0 +1,56 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+MaiaTest
+That username already exists. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+#Software1
+Invalid selection. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+MaiaTest
+Password:
+#Software1
+You have successfully logged in
+Welcome, MaiaTest!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+Maia
+Enter Last Name: (Required)
+Ryan
+Enter University/College Attended: (Required)
+University of South Florida
+Enter Major: (Required)
+Computer Science
+Enter Graduation Year (YYYY): (Required)
+2027
+Enter About (short bio): (Optional)
+
+Add Experience (optional, enter DONE to finish):
+ADD
+Experience Title:
+Software Intern
+Company/Organization:
+9999
+Error: Company/Organization cannot be numbers only. Exiting program

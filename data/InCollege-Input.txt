@@ -1,3 +1,6 @@
+2
+testuser
+Password1!
 1
 testuser
 Password1!
@@ -37,4 +40,13 @@ School Three
 2022-2025
 X
 2
+6
+2
+testuser2
+Password2!
+1
+testuser2
+Password2!
+4
+Alex Smith
 6

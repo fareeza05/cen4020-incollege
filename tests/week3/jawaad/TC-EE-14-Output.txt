@@ -1,0 +1,47 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+user3
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Abcdef1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+user3
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, user3!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+Jane
+Enter Last Name: (Required)
+Smith
+Enter University/College Attended: (Required)
+University of South Florida
+Enter Major: (Required)
+Information Technology
+Enter Graduation Year (YYYY): (Required)
+2026
+Enter About (short bio): (Optional)
+
+Add Experience (optional, enter DONE to finish):
+degree
+Error: Enter ADD to add an experience or DONE to finish. Exiting program.

@@ -1,0 +1,32 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+r2neguser
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Password1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+r2neguser
+Password:
+Password1!
+You have successfully logged in
+Welcome, r2neguser!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+X
+Error: Menu choice must be a single digit 1-6. Exiting program
