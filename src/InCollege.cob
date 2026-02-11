@@ -954,7 +954,7 @@ CREATE-OR-EDIT-ACCOUNT.
            PERFORM PRINT-PROMPT-AND-READ
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
-              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              SUBTRACT 1 FROM WS-PROF-EDU-COUNT(WS-J)
               MOVE "Warning: Education is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
               CONTINUE
@@ -991,7 +991,7 @@ CREATE-OR-EDIT-ACCOUNT.
            PERFORM PRINT-PROMPT-AND-READ
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
-              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              SUBTRACT 1 FROM WS-PROF-EDU-COUNT(WS-J)
               MOVE "Warning: Education is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
               CONTINUE
@@ -1027,7 +1027,7 @@ CREATE-OR-EDIT-ACCOUNT.
            PERFORM PRINT-PROMPT-AND-READ
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
-              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
+              SUBTRACT 1 FROM WS-PROF-EDU-COUNT(WS-J)
               MOVE "Warning: Education is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
               CONTINUE
@@ -1046,8 +1046,8 @@ CREATE-OR-EDIT-ACCOUNT.
            MOVE WS-TOKEN TO WS-EDU-YEARS(WS-J, WS-I)
     END-PERFORM  
 
-    IF WS-PROF-EXP-COUNT(WS-J) = 3
-       MOVE "Note: Maximum of 3 experiences reached." TO WS-OUT-LINE
+    IF WS-PROF-EDU-COUNT(WS-J) = 3
+       MOVE "Note: Maximum of 3 education experiences reached." TO WS-OUT-LINE
        PERFORM PRINT-LINE
     END-IF     
       
@@ -1162,9 +1162,9 @@ VIEW-PROFILE.
     END-STRING
     PERFORM PRINT-LINE
 
-    IF WS-PROF-EXP-COUNT(WS-J) > 0
+    IF WS-PROF-EDU-COUNT(WS-J) > 0
        PERFORM VARYING WS-K FROM 1 BY 1 
-       UNTIL WS-K > WS-PROF-EXP-COUNT(WS-J)
+       UNTIL WS-K > WS-PROF-EDU-COUNT(WS-J)
 
        MOVE SPACES TO WS-OUT-LINE
        STRING "    Degree: " FUNCTION TRIM(WS-EDU-DEGREE(WS-J, WS-K))
