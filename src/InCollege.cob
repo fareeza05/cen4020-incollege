@@ -905,7 +905,7 @@ CREATE-OR-EDIT-ACCOUNT.
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
               SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
-              MOVE "Warning: Experience is incomplete. Moving to next prompt." TO WS-OUT-LINE
+              MOVE "Warning: Experience is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
               CONTINUE
            END-IF
