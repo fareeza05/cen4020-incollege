@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "tests/week3/jawaad/TC-EE-10.txt"
+    SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "tests/week3/jawaad/TC-EE-10-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "data/InCollege-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -885,6 +885,18 @@ CREATE-OR-EDIT-ACCOUNT.
               PERFORM PRINT-LINE
               CONTINUE
            END-IF
+
+           MOVE "Y" TO WS-VALID
+           PERFORM VALIDATE-YEARS-RANGE
+           
+           IF WS-VALID = "N" AND FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) NOT = "DONE"
+               MOVE "Error: Dates must be in YYYY-YYYY format (digits only). Exiting program."
+                   TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF
+           
            MOVE WS-TOKEN TO WS-EXP-DATES(WS-J, WS-I)
 
           *> DESCRIPTION
