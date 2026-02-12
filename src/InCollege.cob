@@ -787,6 +787,10 @@ CREATE-OR-EDIT-ACCOUNT.
            MOVE "X" TO WS-DEST-KIND
            PERFORM PRINT-PROMPT-AND-READ
 
+           IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
+               EXIT PERFORM
+           END-IF
+
 
            IF WS-TOKEN NOT = "ADD"
            MOVE "Error: Enter ADD to add an experience or DONE to finish. Exiting program."
@@ -794,10 +798,6 @@ CREATE-OR-EDIT-ACCOUNT.
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
                STOP RUN
-           END-IF
-           
-           IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
-                  EXIT PERFORM
            END-IF
 
            ADD 1 TO WS-PROF-EXP-COUNT(WS-J)
@@ -808,9 +808,9 @@ CREATE-OR-EDIT-ACCOUNT.
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
                SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
-               MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+               MOVE "Warning: Experience is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
                PERFORM PRINT-LINE
-               EXIT PERFORM
+               CONTINUE
            END-IF
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
@@ -845,9 +845,9 @@ CREATE-OR-EDIT-ACCOUNT.
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
               SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
-              MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+              MOVE "Warning: Experience is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
-              EXIT PERFORM
+              CONTINUE
            END-IF
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
@@ -881,10 +881,22 @@ CREATE-OR-EDIT-ACCOUNT.
            PERFORM PRINT-PROMPT-AND-READ
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
               SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
-              MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+              MOVE "WWarning: Experience is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
-              EXIT PERFORM
+              CONTINUE
            END-IF
+
+           MOVE "Y" TO WS-VALID
+           PERFORM VALIDATE-YEARS-RANGE
+           
+           IF WS-VALID = "N" AND FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) NOT = "DONE"
+               MOVE "Error: Dates must be in YYYY-YYYY format (digits only). Exiting program."
+                   TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               PERFORM CLOSE-FILES
+               STOP RUN
+           END-IF
+           
            MOVE WS-TOKEN TO WS-EXP-DATES(WS-J, WS-I)
 
           *> DESCRIPTION
@@ -893,9 +905,9 @@ CREATE-OR-EDIT-ACCOUNT.
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
               SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
-              MOVE "Experience Incomplete. Returning to menu." TO WS-OUT-LINE
+              MOVE "Warning: Experience is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
-              EXIT PERFORM
+              CONTINUE
            END-IF
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
@@ -922,6 +934,10 @@ CREATE-OR-EDIT-ACCOUNT.
                   TO WS-PROMPT
            MOVE "X" TO WS-DEST-KIND
            PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
+                  EXIT PERFORM
+           END-IF
            
            IF WS-TOKEN NOT = "ADD"
                MOVE "Error: Enter ADD to add education or DONE to finish. Exiting program."
@@ -931,10 +947,6 @@ CREATE-OR-EDIT-ACCOUNT.
                STOP RUN
            END-IF  
 
-           IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
-                  EXIT PERFORM
-           END-IF
-
            ADD 1 TO WS-PROF-EDU-COUNT(WS-J)
 
            *>Degree
@@ -942,10 +954,10 @@ CREATE-OR-EDIT-ACCOUNT.
            PERFORM PRINT-PROMPT-AND-READ
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
-              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
-              MOVE "Education incomplete. Returning to menu." TO WS-OUT-LINE
+              SUBTRACT 1 FROM WS-PROF-EDU-COUNT(WS-J)
+              MOVE "Warning: Education is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
-              EXIT PERFORM
+              CONTINUE
            END-IF
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
@@ -979,10 +991,10 @@ CREATE-OR-EDIT-ACCOUNT.
            PERFORM PRINT-PROMPT-AND-READ
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
-              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
-              MOVE "Education incomplete. Returning to menu." TO WS-OUT-LINE
+              SUBTRACT 1 FROM WS-PROF-EDU-COUNT(WS-J)
+              MOVE "Warning: Education is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
-              EXIT PERFORM
+              CONTINUE
            END-IF
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
@@ -1015,16 +1027,16 @@ CREATE-OR-EDIT-ACCOUNT.
            PERFORM PRINT-PROMPT-AND-READ
 
            IF FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) = "DONE"
-              SUBTRACT 1 FROM WS-PROF-EXP-COUNT(WS-J)
-              MOVE "Education incomplete. Returning to menu." TO WS-OUT-LINE
+              SUBTRACT 1 FROM WS-PROF-EDU-COUNT(WS-J)
+              MOVE "Warning: Education is incomplete, your profile will not display this. Moving to next prompt." TO WS-OUT-LINE
               PERFORM PRINT-LINE
-              EXIT PERFORM
+              CONTINUE
            END-IF
 
            MOVE "Y" TO WS-VALID
            PERFORM VALIDATE-YEARS-RANGE
            
-           IF WS-VALID = "N"
+           IF WS-VALID = "N" AND FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) NOT = "DONE"
                MOVE "Error: Years Attended must be in YYYY-YYYY format (digits only). Exiting program."
                    TO WS-OUT-LINE
                PERFORM PRINT-LINE
@@ -1034,8 +1046,8 @@ CREATE-OR-EDIT-ACCOUNT.
            MOVE WS-TOKEN TO WS-EDU-YEARS(WS-J, WS-I)
     END-PERFORM  
 
-    IF WS-PROF-EXP-COUNT(WS-J) = 3
-       MOVE "Note: Maximum of 3 experiences reached." TO WS-OUT-LINE
+    IF WS-PROF-EDU-COUNT(WS-J) = 3
+       MOVE "Note: Maximum of 3 education experiences reached." TO WS-OUT-LINE
        PERFORM PRINT-LINE
     END-IF     
       
@@ -1150,9 +1162,9 @@ VIEW-PROFILE.
     END-STRING
     PERFORM PRINT-LINE
 
-    IF WS-PROF-EXP-COUNT(WS-J) > 0
+    IF WS-PROF-EDU-COUNT(WS-J) > 0
        PERFORM VARYING WS-K FROM 1 BY 1 
-       UNTIL WS-K > WS-PROF-EXP-COUNT(WS-J)
+       UNTIL WS-K > WS-PROF-EDU-COUNT(WS-J)
 
        MOVE SPACES TO WS-OUT-LINE
        STRING "    Degree: " FUNCTION TRIM(WS-EDU-DEGREE(WS-J, WS-K))

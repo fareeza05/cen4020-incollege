@@ -43,10 +43,13 @@ Enter Graduation Year (YYYY): (Required)
 Enter About (short bio): (Optional)
 
 Add Experience (optional, enter DONE to finish):
-ADD
-Experience Title:
 DONE
-Experience Incomplete. Returning to menu.
 Add Education (optional, enter DONE to finish):
-
-Error: Enter ADD to add education or DONE to finish. Exiting program.
+ADD
+Degree:
+BSCS
+University/College:
+University of South Florida
+Years Attended:
+ABCD-ABCD
+Error: Years Attended must be in YYYY-YYYY format (digits only). Exiting program.

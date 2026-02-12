@@ -11,9 +11,7 @@ USF
 CS
 2024
 
-ADD
 DONE
-
 ADD
 BSCS
 University of South Florida
