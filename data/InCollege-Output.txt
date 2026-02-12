@@ -3,6 +3,22 @@ Please choose an option:
 1) Log In
 2) Create New Account
 Enter choice (1 or 2):
+2
+Create a username:
+testuser
+That username already exists. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Password1!
+Invalid selection. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
 1
 Username:
 testuser
@@ -32,7 +48,7 @@ Enter Graduation Year (YYYY): (Required)
 Enter About (short bio): (Optional)
 This is a short bio that stays within limits.
 Add Experience (optional, enter DONE to finish):
-
+ADD
 Experience Title:
 Role One
 Company/Organization:
@@ -42,7 +58,7 @@ Dates:
 Description (optional):
 Did useful work
 Add Experience (optional, enter DONE to finish):
-
+ADD
 Experience Title:
 Role Two
 Company/Organization:
@@ -52,7 +68,7 @@ Dates:
 Description (optional):
 Learned important skills
 Add Experience (optional, enter DONE to finish):
-
+ADD
 Experience Title:
 Role Three
 Company/Organization:
@@ -63,7 +79,7 @@ Description (optional):
 Led small projects
 Note: Maximum of 3 experiences reached.
 Add Education (optional, enter DONE to finish):
-
+ADD
 Degree:
 Degree One
 University/College:
@@ -71,7 +87,7 @@ School One
 Years Attended:
 2018-2020
 Add Education (optional, enter DONE to finish):
-
+ADD
 Degree:
 Degree Two
 University/College:
@@ -79,7 +95,7 @@ School Two
 Years Attended:
 2020-2022
 Add Education (optional, enter DONE to finish):
-
+ADD
 Degree:
 Degree Three
 University/College:
@@ -142,13 +158,24 @@ Please choose an option:
 1) Log In
 2) Create New Account
 Enter choice (1 or 2):
+2
+Create a username:
+testuser2
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Password2!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
 1
 Username:
-jawaad
+testuser2
 Password:
-Abcdef1!
+Password2!
 You have successfully logged in
-Welcome, jawaad!
+Welcome, testuser2!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job

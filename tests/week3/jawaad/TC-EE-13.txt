@@ -1,0 +1,28 @@
+2
+user2
+Abcdef1!
+1
+user2
+Abcdef1!
+1
+John
+Doe
+University of South Florida
+Computer Science
+2024
+
+ADD
+Software Intern
+TechCorp
+2023-2024
+
+ADD
+Research Assistant
+USF Lab
+2022-2023
+
+ADD
+Tutor
+Campus Center
+2021-2022
+

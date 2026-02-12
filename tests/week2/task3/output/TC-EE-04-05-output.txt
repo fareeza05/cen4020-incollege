@@ -1,0 +1,148 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+MaiaTest
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+#Software1
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+MaiaTest
+Password:
+#Software1
+You have successfully logged in
+Welcome, MaiaTest!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+Maia
+Enter Last Name: (Required)
+Ryan
+Enter University/College Attended: (Required)
+University of South Florida
+Enter Major: (Required)
+Computer Science
+Enter Graduation Year (YYYY): (Required)
+2027
+Enter About (short bio): (Optional)
+About me for week 2.
+Add Experience (optional, enter DONE to finish):
+ADD
+Experience Title:
+Software Intern
+Company/Organization:
+Tech Corp
+Dates:
+Summer 2024
+Description (optional):
+Developed tools for internal testing.
+Add Experience (optional, enter DONE to finish):
+ADD
+Experience Title:
+Research Assistant
+Company/Organization:
+USF Lab
+Dates:
+Jan 2023 - May 2024
+Description (optional):
+Worked on data collection and analysis.
+Add Experience (optional, enter DONE to finish):
+ADD
+Experience Title:
+Project Lead
+Company/Organization:
+HackUSF
+Dates:
+Fall 2024
+Description (optional):
+Led a team and shipped a demo.
+Add Education (optional, enter DONE to finish):
+ADD
+Degree:
+Bachelor of Science
+University/College:
+University of South Florida
+Years Attended:
+2024-2027
+Add Education (optional, enter DONE to finish):
+ADD
+Degree:
+Certificate in AI
+University/College:
+Online Program
+Years Attended:
+2025-2025
+Add Education (optional, enter DONE to finish):
+ADD
+Degree:
+Minor in Math
+University/College:
+University of South Florida
+Years Attended:
+2024-2027
+Profile saved.
+Press 'X' to return to menu.
+X
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+2
+----- PROFILE -----
+Name: Maia Ryan
+Graduation Year: 2027
+Major: Computer Science
+University: University of South Florida
+About: About me for week 2.
+Experience:
+    Title: Software Intern
+    Company: Tech Corp
+    Dates: Summer 2024
+    Description: Developed tools for internal testing.
+    Title: Research Assistant
+    Company: USF Lab
+    Dates: Jan 2023 - May 2024
+    Description: Worked on data collection and analysis.
+    Title: Project Lead
+    Company: HackUSF
+    Dates: Fall 2024
+    Description: Led a team and shipped a demo.
+Education:
+    Degree: Bachelor of Science
+    School: University of South Florida
+    Years: 2024-2027
+    Degree: Certificate in AI
+    School: Online Program
+    Years: 2025-2025
+    Degree: Minor in Math
+    School: University of South Florida
+    Years: 2024-2027
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+Input file ended. Exiting program.

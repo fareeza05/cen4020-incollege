@@ -1,10 +1,52 @@
 2
-jawaad
-Abcdef1!
+testuser
+Password1!
 1
-jawaad
-Abcdef1!
-3
+testuser
+Password1!
 1
+Alex
+Smith
+Generic University
+Information Systems
+2025
+This is a short bio that stays within limits.
+ADD
+Role One
+Company One
+2020-2021
+Did useful work
+ADD
+Role Two
+Company Two
+2021-2022
+Learned important skills
+ADD
+Role Three
+Company Three
+2022-2023
+Led small projects
+ADD
+Degree One
+School One
+2018-2020
+ADD
+Degree Two
+School Two
+2020-2022
+ADD
+Degree Three
+School Three
+2022-2025
+X
+2
 6
+2
+testuser2
+Password2!
+1
+testuser2
+Password2!
 4
+Alex Smith
+6

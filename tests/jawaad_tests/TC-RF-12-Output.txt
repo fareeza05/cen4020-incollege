@@ -1,0 +1,32 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+testuser
+Password:
+Password1!
+You have successfully logged in
+Welcome, testuser!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+John
+Enter Last Name: (Required)
+Doe
+Enter University/College Attended: (Required)
+USF
+Enter Major: (Required)
+CS
+Enter Graduation Year (YYYY): (Required)
+9999
+Error: Graduation Year must be between 1900 and 2100.

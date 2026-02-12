@@ -12,4 +12,4 @@ RUN printf "%s\n" \
  && apk update \
  && apk add --no-cache gnucobol
 
-CMD ["sh", "-lc", "cobc -x -free -o program main.cbl && ./program"]
+CMD ["sh", "-lc", "cobc -x -free -o program src/InCollege.cob && ./program"]
