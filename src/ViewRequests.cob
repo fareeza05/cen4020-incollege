@@ -9,6 +9,10 @@
                "data/InCollege-Connections.txt"
                ORGANIZATION IS LINE SEQUENTIAL
                FILE STATUS IS WS-CONN-FILE-STATUS.
+           SELECT OUTPUT-FILE ASSIGN TO
+               "data/InCollege-Output.txt"
+               ORGANIZATION IS LINE SEQUENTIAL
+               FILE STATUS IS WS-OUT-FILE-STATUS.
 
        DATA DIVISION.
        FILE SECTION.
@@ -20,29 +24,29 @@
            05  FILLER                  PIC X VALUE "|".
            05  CONN-STATUS             PIC X(10).
 
+       FD  OUTPUT-FILE.
+       01  OUTPUT-RECORD               PIC X(200).
+
        WORKING-STORAGE SECTION.
        01  WS-CONN-FILE-STATUS         PIC XX.
+       01  WS-OUT-FILE-STATUS          PIC XX.
        01  WS-CURRENT-USER             PIC X(20).
        01  WS-EOF                      PIC 9 VALUE 0.
        01  WS-REQUEST-COUNT            PIC 99 VALUE 0.
-       01  WS-DISPLAY-LINE             PIC X(100).
-       01  WS-OUTPUT-FILE              PIC X(50)
-           VALUE "out/InCollege-Output.txt".
-       01  WS-OUTPUT-FD                PIC 9(4) COMP.
+       01  WS-DISPLAY-LINE             PIC X(200).
        01  WS-TEMP-SENDER              PIC X(20).
        01  WS-TEMP-RECIPIENT           PIC X(20).
        01  WS-TEMP-STATUS              PIC X(10).
 
        LINKAGE SECTION.
        01  LS-CURRENT-USER             PIC X(20).
-       01  LS-OUTPUT-FD                PIC 9(4) COMP.
 
-       PROCEDURE DIVISION USING LS-CURRENT-USER
-                                LS-OUTPUT-FD.
+       PROCEDURE DIVISION USING LS-CURRENT-USER.
 
        MAIN-VIEW-REQUESTS.
            MOVE LS-CURRENT-USER TO WS-CURRENT-USER.
-           MOVE LS-OUTPUT-FD TO WS-OUTPUT-FD.
+
+           OPEN EXTEND OUTPUT-FILE.
 
            PERFORM DISPLAY-HEADER.
            PERFORM READ-AND-DISPLAY-REQUESTS.
@@ -53,23 +57,24 @@
                PERFORM DISPLAY-FOOTER
            END-IF.
 
+           CLOSE OUTPUT-FILE.
            GOBACK.
 
        DISPLAY-HEADER.
-           DISPLAY "----- PENDING CONNECTION REQUESTS -----".
-           CALL "write_to_file" USING WS-OUTPUT-FD
-               "----- PENDING CONNECTION REQUESTS -----".
-           DISPLAY " ".
-           CALL "write_to_file" USING WS-OUTPUT-FD " ".
+           MOVE "----- PENDING CONNECTION REQUESTS -----"
+               TO WS-DISPLAY-LINE.
+           PERFORM WRITE-OUTPUT-LINE.
+           MOVE " " TO WS-DISPLAY-LINE.
+           PERFORM WRITE-OUTPUT-LINE.
 
        READ-AND-DISPLAY-REQUESTS.
            OPEN INPUT CONNECTION-FILE.
 
            IF WS-CONN-FILE-STATUS NOT = "00" AND
               WS-CONN-FILE-STATUS NOT = "35"
-               DISPLAY "Error opening connections file."
-               CALL "write_to_file" USING WS-OUTPUT-FD
-                   "Error opening connections file."
+               MOVE "Error opening connections file."
+                   TO WS-DISPLAY-LINE
+               PERFORM WRITE-OUTPUT-LINE
                GO TO CLOSE-CONNECTION-FILE
            END-IF.
 
@@ -108,34 +113,35 @@
            END-IF.
 
        DISPLAY-SINGLE-REQUEST.
+           MOVE SPACES TO WS-DISPLAY-LINE.
            STRING "Request from: " DELIMITED BY SIZE
                   WS-TEMP-SENDER DELIMITED BY " "
                   INTO WS-DISPLAY-LINE
            END-STRING.
+           PERFORM WRITE-OUTPUT-LINE.
 
-           DISPLAY WS-DISPLAY-LINE.
-           CALL "write_to_file" USING WS-OUTPUT-FD
-               WS-DISPLAY-LINE.
-
-           DISPLAY " ".
-           CALL "write_to_file" USING WS-OUTPUT-FD " ".
+           MOVE " " TO WS-DISPLAY-LINE.
+           PERFORM WRITE-OUTPUT-LINE.
 
        DISPLAY-NO-REQUESTS.
-           DISPLAY "You have no pending connection requests.".
-           CALL "write_to_file" USING WS-OUTPUT-FD
-               "You have no pending connection requests.".
-           DISPLAY " ".
-           CALL "write_to_file" USING WS-OUTPUT-FD " ".
+           MOVE "You have no pending connection requests."
+               TO WS-DISPLAY-LINE.
+           PERFORM WRITE-OUTPUT-LINE.
+           MOVE " " TO WS-DISPLAY-LINE.
+           PERFORM WRITE-OUTPUT-LINE.
 
        DISPLAY-FOOTER.
+           MOVE SPACES TO WS-DISPLAY-LINE.
            STRING "Total pending requests: " DELIMITED BY SIZE
                   WS-REQUEST-COUNT DELIMITED BY SIZE
                   INTO WS-DISPLAY-LINE
            END-STRING.
+           PERFORM WRITE-OUTPUT-LINE.
 
+           MOVE "-------------------" TO WS-DISPLAY-LINE.
+           PERFORM WRITE-OUTPUT-LINE.
+
+       WRITE-OUTPUT-LINE.
            DISPLAY WS-DISPLAY-LINE.
-           CALL "write_to_file" USING WS-OUTPUT-FD
-               WS-DISPLAY-LINE.
-           DISPLAY "-------------------".
-           CALL "write_to_file" USING WS-OUTPUT-FD
-               "-------------------".
+           MOVE WS-DISPLAY-LINE TO OUTPUT-RECORD.
+           WRITE OUTPUT-RECORD.
