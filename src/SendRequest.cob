@@ -59,13 +59,13 @@
            GOBACK.
 
        VALIDATE-REQUEST.
-      *    Placeholder - teammate will implement validation logic
-      *    For now, assume all requests are valid
+      *>    Placeholder - teammate will implement validation logic
+      *>    For now, assume all requests are valid
            MOVE 1 TO WS-REQUEST-VALID.
 
        WRITE-CONNECTION-REQUEST.
-      *    Placeholder - teammate will implement write logic
-      *    For now, just acknowledge
+      *>    Placeholder - teammate will implement write logic
+      *>    For now, just acknowledge
            CONTINUE.
 
        DISPLAY-SUCCESS-MESSAGE.
