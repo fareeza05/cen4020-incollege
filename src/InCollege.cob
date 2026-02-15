@@ -12,10 +12,14 @@ FILE-CONTROL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-ACC-STATUS.
-     
+
     SELECT PROF-FILE ASSIGN TO "data/InCollege-Profiles.txt"
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-PROF-STATUS.
+
+    SELECT CONN-FILE ASSIGN TO "data/InCollege-Connections.txt"
+        ORGANIZATION IS LINE SEQUENTIAL
+        FILE STATUS IS WS-CONN-STATUS.
 
 DATA DIVISION.
 FILE SECTION.
@@ -47,12 +51,18 @@ FD  PROF-FILE.
         10 PROF-EXP-COMP   PIC X(50).
         10 PROF-EXP-DATES  PIC X(30).
         10 PROF-EXP-DESC   PIC X(100).
-
     05 PROF-EDU-COUNT      PIC 9.
     05 PROF-EDUCATION OCCURS 3 TIMES.
         10 PROF-EDU-DEGREE PIC X(50).
         10 PROF-EDU-SCHOOL PIC X(50).
         10 PROF-EDU-YEARS  PIC X(20).
+FD  CONN-FILE.
+01  CONN-REC.
+    05 CONN-SENDER         PIC X(20).
+    05 FILLER              PIC X VALUE "|".
+    05 CONN-RECIPIENT      PIC X(20).
+    05 FILLER              PIC X VALUE "|".
+    05 CONN-STATUS         PIC X(10).
 
 WORKING-STORAGE SECTION.
 
@@ -107,6 +117,10 @@ WORKING-STORAGE SECTION.
 
 01  WS-PROF-STATUS           PIC XX VALUE "00".
 01  WS-PROF-EOF               PIC X VALUE "N".
+
+01  WS-CONN-STATUS          PIC XX VALUE "00".
+01  WS-CONN-EOF             PIC X VALUE "N".
+01  WS-CONN-REQUEST-COUNT   PIC 99 VALUE 0.
 
 01  WS-PROFILES.
     05 WS-PROF-COUNT         PIC 9 VALUE 0.
@@ -190,7 +204,7 @@ LOAD-ACCOUNTS.
         END-READ
     END-PERFORM
     CLOSE ACC-FILE.
- 
+
 LOAD-PROFILES.
     MOVE 0 TO WS-PROF-COUNT
     MOVE "N" TO WS-PROF-EOF
@@ -234,12 +248,12 @@ LOAD-PROFILES.
                         MOVE PROF-EDU-YEARS(WS-J)
                             TO WS-EDU-YEARS(WS-PROF-COUNT, WS-J)
                     END-PERFORM
-      
+
                 END-IF
         END-READ
     END-PERFORM
     CLOSE PROF-FILE.
-   
+
 
 MENU-LOOP.
     PERFORM UNTIL WS-DONE = "Y"
@@ -408,7 +422,7 @@ SAVE-ACCOUNTS.
 
 POST-LOGIN-MENU.
     MOVE SPACE TO WS-MENU-CHOICE
-    PERFORM UNTIL WS-MENU-CHOICE = "6"
+    PERFORM UNTIL WS-MENU-CHOICE = "7"
         MOVE "1. Create/edit my profile" TO WS-OUT-LINE
         PERFORM PRINT-LINE
         MOVE "2. View my profile" TO WS-OUT-LINE
@@ -419,19 +433,21 @@ POST-LOGIN-MENU.
         PERFORM PRINT-LINE
         MOVE "5. Learn a new skill" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "6. Logout" TO WS-OUT-LINE
+        MOVE "6. View My Pending Connection Requests" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "7. Logout" TO WS-OUT-LINE
         PERFORM PRINT-LINE
 
         MOVE "Enter your choice:" TO WS-PROMPT
         MOVE "M" TO WS-DEST-KIND
         PERFORM PRINT-PROMPT-AND-READ
 
-        PERFORM VALIDATE-MENU-1-6
+        PERFORM VALIDATE-MENU-1-7
         IF WS-VALID = "N"
-           MOVE "Error: Menu choice must be a single digit 1-6. Exiting program" to WS-OUT-LINE
+           MOVE "Error: Menu choice must be a single digit 1-7. Exiting program" to WS-OUT-LINE
            PERFORM PRINT-LINE
            PERFORM CLOSE-FILES
-           STOP RUN  
+           STOP RUN
         END-IF
 
         MOVE WS-TOKEN(1:1) TO WS-MENU-CHOICE
@@ -449,9 +465,11 @@ POST-LOGIN-MENU.
             WHEN "5"
                 PERFORM LEARN-A-NEW-SKILL
             WHEN "6"
+                PERFORM VIEW-PENDING-REQUESTS
+            WHEN "7"
                 EXIT PERFORM
             WHEN OTHER
-                MOVE "Invalid choice. Please enter 1-6." TO WS-OUT-LINE
+                MOVE "Invalid choice. Please enter 1-7." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
         END-EVALUATE
     END-PERFORM.
@@ -500,7 +518,7 @@ FIND-PROFILE-IDX.
            MOVE WS-I TO WS-J
        END-IF
       END-PERFORM.
- 
+
 SAVE-PROFILES.
     OPEN OUTPUT PROF-FILE
     PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > WS-PROF-COUNT
@@ -514,7 +532,7 @@ SAVE-PROFILES.
         MOVE WS-PROF-EXP-COUNT(WS-I) TO PROF-EXP-COUNT
         MOVE WS-PROF-EDU-COUNT(WS-I) TO PROF-EDU-COUNT
 
-        *> Clear experience and education slots 
+        *> Clear experience and education slots
         PERFORM VARYING WS-K FROM 1 BY 1 UNTIL WS-K > 3
                MOVE SPACES TO PROF-EXP-TITLE(WS-K)
                MOVE SPACES TO PROF-EXP-COMP(WS-K)
@@ -524,7 +542,7 @@ SAVE-PROFILES.
                MOVE SPACES TO PROF-EDU-DEGREE(WS-K)
                MOVE SPACES TO PROF-EDU-SCHOOL(WS-K)
                MOVE SPACES TO PROF-EDU-YEARS(WS-K)
-        END-PERFORM       
+        END-PERFORM
 
         *> Copy experience entries
         PERFORM VARYING WS-K FROM 1 BY 1
@@ -534,7 +552,7 @@ SAVE-PROFILES.
                MOVE WS-EXP-DATES(WS-I, WS-K) TO PROF-EXP-DATES(WS-K)
                MOVE WS-EXP-DESC(WS-I, WS-K)  TO PROF-EXP-DESC(WS-K)
         END-PERFORM
-      
+
         *> Copy education entries
         PERFORM VARYING WS-K FROM 1 BY 1
                UNTIL WS-K > WS-PROF-EDU-COUNT(WS-I)
@@ -603,7 +621,7 @@ VALIDATE-YEARS-RANGE.
 
     MOVE "Y" TO WS-VALID.
 
-VALIDATE-MENU-1-6.
+VALIDATE-MENU-1-7.
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
     IF WS-LEN NOT = 1
@@ -616,7 +634,7 @@ VALIDATE-MENU-1-6.
         EXIT PARAGRAPH
     END-IF
 
-    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "6"
+    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "7"
         MOVE "N" TO WS-VALID
         EXIT PARAGRAPH
     END-IF
@@ -631,7 +649,7 @@ CREATE-OR-EDIT-ACCOUNT.
     PERFORM PRINT-LINE
 *> FIND EXISTING PROFILE ROW FOR THIS USER FROM OUR FILE
     PERFORM FIND-PROFILE-IDX
- 
+
 *> IF NO PROFILE EXISTS, CREATE NEW
     IF WS-J = 0
        IF WS-PROF-COUNT < 5
@@ -645,7 +663,7 @@ CREATE-OR-EDIT-ACCOUNT.
     MOVE "Enter First Name: (Required)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
-      
+
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
         MOVE "Error: First Name is required. Exiting program" TO WS-OUT-LINE
@@ -658,7 +676,7 @@ CREATE-OR-EDIT-ACCOUNT.
         PERFORM PRINT-LINE
         PERFORM CLOSE-FILES
         STOP RUN
-    END-IF 
+    END-IF
 
     MOVE WS-TOKEN TO WS-PROF-FNAME(WS-J)
 
@@ -679,7 +697,7 @@ CREATE-OR-EDIT-ACCOUNT.
         PERFORM PRINT-LINE
         PERFORM CLOSE-FILES
         STOP RUN
-    END-IF 
+    END-IF
 
     MOVE WS-TOKEN TO WS-PROF-LNAME(WS-J)
 
@@ -700,7 +718,7 @@ CREATE-OR-EDIT-ACCOUNT.
         PERFORM PRINT-LINE
         PERFORM CLOSE-FILES
         STOP RUN
-    END-IF 
+    END-IF
 
     MOVE WS-TOKEN TO WS-PROF-UNIV(WS-J)
 
@@ -721,7 +739,7 @@ CREATE-OR-EDIT-ACCOUNT.
         PERFORM PRINT-LINE
         PERFORM CLOSE-FILES
         STOP RUN
-    END-IF 
+    END-IF
 
     MOVE WS-TOKEN TO WS-PROF-MAJOR(WS-J)
 
@@ -742,12 +760,12 @@ CREATE-OR-EDIT-ACCOUNT.
 
     IF WS-LEN NOT = 4
        MOVE "Error: Graduation year must be exactly 4 digits (YYYY). Exiting program." TO WS-OUT-LINE
-       PERFORM PRINT-LINE 
+       PERFORM PRINT-LINE
        PERFORM CLOSE-FILES
        STOP RUN
     END-IF
 
-    IF FUNCTION TRIM(WS-TOKEN) IS NOT NUMERIC 
+    IF FUNCTION TRIM(WS-TOKEN) IS NOT NUMERIC
        MOVE "Error: Graduation year must be numeric. Exiting program." TO WS-OUT-LINE
        PERFORM PRINT-LINE
        PERFORM CLOSE-FILES
@@ -773,8 +791,8 @@ CREATE-OR-EDIT-ACCOUNT.
        MOVE "Error: About section cannot exceed 200 characters. Exiting program." TO WS-OUT-LINE
        PERFORM PRINT-LINE
        PERFORM CLOSE-FILES
-       STOP RUN   
-    END-IF 
+       STOP RUN
+    END-IF
 
     MOVE WS-TOKEN TO WS-PROF-ABOUT(WS-J)
 
@@ -815,18 +833,18 @@ CREATE-OR-EDIT-ACCOUNT.
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
-           IF WS-LEN = 0 
+           IF WS-LEN = 0
                MOVE "Error: Experience Title is required. Exiting program." TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
                STOP RUN
-           END-IF 
+           END-IF
 
            IF WS-LEN > 50
                MOVE "Error: Experience Title cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
-               STOP RUN 
+               STOP RUN
            END-IF
 
            PERFORM CHECK-HAS-LETTER
@@ -834,7 +852,7 @@ CREATE-OR-EDIT-ACCOUNT.
                    MOVE "Error: Experience Title cannot be numbers only. Exiting program" TO WS-OUT-LINE
                    PERFORM PRINT-LINE
                    PERFORM CLOSE-FILES
-                   STOP RUN 
+                   STOP RUN
                END-IF
 
            MOVE WS-TOKEN TO WS-EXP-TITLE(WS-J, WS-I)
@@ -852,18 +870,18 @@ CREATE-OR-EDIT-ACCOUNT.
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
-           IF WS-LEN = 0 
+           IF WS-LEN = 0
                MOVE "Error: Company/Organization is required. Exiting program." TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
                STOP RUN
-           END-IF 
+           END-IF
 
            IF WS-LEN > 50
                MOVE "Error: Company/Organization cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
-               STOP RUN 
+               STOP RUN
            END-IF
 
            PERFORM CHECK-HAS-LETTER
@@ -871,7 +889,7 @@ CREATE-OR-EDIT-ACCOUNT.
                    MOVE "Error: Company/Organization cannot be numbers only. Exiting program" TO WS-OUT-LINE
                    PERFORM PRINT-LINE
                    PERFORM CLOSE-FILES
-                   STOP RUN 
+                   STOP RUN
                END-IF
 
            MOVE WS-TOKEN TO WS-EXP-COMP(WS-J, WS-I)
@@ -888,7 +906,7 @@ CREATE-OR-EDIT-ACCOUNT.
 
            MOVE "Y" TO WS-VALID
            PERFORM VALIDATE-YEARS-RANGE
-           
+
            IF WS-VALID = "N" AND FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) NOT = "DONE"
                MOVE "Error: Dates must be in YYYY-YYYY format (digits only). Exiting program."
                    TO WS-OUT-LINE
@@ -896,7 +914,7 @@ CREATE-OR-EDIT-ACCOUNT.
                PERFORM CLOSE-FILES
                STOP RUN
            END-IF
-           
+
            MOVE WS-TOKEN TO WS-EXP-DATES(WS-J, WS-I)
 
           *> DESCRIPTION
@@ -916,15 +934,15 @@ CREATE-OR-EDIT-ACCOUNT.
                MOVE "Description cannot exceed 100 characters. Exiting program." TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
-               STOP RUN 
+               STOP RUN
            END-IF
            MOVE WS-TOKEN TO WS-EXP-DESC(WS-J, WS-I)
-    END-PERFORM 
+    END-PERFORM
 
     IF WS-PROF-EXP-COUNT(WS-J) = 3
        MOVE "Note: Maximum of 3 experiences reached." TO WS-OUT-LINE
        PERFORM PRINT-LINE
-    END-IF 
+    END-IF
 
     *> Education (optional, up to 3)
     MOVE 0 TO WS-PROF-EDU-COUNT(WS-J)
@@ -938,14 +956,14 @@ CREATE-OR-EDIT-ACCOUNT.
            IF FUNCTION UPPER-CASE(WS-TOKEN) = "DONE"
                   EXIT PERFORM
            END-IF
-           
+
            IF WS-TOKEN NOT = "ADD"
                MOVE "Error: Enter ADD to add education or DONE to finish. Exiting program."
                    TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
                STOP RUN
-           END-IF  
+           END-IF
 
            ADD 1 TO WS-PROF-EDU-COUNT(WS-J)
 
@@ -962,18 +980,18 @@ CREATE-OR-EDIT-ACCOUNT.
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
-           IF WS-LEN = 0 
+           IF WS-LEN = 0
                MOVE "Error: Degree is required. Exiting program." TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
                STOP RUN
-           END-IF 
+           END-IF
 
            IF WS-LEN > 50
                MOVE "Error: Degree cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
-               STOP RUN 
+               STOP RUN
            END-IF
 
            PERFORM CHECK-HAS-LETTER
@@ -981,7 +999,7 @@ CREATE-OR-EDIT-ACCOUNT.
                    MOVE "Error: Degree cannot be numbers only. Exiting program" TO WS-OUT-LINE
                    PERFORM PRINT-LINE
                    PERFORM CLOSE-FILES
-                   STOP RUN 
+                   STOP RUN
                END-IF
 
            MOVE WS-TOKEN TO WS-EDU-DEGREE(WS-J, WS-I)
@@ -999,18 +1017,18 @@ CREATE-OR-EDIT-ACCOUNT.
 
            COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
 
-           IF WS-LEN = 0 
+           IF WS-LEN = 0
                MOVE "Error: University/College is required. Exiting program." TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
                STOP RUN
-           END-IF 
+           END-IF
 
            IF WS-LEN > 50
                MOVE "Error: University/College cannot exceed 50 characters. Exiting program." TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
-               STOP RUN 
+               STOP RUN
            END-IF
 
            PERFORM CHECK-HAS-LETTER
@@ -1018,7 +1036,7 @@ CREATE-OR-EDIT-ACCOUNT.
                    MOVE "Error: University/College cannot be numbers only. Exiting program" TO WS-OUT-LINE
                    PERFORM PRINT-LINE
                    PERFORM CLOSE-FILES
-                   STOP RUN 
+                   STOP RUN
                END-IF
            MOVE WS-TOKEN TO WS-EDU-SCHOOL(WS-J, WS-I)
 
@@ -1035,7 +1053,7 @@ CREATE-OR-EDIT-ACCOUNT.
 
            MOVE "Y" TO WS-VALID
            PERFORM VALIDATE-YEARS-RANGE
-           
+
            IF WS-VALID = "N" AND FUNCTION UPPER-CASE(FUNCTION TRIM(WS-TOKEN)) NOT = "DONE"
                MOVE "Error: Years Attended must be in YYYY-YYYY format (digits only). Exiting program."
                    TO WS-OUT-LINE
@@ -1044,13 +1062,13 @@ CREATE-OR-EDIT-ACCOUNT.
                STOP RUN
            END-IF
            MOVE WS-TOKEN TO WS-EDU-YEARS(WS-J, WS-I)
-    END-PERFORM  
+    END-PERFORM
 
     IF WS-PROF-EDU-COUNT(WS-J) = 3
        MOVE "Note: Maximum of 3 education experiences reached." TO WS-OUT-LINE
        PERFORM PRINT-LINE
-    END-IF     
-      
+    END-IF
+
     PERFORM SAVE-PROFILES
 
     MOVE "Profile saved." TO WS-OUT-LINE
@@ -1126,7 +1144,7 @@ VIEW-PROFILE.
     PERFORM PRINT-LINE
 
     IF WS-PROF-EXP-COUNT(WS-J) > 0
-       PERFORM VARYING WS-K FROM 1 BY 1 
+       PERFORM VARYING WS-K FROM 1 BY 1
        UNTIL WS-K > WS-PROF-EXP-COUNT(WS-J)
 
        MOVE SPACES TO WS-OUT-LINE
@@ -1152,7 +1170,7 @@ VIEW-PROFILE.
          INTO WS-OUT-LINE
        END-STRING
        PERFORM PRINT-LINE
-     END-PERFORM 
+     END-PERFORM
     END-IF
 
     *> Education
@@ -1163,7 +1181,7 @@ VIEW-PROFILE.
     PERFORM PRINT-LINE
 
     IF WS-PROF-EDU-COUNT(WS-J) > 0
-       PERFORM VARYING WS-K FROM 1 BY 1 
+       PERFORM VARYING WS-K FROM 1 BY 1
        UNTIL WS-K > WS-PROF-EDU-COUNT(WS-J)
 
        MOVE SPACES TO WS-OUT-LINE
@@ -1184,7 +1202,7 @@ VIEW-PROFILE.
        END-STRING
        PERFORM PRINT-LINE
 
-     END-PERFORM 
+     END-PERFORM
     END-IF
 
     MOVE "-------------------" TO WS-OUT-LINE
@@ -1386,4 +1404,5 @@ PRINT-LINE.
 CLOSE-FILES.
     CLOSE IN-FILE
     CLOSE OUT-FILE.
-    
+
+       COPY "src/ViewRequests.cob".

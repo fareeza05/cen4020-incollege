@@ -1,5 +1,5 @@
-       >>SOURCE FORMAT FREE
-IDENTIFICATION DIVISION.
+>>SOURCE FORMAT FREE
+       IDENTIFICATION DIVISION.
        PROGRAM-ID. SENDREQUEST.
 
        ENVIRONMENT DIVISION.
@@ -9,6 +9,10 @@ IDENTIFICATION DIVISION.
                "data/InCollege-Connections.txt"
                ORGANIZATION IS LINE SEQUENTIAL
                FILE STATUS IS WS-CONN-FILE-STATUS.
+           SELECT OUTPUT-FILE ASSIGN TO
+               "data/InCollege-Output.txt"
+               ORGANIZATION IS LINE SEQUENTIAL
+               FILE STATUS IS WS-OUT-FILE-STATUS.
 
        DATA DIVISION.
        FILE SECTION.
@@ -20,28 +24,29 @@ IDENTIFICATION DIVISION.
            05  FILLER                  PIC X VALUE "|".
            05  CONN-STATUS             PIC X(10).
 
+       FD  OUTPUT-FILE.
+       01  OUTPUT-RECORD               PIC X(200).
+
        WORKING-STORAGE SECTION.
        01  WS-CONN-FILE-STATUS         PIC XX.
+       01  WS-OUT-FILE-STATUS          PIC XX.
        01  WS-CURRENT-USER             PIC X(20).
        01  WS-TARGET-USER              PIC X(20).
        01  WS-REQUEST-VALID            PIC 9 VALUE 1.
-       01  WS-OUTPUT-FILE              PIC X(50)
-           VALUE "out/InCollege-Output.txt".
-       01  WS-OUTPUT-FD                PIC 9(4) COMP.
+       01  WS-DISPLAY-LINE             PIC X(200).
 
        LINKAGE SECTION.
        01  LS-CURRENT-USER             PIC X(20).
        01  LS-TARGET-USER              PIC X(20).
-       01  LS-OUTPUT-FD                PIC 9(4) COMP.
 
        PROCEDURE DIVISION USING LS-CURRENT-USER
-                                LS-TARGET-USER
-                                LS-OUTPUT-FD.
+                                LS-TARGET-USER.
 
        MAIN-SEND-REQUEST.
            MOVE LS-CURRENT-USER TO WS-CURRENT-USER.
            MOVE LS-TARGET-USER TO WS-TARGET-USER.
-           MOVE LS-OUTPUT-FD TO WS-OUTPUT-FD.
+
+           OPEN EXTEND OUTPUT-FILE.
 
            PERFORM VALIDATE-REQUEST.
 
@@ -50,17 +55,25 @@ IDENTIFICATION DIVISION.
                PERFORM DISPLAY-SUCCESS-MESSAGE
            END-IF.
 
+           CLOSE OUTPUT-FILE.
            GOBACK.
 
        VALIDATE-REQUEST.
-      *    Placeholder - teammate will implement validation logic
+      *>    Placeholder - teammate will implement validation logic
+      *>    For now, assume all requests are valid
            MOVE 1 TO WS-REQUEST-VALID.
 
        WRITE-CONNECTION-REQUEST.
-      *    Placeholder - teammate will implement write logic
+      *>    Placeholder - teammate will implement write logic
+      *>    For now, just acknowledge
            CONTINUE.
 
        DISPLAY-SUCCESS-MESSAGE.
-           DISPLAY "Connection request sent successfully!".
-           CALL "write_to_file" USING WS-OUTPUT-FD
-               "Connection request sent successfully!".
+           MOVE "Connection request sent successfully!"
+               TO WS-DISPLAY-LINE.
+           PERFORM WRITE-OUTPUT-LINE.
+
+       WRITE-OUTPUT-LINE.
+           DISPLAY WS-DISPLAY-LINE.
+           MOVE WS-DISPLAY-LINE TO OUTPUT-RECORD.
+           WRITE OUTPUT-RECORD.
