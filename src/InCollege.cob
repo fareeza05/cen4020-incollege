@@ -1370,16 +1370,25 @@ AFTER-SEARCH-MENU.
     MOVE "M" TO WS-DEST-KIND
     PERFORM PRINT-PROMPT-AND-READ
 
-    EVALUATE WS-MENU-CHOICE
-        WHEN "1"
-            PERFORM SEND-CONNECTION-REQUEST
-        WHEN "2"
-            CONTINUE
-        WHEN OTHER
-            MOVE "Invalid choice. Returning to main menu."
-                TO WS-OUT-LINE
-            PERFORM PRINT-LINE
-    END-EVALUATE.
+    COMPUTE WS-LEN =
+        FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+
+    IF WS-LEN NOT = 1
+        MOVE "Invalid choice. Returning to main menu."
+            TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+    ELSE
+        EVALUATE WS-MENU-CHOICE
+            WHEN "1"
+                PERFORM SEND-CONNECTION-REQUEST
+            WHEN "2"
+                CONTINUE
+            WHEN OTHER
+                MOVE "Invalid choice. Returning to main menu."
+                    TO WS-OUT-LINE
+                PERFORM PRINT-LINE
+        END-EVALUATE
+    END-IF.
 
 
 PRINT-PROMPT-AND-READ.
