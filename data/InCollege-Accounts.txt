@@ -1,5 +1,4 @@
 username1           Password1!
 username2           Password2!
 username3           Password3!
-testuser            Password1!
-testuser2           Password2!
+MaiaTest            #Software1
