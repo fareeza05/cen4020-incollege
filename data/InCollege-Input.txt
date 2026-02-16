@@ -40,7 +40,7 @@ School Three
 2022-2025
 X
 2
-6
+7
 2
 testuser2
 Password2!
@@ -49,4 +49,5 @@ testuser2
 Password2!
 4
 Alex Smith
-6
+2
+7
