@@ -1239,6 +1239,7 @@ SEARCH-USER.
 
     IF WS-FOUND = "Y"
         PERFORM DISPLAY-FOUND-PROFILE
+        PERFORM AFTER-SEARCH-MENU
     ELSE
         MOVE "No one by that name could be found."
             TO WS-OUT-LINE
@@ -1359,6 +1360,27 @@ DISPLAY-FOUND-PROFILE.
     MOVE "------------------------" TO WS-OUT-LINE
     PERFORM PRINT-LINE.
 
+AFTER-SEARCH-MENU.
+    MOVE "1. Send Connection Request" TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+    MOVE "2. Back to Main Menu" TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+
+    MOVE "Enter your choice:" TO WS-PROMPT
+    MOVE "M" TO WS-DEST-KIND
+    PERFORM PRINT-PROMPT-AND-READ
+
+    EVALUATE WS-MENU-CHOICE
+        WHEN "1"
+            PERFORM SEND-CONNECTION-REQUEST
+        WHEN "2"
+            CONTINUE
+        WHEN OTHER
+            MOVE "Invalid choice. Returning to main menu."
+                TO WS-OUT-LINE
+            PERFORM PRINT-LINE
+    END-EVALUATE.
+
 
 PRINT-PROMPT-AND-READ.
     MOVE WS-PROMPT TO WS-OUT-LINE
@@ -1406,3 +1428,4 @@ CLOSE-FILES.
     CLOSE OUT-FILE.
 
        COPY "src/ViewRequests.cob".
+       COPY "src/SendRequest.cob".

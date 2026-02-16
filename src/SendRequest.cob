@@ -1,79 +1,88 @@
->>SOURCE FORMAT FREE
-       IDENTIFICATION DIVISION.
-       PROGRAM-ID. SENDREQUEST.
+*> SendRequest.cob - Copybook for sending connection requests
+      *> This code is meant to be COPYed into the main program
 
-       ENVIRONMENT DIVISION.
-       INPUT-OUTPUT SECTION.
-       FILE-CONTROL.
-           SELECT CONNECTION-FILE ASSIGN TO
-               "data/InCollege-Connections.txt"
-               ORGANIZATION IS LINE SEQUENTIAL
-               FILE STATUS IS WS-CONN-FILE-STATUS.
-           SELECT OUTPUT-FILE ASSIGN TO
-               "data/InCollege-Output.txt"
-               ORGANIZATION IS LINE SEQUENTIAL
-               FILE STATUS IS WS-OUT-FILE-STATUS.
+SEND-CONNECTION-REQUEST.
+    MOVE "Y" TO WS-VALID
 
-       DATA DIVISION.
-       FILE SECTION.
-       FD  CONNECTION-FILE.
-       01  CONNECTION-RECORD.
-           05  CONN-SENDER             PIC X(20).
-           05  FILLER                  PIC X VALUE "|".
-           05  CONN-RECIPIENT          PIC X(20).
-           05  FILLER                  PIC X VALUE "|".
-           05  CONN-STATUS             PIC X(10).
+    PERFORM CHECK-CONNECTION-EXISTS
 
-       FD  OUTPUT-FILE.
-       01  OUTPUT-RECORD               PIC X(200).
+    IF WS-VALID = "N"
+        EXIT PARAGRAPH
+    END-IF
 
-       WORKING-STORAGE SECTION.
-       01  WS-CONN-FILE-STATUS         PIC XX.
-       01  WS-OUT-FILE-STATUS          PIC XX.
-       01  WS-CURRENT-USER             PIC X(20).
-       01  WS-TARGET-USER              PIC X(20).
-       01  WS-REQUEST-VALID            PIC 9 VALUE 1.
-       01  WS-DISPLAY-LINE             PIC X(200).
+    *> Write new connection request
+    OPEN EXTEND CONN-FILE
+    MOVE WS-CURR-USER TO CONN-SENDER
+    MOVE WS-PROF-USER(WS-SEARCH-IDX) TO CONN-RECIPIENT
+    MOVE "PENDING" TO CONN-STATUS
+    MOVE "|" TO CONN-REC(21:1)
+    MOVE "|" TO CONN-REC(42:1)
+    WRITE CONN-REC
+    CLOSE CONN-FILE
 
-       LINKAGE SECTION.
-       01  LS-CURRENT-USER             PIC X(20).
-       01  LS-TARGET-USER              PIC X(20).
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Connection request sent to "
+           FUNCTION TRIM(WS-PROF-FNAME(WS-SEARCH-IDX)) " "
+           FUNCTION TRIM(WS-PROF-LNAME(WS-SEARCH-IDX)) "."
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE.
 
-       PROCEDURE DIVISION USING LS-CURRENT-USER
-                                LS-TARGET-USER.
+CHECK-CONNECTION-EXISTS.
+    OPEN INPUT CONN-FILE.
 
-       MAIN-SEND-REQUEST.
-           MOVE LS-CURRENT-USER TO WS-CURRENT-USER.
-           MOVE LS-TARGET-USER TO WS-TARGET-USER.
+    IF WS-CONN-STATUS NOT = "00" AND WS-CONN-STATUS NOT = "35"
+        MOVE "Error opening connections file." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        CLOSE CONN-FILE
+        MOVE "N" TO WS-VALID
+        EXIT PARAGRAPH
+    END-IF.
 
-           OPEN EXTEND OUTPUT-FILE.
+    IF WS-CONN-STATUS = "35"
+        *> File doesn't exist yet, no connections
+        EXIT PARAGRAPH
+    END-IF.
 
-           PERFORM VALIDATE-REQUEST.
+    MOVE 0 TO WS-CONN-EOF.
 
-           IF WS-REQUEST-VALID = 1
-               PERFORM WRITE-CONNECTION-REQUEST
-               PERFORM DISPLAY-SUCCESS-MESSAGE
-           END-IF.
+    PERFORM UNTIL WS-CONN-EOF = 1
+        READ CONN-FILE
+            AT END
+                MOVE 1 TO WS-CONN-EOF
+            NOT AT END
+                *> Check if we already sent them a pending request
+                IF CONN-SENDER = WS-CURR-USER AND
+                   CONN-RECIPIENT = WS-PROF-USER(WS-SEARCH-IDX)
+                   AND CONN-STATUS = "PENDING"
+                    MOVE "You have already sent a connection request to this user." TO WS-OUT-LINE
+                    PERFORM PRINT-LINE
+                    MOVE "N" TO WS-VALID
+                    MOVE 1 TO WS-CONN-EOF
+                END-IF
+                *> Check if they already sent us a pending request
+                IF CONN-SENDER = WS-PROF-USER(WS-SEARCH-IDX)
+                   AND CONN-RECIPIENT = WS-CURR-USER
+                   AND CONN-STATUS = "PENDING"
+                    MOVE "This user has already sent you a connection request." TO WS-OUT-LINE
+                    PERFORM PRINT-LINE
+                    MOVE "N" TO WS-VALID
+                    MOVE 1 TO WS-CONN-EOF
+                END-IF
+                *> Check if already connected
+                IF (CONN-SENDER = WS-CURR-USER AND
+                    CONN-RECIPIENT = WS-PROF-USER(WS-SEARCH-IDX)
+                    AND CONN-STATUS = "ACCEPTED")
+                    OR
+                   (CONN-SENDER = WS-PROF-USER(WS-SEARCH-IDX)
+                    AND CONN-RECIPIENT = WS-CURR-USER
+                    AND CONN-STATUS = "ACCEPTED")
+                    MOVE "You are already connected with this user." TO WS-OUT-LINE
+                    PERFORM PRINT-LINE
+                    MOVE "N" TO WS-VALID
+                    MOVE 1 TO WS-CONN-EOF
+                END-IF
+        END-READ
+    END-PERFORM.
 
-           CLOSE OUTPUT-FILE.
-           GOBACK.
-
-       VALIDATE-REQUEST.
-      *>    Placeholder - teammate will implement validation logic
-      *>    For now, assume all requests are valid
-           MOVE 1 TO WS-REQUEST-VALID.
-
-       WRITE-CONNECTION-REQUEST.
-      *>    Placeholder - teammate will implement write logic
-      *>    For now, just acknowledge
-           CONTINUE.
-
-       DISPLAY-SUCCESS-MESSAGE.
-           MOVE "Connection request sent successfully!"
-               TO WS-DISPLAY-LINE.
-           PERFORM WRITE-OUTPUT-LINE.
-
-       WRITE-OUTPUT-LINE.
-           DISPLAY WS-DISPLAY-LINE.
-           MOVE WS-DISPLAY-LINE TO OUTPUT-RECORD.
-           WRITE OUTPUT-RECORD.
+    CLOSE CONN-FILE.
