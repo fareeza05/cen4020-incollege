@@ -40,36 +40,40 @@ data/InCollege-Profiles.txt – stores profile data (about me, education, experi
 
 Tip: For clean testing, you can clear these files before running so you start fresh.
 
-New Functionality: Profile Viewing & Basic Search (Week 3)
-1) View My Profile (Enhanced)
-The “View My Profile” option displays the full profile for the currently logged-in user, including:
+New Functionality: Making Connections (Week 4):
 
-First Name + Last Name
+1) Send Connection Requests
 
-University/College
-
-Major
-
-Graduation Year
-
-About Me
-
-Experience entries
-
-Education entries
+Allows users to send friend requests to other existing users.
 
 How to test via input file:
 
 Log in to an existing account (or create one).
 
-Navigate to profile creation/edit steps and enter profile details.
+Select appropriate menu option
 
-Choose “View My Profile” from the menu.
+Search for profile
+
+Send request
 
 Where to find the result:
 
 Console output, and also in out/InCollege-Output.txt
-Search in the output file for the “View My Profile” section to verify formatting and completeness.
 
-2) Find S
+
+2) View Pending Requests
+
+Allows existing users to view pending friend requests.
+
+How to test via input file:
+
+Log in to an existing account (or create one).
+
+Select appropriate menu option
+
+view pending request(s)
+
+Where to find the result:
+
+Console output, and also in out/InCollege-Output.txt
 
