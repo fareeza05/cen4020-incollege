@@ -53,7 +53,53 @@ Experience Title:
 OnlyTitle
 Company/Organization:
 DONE
-Experience Incomplete. Returning to menu.
+Warning: Experience is incomplete. Moving to next prompt.
+Dates:
+DONE
+Warning: Experience is incomplete. Moving to next prompt.
+Description (optional):
+DONE
+Warning: Experience is incomplete. Moving to next prompt.
+Add Experience (optional, enter DONE to finish):
+DONE
+Add Education (optional, enter DONE to finish):
+ADD
+Degree:
+OnlyDegree
+University/College:
+DONE
+Warning: Education is incomplete. Moving to next prompt.
+Years Attended:
+DONE
+Warning: Education is incomplete. Moving to next prompt.
 Add Education (optional, enter DONE to finish):
 DONE
-Error: Enter ADD to add education or DONE to finish. Exiting program.
+Profile saved.
+Press 'X' to return to menu.
+X
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+2
+----- PROFILE -----
+Name: Maia Ryan
+Graduation Year: 2027
+Major: Computer Science
+University: University of South Florida
+About:
+Experience:
+Education:
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter your choice:
+Input file ended. Exiting program.

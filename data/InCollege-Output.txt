@@ -31,7 +31,8 @@ Welcome, testuser!
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
 1
 ----- CREATE/EDIT PROFILE -----
@@ -102,7 +103,7 @@ University/College:
 School Three
 Years Attended:
 2022-2025
-Note: Maximum of 3 experiences reached.
+Note: Maximum of 3 education experiences reached.
 Profile saved.
 Press 'X' to return to menu.
 X
@@ -112,7 +113,8 @@ X
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
 2
 ----- PROFILE -----
@@ -150,9 +152,10 @@ Education:
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
-6
+7
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -161,9 +164,14 @@ Enter choice (1 or 2):
 2
 Create a username:
 testuser2
-Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+That username already exists. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
 Password2!
-Account created successfully.
+Invalid selection. Please try again.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -181,7 +189,8 @@ Welcome, testuser2!
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
 4
 Enter the full name of the person you are looking for:
@@ -216,14 +225,19 @@ Education:
     School: School Three
     Years: 2022-2025
 ------------------------
+1. Send Connection Request
+2. Back to Main Menu
+Enter your choice:
+2
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
-6
+7
 Welcome to InCollege
 Please choose an option:
 1) Log In

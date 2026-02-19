@@ -1,0 +1,42 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+username2
+Password:
+Password2!
+You have successfully logged in
+Welcome, username2!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. Logout
+Enter your choice:
+6
+----- PENDING CONNECTION REQUESTS -----
+
+Request from: username1
+
+Total pending requests: 01
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. Logout
+Enter your choice:
+7
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Input file ended. Exiting program.

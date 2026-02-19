@@ -3,6 +3,27 @@ Please choose an option:
 1) Log In
 2) Create New Account
 Enter choice (1 or 2):
+2
+All permitted accounts have been created, please come back later
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+testuser
+Invalid selection. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Password1!
+Invalid selection. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
 1
 Username:
 testuser
@@ -15,12 +36,13 @@ Welcome, testuser!
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
 1
 ----- CREATE/EDIT PROFILE -----
 Enter First Name: (Required)
-Alex
+Amy
 Enter Last Name: (Required)
 Smith
 Enter University/College Attended: (Required)
@@ -32,7 +54,7 @@ Enter Graduation Year (YYYY): (Required)
 Enter About (short bio): (Optional)
 This is a short bio that stays within limits.
 Add Experience (optional, enter DONE to finish):
-
+ADD
 Experience Title:
 Role One
 Company/Organization:
@@ -42,7 +64,7 @@ Dates:
 Description (optional):
 Did useful work
 Add Experience (optional, enter DONE to finish):
-
+ADD
 Experience Title:
 Role Two
 Company/Organization:
@@ -52,7 +74,7 @@ Dates:
 Description (optional):
 Learned important skills
 Add Experience (optional, enter DONE to finish):
-
+ADD
 Experience Title:
 Role Three
 Company/Organization:
@@ -63,7 +85,7 @@ Description (optional):
 Led small projects
 Note: Maximum of 3 experiences reached.
 Add Education (optional, enter DONE to finish):
-
+ADD
 Degree:
 Degree One
 University/College:
@@ -71,7 +93,7 @@ School One
 Years Attended:
 2018-2020
 Add Education (optional, enter DONE to finish):
-
+ADD
 Degree:
 Degree Two
 University/College:
@@ -79,14 +101,14 @@ School Two
 Years Attended:
 2020-2022
 Add Education (optional, enter DONE to finish):
-
+ADD
 Degree:
 Degree Three
 University/College:
 School Three
 Years Attended:
 2022-2025
-Note: Maximum of 3 experiences reached.
+Note: Maximum of 3 education experiences reached.
 Profile saved.
 Press 'X' to return to menu.
 X
@@ -96,11 +118,12 @@ X
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
 2
 ----- PROFILE -----
-Name: Alex Smith
+Name: Amy Smith
 Graduation Year: 2025
 Major: Information Systems
 University: Generic University
@@ -134,9 +157,31 @@ Education:
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
-6
+7
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+All permitted accounts have been created, please come back later
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+testuser2
+Invalid selection. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Password2!
+Invalid selection. Please try again.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -144,23 +189,24 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-jawaad
+testuser2
 Password:
-Abcdef1!
+Password2!
 You have successfully logged in
-Welcome, jawaad!
+Welcome, testuser2!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
 4
 Enter the full name of the person you are looking for:
-Alex Smith
+Amy Smith
 --- Found User Profile ---
-Name: Alex Smith
+Name: Amy Smith
 University: Generic University
 Major: Information Systems
 Graduation Year: 2025
@@ -189,14 +235,56 @@ Education:
     School: School Three
     Years: 2022-2025
 ------------------------
+1. Send Connection Request
+2. Back to Main Menu
+Enter your choice:
+1
+Connection request sent to Amy Smith.
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
 4. Find someone you know
 5. Learn a new skill
-6. Logout
+6. View My Pending Connection Requests
+7. Logout
+Enter your choice:
+7
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+testuser
+Password:
+Password1!
+You have successfully logged in
+Welcome, testuser!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. Logout
 Enter your choice:
 6
+----- PENDING CONNECTION REQUESTS -----
+
+Request from: testuser2
+
+Total pending requests: 01
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. Logout
+Enter your choice:
+7
 Welcome to InCollege
 Please choose an option:
 1) Log In

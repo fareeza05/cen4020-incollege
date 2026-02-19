@@ -5,7 +5,7 @@ Password1!
 testuser
 Password1!
 1
-Alex
+Amy
 Smith
 Generic University
 Information Systems
@@ -40,7 +40,7 @@ School Three
 2022-2025
 X
 2
-6
+7
 2
 testuser2
 Password2!
@@ -48,5 +48,11 @@ Password2!
 testuser2
 Password2!
 4
-Alex Smith
+Amy Smith
+1
+7
+1
+testuser
+Password1!
 6
+7
