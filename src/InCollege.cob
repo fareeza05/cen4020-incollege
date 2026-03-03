@@ -56,6 +56,7 @@ FD  PROF-FILE.
         10 PROF-EDU-DEGREE PIC X(50).
         10 PROF-EDU-SCHOOL PIC X(50).
         10 PROF-EDU-YEARS  PIC X(20).
+
 FD  CONN-FILE.
 01  CONN-REC.
     05 CONN-SENDER         PIC X(20).
@@ -105,7 +106,6 @@ WORKING-STORAGE SECTION.
     05 WS-YEAR1             PIC 9(4) VALUE 0.
     05 WS-YEAR2             PIC 9(4) VALUE 0.
 
-
     05 WS-K                 PIC 9(3) VALUE 0.
     05 WS-FOUND             PIC X VALUE "N".
     05 WS-VALID             PIC X VALUE "N".
@@ -116,7 +116,7 @@ WORKING-STORAGE SECTION.
     05 WS-CHAR              PIC X VALUE SPACE.
 
 01  WS-PROF-STATUS           PIC XX VALUE "00".
-01  WS-PROF-EOF               PIC X VALUE "N".
+01  WS-PROF-EOF              PIC X VALUE "N".
 
 01  WS-CONN-STATUS          PIC XX VALUE "00".
 01  WS-CONN-EOF             PIC X VALUE "N".
@@ -151,6 +151,11 @@ WORKING-STORAGE SECTION.
     05 WS-FULL-NAME        PIC X(120) VALUE SPACES.
     05 WS-SEARCH-IDX       PIC 9(3) VALUE 0.
 
+*> Network helper items
+01  WS-NETWORK.
+    05 WS-NET-COUNT        PIC 99 VALUE 0.
+    05 WS-FRIEND-USER      PIC X(20) VALUE SPACES.
+    05 WS-FRIEND-IDX       PIC 9(3) VALUE 0.
 
 PROCEDURE DIVISION.
 
@@ -185,7 +190,6 @@ INIT-FILES.
     ELSE
         CLOSE PROF-FILE
     END-IF.
-
 
 LOAD-ACCOUNTS.
     MOVE 0 TO WS-ACC-COUNT
@@ -253,7 +257,6 @@ LOAD-PROFILES.
         END-READ
     END-PERFORM
     CLOSE PROF-FILE.
-
 
 MENU-LOOP.
     PERFORM UNTIL WS-DONE = "Y"
@@ -422,7 +425,7 @@ SAVE-ACCOUNTS.
 
 POST-LOGIN-MENU.
     MOVE SPACE TO WS-MENU-CHOICE
-    PERFORM UNTIL WS-MENU-CHOICE = "7"
+    PERFORM UNTIL WS-MENU-CHOICE = "8"
         MOVE "1. Create/edit my profile" TO WS-OUT-LINE
         PERFORM PRINT-LINE
         MOVE "2. View my profile" TO WS-OUT-LINE
@@ -435,7 +438,9 @@ POST-LOGIN-MENU.
         PERFORM PRINT-LINE
         MOVE "6. View My Pending Connection Requests" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "7. Logout" TO WS-OUT-LINE
+        MOVE "7. View My Network" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "8. Logout" TO WS-OUT-LINE
         PERFORM PRINT-LINE
 
         MOVE "Enter your choice:" TO WS-PROMPT
@@ -444,7 +449,7 @@ POST-LOGIN-MENU.
 
         PERFORM VALIDATE-MENU-1-7
         IF WS-VALID = "N"
-           MOVE "Error: Menu choice must be a single digit 1-7. Exiting program" to WS-OUT-LINE
+           MOVE "Error: Menu choice must be a single digit 1-8. Exiting program" TO WS-OUT-LINE
            PERFORM PRINT-LINE
            PERFORM CLOSE-FILES
            STOP RUN
@@ -467,9 +472,11 @@ POST-LOGIN-MENU.
             WHEN "6"
                 PERFORM VIEW-PENDING-REQUESTS
             WHEN "7"
+                PERFORM VIEW-NETWORK
+            WHEN "8"
                 EXIT PERFORM
             WHEN OTHER
-                MOVE "Invalid choice. Please enter 1-7." TO WS-OUT-LINE
+                MOVE "Invalid choice. Please enter 1-8." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
         END-EVALUATE
     END-PERFORM.
@@ -508,7 +515,7 @@ LEARN-A-NEW-SKILL.
         END-EVALUATE
     END-PERFORM.
 
- *> Helpers for create/edit account:
+*> Helpers for create/edit account:
 FIND-PROFILE-IDX.
       MOVE 0 TO WS-I
       MOVE 0 TO WS-J
@@ -634,14 +641,12 @@ VALIDATE-MENU-1-7.
         EXIT PARAGRAPH
     END-IF
 
-    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "7"
+    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "8"
         MOVE "N" TO WS-VALID
         EXIT PARAGRAPH
     END-IF
 
     MOVE "Y" TO WS-VALID.
-
-
 
 CREATE-OR-EDIT-ACCOUNT.
 
@@ -743,7 +748,6 @@ CREATE-OR-EDIT-ACCOUNT.
 
     MOVE WS-TOKEN TO WS-PROF-MAJOR(WS-J)
 
-
     *> Graduation Year (YYYY)
     MOVE "Enter Graduation Year (YYYY): (Required)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
@@ -773,10 +777,10 @@ CREATE-OR-EDIT-ACCOUNT.
     END-IF
 
     IF WS-TOKEN < "1900" OR WS-TOKEN > "2100"
-    MOVE "Error: Graduation Year must be between 1900 and 2100." TO WS-OUT-LINE
-    PERFORM PRINT-LINE
-    PERFORM CLOSE-FILES
-    STOP RUN
+       MOVE "Error: Graduation Year must be between 1900 and 2100." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+       PERFORM CLOSE-FILES
+       STOP RUN
     END-IF
 
     MOVE WS-TOKEN(1:4) TO WS-PROF-GRAD(WS-J)
@@ -809,10 +813,9 @@ CREATE-OR-EDIT-ACCOUNT.
                EXIT PERFORM
            END-IF
 
-
            IF WS-TOKEN NOT = "ADD"
-           MOVE "Error: Enter ADD to add an experience or DONE to finish. Exiting program."
-               TO WS-OUT-LINE
+               MOVE "Error: Enter ADD to add an experience or DONE to finish. Exiting program."
+                   TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
                STOP RUN
@@ -1081,7 +1084,6 @@ CREATE-OR-EDIT-ACCOUNT.
     PERFORM PRINT-LINE
 
     EXIT PARAGRAPH.
-
 
 VIEW-PROFILE.
     PERFORM FIND-PROFILE-IDX
@@ -1390,7 +1392,6 @@ AFTER-SEARCH-MENU.
         END-EVALUATE
     END-IF.
 
-
 PRINT-PROMPT-AND-READ.
     MOVE WS-PROMPT TO WS-OUT-LINE
     PERFORM PRINT-LINE
@@ -1438,3 +1439,4 @@ CLOSE-FILES.
 
        COPY "src/ViewRequests.cob".
        COPY "src/SendRequest.cob".
+       COPY "src/ViewNetwork.cob".

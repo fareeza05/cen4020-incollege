@@ -2,3 +2,4 @@ username1           Password1!
 username2           Password2!
 username3           Password3!
 MaiaTest            #Software1
+netuser             Abcdef1!
