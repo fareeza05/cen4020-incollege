@@ -122,6 +122,19 @@ WORKING-STORAGE SECTION.
 01  WS-CONN-EOF             PIC X VALUE "N".
 01  WS-CONN-REQUEST-COUNT   PIC 99 VALUE 0.
 
+*> In-memory mirror of InCollege-Connections.txt.
+*> Loaded by LOAD-ALL-CONNECTIONS, modified by PROCESS-PENDING-REQUEST,
+*> then flushed back to disk by SAVE-CONNECTIONS (REJECTED entries dropped).
+01  WS-CONN-DATA.
+    05  WS-CONN-COUNT        PIC 99 VALUE 0.
+    05  WS-CONN-ENTRY OCCURS 25 TIMES.
+        10 WS-CSENDER        PIC X(20).
+        10 WS-CRECIPIENT     PIC X(20).
+        10 WS-CSTATUS        PIC X(10).
+
+*> Current row index used by PROCESS-PENDING-REQUEST and SAVE-CONNECTIONS.
+01  WS-CONN-IDX              PIC 99 VALUE 0.
+
 01  WS-PROFILES.
     05 WS-PROF-COUNT         PIC 9 VALUE 0.
     05 WS-PROF-TABLE OCCURS 5 TIMES.
