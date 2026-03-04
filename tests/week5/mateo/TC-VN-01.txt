@@ -1,0 +1,6 @@
+1
+netuser
+Abcdef1!
+7
+X
+8
