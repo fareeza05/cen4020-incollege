@@ -27,6 +27,11 @@ Request from: userA
 2. Reject
 Enter your choice for userA:
 1ABC
+Invalid choice. Please enter 1 or 2.
+1. Accept
+2. Reject
+Enter your choice for userA:
+1
 Connection request from userA accepted.
 1. Create/edit my profile
 2. View my profile
