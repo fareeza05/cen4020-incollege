@@ -1,6 +1,7 @@
-
+                    |                    |
 username1           |username3           |PENDING
 username2           |username3           |PENDING
-username1           |username2           |PENDING
-testuser2           |username2           |PENDING
+username1           |username2           |ACCEPTED
+testuser2           |username2           |ACCEPTED
 testuser2           |testuser            |PENDING
+userA               |username1           |ACCEPTED
