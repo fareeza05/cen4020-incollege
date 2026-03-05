@@ -84,7 +84,7 @@ LOAD-ALL-CONNECTIONS.
 *>   Updates WS-CSTATUS to "ACCEPTED" or "REJECTED" in memory.
 *> ---------------------------------------------------------------
 PROCESS-PENDING-REQUEST.
-    *> Show who sent the request
+    *> Show who sent the request (once, outside the retry loop)
     MOVE SPACES TO WS-OUT-LINE
     STRING "Request from: " DELIMITED BY SIZE
            WS-CSENDER(WS-CONN-IDX) DELIMITED BY " "
@@ -92,46 +92,56 @@ PROCESS-PENDING-REQUEST.
     END-STRING
     PERFORM PRINT-LINE
 
-    *> Show the numbered options
-    MOVE "1. Accept" TO WS-OUT-LINE
-    PERFORM PRINT-LINE
-    MOVE "2. Reject" TO WS-OUT-LINE
-    PERFORM PRINT-LINE
+    *> Loop until the user enters a valid choice (1 or 2)
+    MOVE "N" TO WS-VALID
+    PERFORM UNTIL WS-VALID = "Y"
+        MOVE "1. Accept" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "2. Reject" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
 
-    *> Build prompt: "Enter your choice for <username>:"
-    MOVE SPACES TO WS-PROMPT
-    STRING "Enter your choice for " DELIMITED BY SIZE
-           WS-CSENDER(WS-CONN-IDX) DELIMITED BY " "
-           ":" DELIMITED BY SIZE
-           INTO WS-PROMPT
-    END-STRING
-    MOVE "M" TO WS-DEST-KIND
-    PERFORM PRINT-PROMPT-AND-READ
+        MOVE SPACES TO WS-PROMPT
+        STRING "Enter your choice for " DELIMITED BY SIZE
+               WS-CSENDER(WS-CONN-IDX) DELIMITED BY " "
+               ":" DELIMITED BY SIZE
+               INTO WS-PROMPT
+        END-STRING
+        MOVE "M" TO WS-DEST-KIND
+        PERFORM PRINT-PROMPT-AND-READ
 
-    *> WS-MENU-CHOICE now holds the first char of the input
-    EVALUATE WS-MENU-CHOICE
-        WHEN "1"
-            MOVE "ACCEPTED" TO WS-CSTATUS(WS-CONN-IDX)
-            MOVE SPACES TO WS-OUT-LINE
-            STRING "Connection request from " DELIMITED BY SIZE
-                   WS-CSENDER(WS-CONN-IDX) DELIMITED BY " "
-                   " accepted." DELIMITED BY SIZE
-                   INTO WS-OUT-LINE
-            END-STRING
+        *> Reject input that is not exactly one character (e.g. "10", "1ABCD")
+        COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+        IF WS-LEN NOT = 1
+            MOVE "Invalid choice. Please enter 1 or 2." TO WS-OUT-LINE
             PERFORM PRINT-LINE
-        WHEN "2"
-            MOVE "REJECTED" TO WS-CSTATUS(WS-CONN-IDX)
-            MOVE SPACES TO WS-OUT-LINE
-            STRING "Connection request from " DELIMITED BY SIZE
-                   WS-CSENDER(WS-CONN-IDX) DELIMITED BY " "
-                   " rejected." DELIMITED BY SIZE
-                   INTO WS-OUT-LINE
-            END-STRING
-            PERFORM PRINT-LINE
-        WHEN OTHER
-            MOVE "Invalid choice. Request left as pending." TO WS-OUT-LINE
-            PERFORM PRINT-LINE
-    END-EVALUATE.
+        ELSE
+            EVALUATE WS-MENU-CHOICE
+                WHEN "1"
+                    MOVE "ACCEPTED" TO WS-CSTATUS(WS-CONN-IDX)
+                    MOVE SPACES TO WS-OUT-LINE
+                    STRING "Connection request from " DELIMITED BY SIZE
+                           WS-CSENDER(WS-CONN-IDX) DELIMITED BY " "
+                           " accepted." DELIMITED BY SIZE
+                           INTO WS-OUT-LINE
+                    END-STRING
+                    PERFORM PRINT-LINE
+                    MOVE "Y" TO WS-VALID
+                WHEN "2"
+                    MOVE "REJECTED" TO WS-CSTATUS(WS-CONN-IDX)
+                    MOVE SPACES TO WS-OUT-LINE
+                    STRING "Connection request from " DELIMITED BY SIZE
+                           WS-CSENDER(WS-CONN-IDX) DELIMITED BY " "
+                           " rejected." DELIMITED BY SIZE
+                           INTO WS-OUT-LINE
+                    END-STRING
+                    PERFORM PRINT-LINE
+                    MOVE "Y" TO WS-VALID
+                WHEN OTHER
+                    MOVE "Invalid choice. Please enter 1 or 2." TO WS-OUT-LINE
+                    PERFORM PRINT-LINE
+            END-EVALUATE
+        END-IF
+    END-PERFORM.
 
 *> ---------------------------------------------------------------
 *> SAVE-CONNECTIONS
