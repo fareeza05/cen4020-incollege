@@ -192,6 +192,11 @@ WORKING-STORAGE SECTION.
 01  WS-JOB-STATUS          PIC XX VALUE "00".
 01  WS-JOB-EOF             PIC X VALUE "N".
 01  WS-NEXT-JOB-ID         PIC 9(4) VALUE 1.
+*> Network helper items
+01  WS-NETWORK.
+    05 WS-NET-COUNT        PIC 99 VALUE 0.
+    05 WS-FRIEND-USER      PIC X(20) VALUE SPACES.
+    05 WS-FRIEND-IDX       PIC 9(3) VALUE 0.
 
 PROCEDURE DIVISION.
 
@@ -230,9 +235,9 @@ INIT-FILES.
     *> Jobs file: try read existing; if missing, create empty
     OPEN INPUT JOB-FILE
     IF WS-JOB-STATUS = "35"
-       CLOSE JOB-FILE
-       OPEN OUTPUT JOB-FILE
-       CLOSE JOB-FILE
+        CLOSE JOB-FILE
+        CALL "SYSTEM"
+            USING "printf '\n' > data/InCollege-Jobs.txt"
     ELSE
         CLOSE JOB-FILE
     END-IF.
@@ -471,7 +476,7 @@ SAVE-ACCOUNTS.
 
 POST-LOGIN-MENU.
     MOVE SPACE TO WS-MENU-CHOICE
-    PERFORM UNTIL WS-MENU-CHOICE = "7"
+    PERFORM UNTIL WS-MENU-CHOICE = "8"
         MOVE "1. Create/edit my profile" TO WS-OUT-LINE
         PERFORM PRINT-LINE
         MOVE "2. View my profile" TO WS-OUT-LINE
@@ -484,7 +489,9 @@ POST-LOGIN-MENU.
         PERFORM PRINT-LINE
         MOVE "6. View My Pending Connection Requests" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "7. Logout" TO WS-OUT-LINE
+        MOVE "7. View My Network" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "8. Logout" TO WS-OUT-LINE
         PERFORM PRINT-LINE
 
         MOVE "Enter your choice:" TO WS-PROMPT
@@ -493,7 +500,7 @@ POST-LOGIN-MENU.
 
         PERFORM VALIDATE-MENU-1-7
         IF WS-VALID = "N"
-           MOVE "Error: Menu choice must be a single digit 1-7. Exiting program" TO WS-OUT-LINE
+           MOVE "Error: Menu choice must be a single digit 1-8. Exiting program" TO WS-OUT-LINE
            PERFORM PRINT-LINE
            PERFORM CLOSE-FILES
            STOP RUN
@@ -515,9 +522,11 @@ POST-LOGIN-MENU.
             WHEN "6"
                 PERFORM VIEW-PENDING-REQUESTS
             WHEN "7"
+                PERFORM VIEW-NETWORK
+            WHEN "8"
                 EXIT PERFORM
             WHEN OTHER
-                MOVE "Invalid choice. Please enter 1-7." TO WS-OUT-LINE
+                MOVE "Invalid choice. Please enter 1-8." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
         END-EVALUATE
     END-PERFORM.
@@ -848,7 +857,7 @@ VALIDATE-MENU-1-7.
         EXIT PARAGRAPH
     END-IF
 
-    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "7"
+    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "8"
         MOVE "N" TO WS-VALID
         EXIT PARAGRAPH
     END-IF

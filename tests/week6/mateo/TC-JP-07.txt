@@ -1,0 +1,12 @@
+1
+username1
+Password1!
+3
+1
+QA Engineer
+Test software quality
+Microsoft
+Redmond, WA
+$80,000/year
+3
+8
