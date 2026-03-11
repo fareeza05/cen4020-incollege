@@ -21,6 +21,10 @@ FILE-CONTROL.
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-CONN-STATUS.
 
+    SELECT JOB-FILE ASSIGN TO "data/InCollege-Jobs.txt"
+        ORGANIZATION IS LINE SEQUENTIAL
+        FILE STATUS IS WS-JOB-STATUS.
+
 DATA DIVISION.
 FILE SECTION.
 
@@ -56,6 +60,7 @@ FD  PROF-FILE.
         10 PROF-EDU-DEGREE PIC X(50).
         10 PROF-EDU-SCHOOL PIC X(50).
         10 PROF-EDU-YEARS  PIC X(20).
+
 FD  CONN-FILE.
 01  CONN-REC.
     05 CONN-SENDER         PIC X(20).
@@ -63,6 +68,22 @@ FD  CONN-FILE.
     05 CONN-RECIPIENT      PIC X(20).
     05 FILLER              PIC X VALUE "|".
     05 CONN-STATUS         PIC X(10).
+
+FD  JOB-FILE.
+01  JOB-REC.
+    05 JOB-ID              PIC 9(4).
+    05 FILLER              PIC X VALUE "|".
+    05 JOB-POSTER          PIC X(20).
+    05 FILLER              PIC X VALUE "|".
+    05 JOB-TITLE-FILE      PIC X(100).
+    05 FILLER              PIC X VALUE "|".
+    05 JOB-DESC-FILE       PIC X(200).
+    05 FILLER              PIC X VALUE "|".
+    05 JOB-EMPLOYER-FILE   PIC X(100).
+    05 FILLER              PIC X VALUE "|".
+    05 JOB-LOCATION-FILE   PIC X(100).
+    05 FILLER              PIC X VALUE "|".
+    05 JOB-SALARY-FILE     PIC X(50).
 
 WORKING-STORAGE SECTION.
 
@@ -105,7 +126,6 @@ WORKING-STORAGE SECTION.
     05 WS-YEAR1             PIC 9(4) VALUE 0.
     05 WS-YEAR2             PIC 9(4) VALUE 0.
 
-
     05 WS-K                 PIC 9(3) VALUE 0.
     05 WS-FOUND             PIC X VALUE "N".
     05 WS-VALID             PIC X VALUE "N".
@@ -123,8 +143,6 @@ WORKING-STORAGE SECTION.
 01  WS-CONN-REQUEST-COUNT   PIC 99 VALUE 0.
 
 *> In-memory mirror of InCollege-Connections.txt.
-*> Loaded by LOAD-ALL-CONNECTIONS, modified by PROCESS-PENDING-REQUEST,
-*> then flushed back to disk by SAVE-CONNECTIONS (REJECTED entries dropped).
 01  WS-CONN-DATA.
     05  WS-CONN-COUNT        PIC 99 VALUE 0.
     05  WS-CONN-ENTRY OCCURS 25 TIMES.
@@ -132,7 +150,6 @@ WORKING-STORAGE SECTION.
         10 WS-CRECIPIENT     PIC X(20).
         10 WS-CSTATUS        PIC X(10).
 
-*> Current row index used by PROCESS-PENDING-REQUEST and SAVE-CONNECTIONS.
 01  WS-CONN-IDX              PIC 99 VALUE 0.
 
 01  WS-PROFILES.
@@ -164,6 +181,22 @@ WORKING-STORAGE SECTION.
     05 WS-FULL-NAME        PIC X(120) VALUE SPACES.
     05 WS-SEARCH-IDX       PIC 9(3) VALUE 0.
 
+*> Epic 6 - Focus Areas 1 & 2 (no persistence yet)
+01  WS-JOB-DATA.
+    05 WS-JOB-TITLE        PIC X(100) VALUE SPACES.
+    05 WS-JOB-DESC         PIC X(200) VALUE SPACES.
+    05 WS-JOB-EMPLOYER     PIC X(100) VALUE SPACES.
+    05 WS-JOB-LOCATION     PIC X(100) VALUE SPACES.
+    05 WS-JOB-SALARY       PIC X(50)  VALUE SPACES.
+
+01  WS-JOB-STATUS          PIC XX VALUE "00".
+01  WS-JOB-EOF             PIC X VALUE "N".
+01  WS-NEXT-JOB-ID         PIC 9(4) VALUE 1.
+*> Network helper items
+01  WS-NETWORK.
+    05 WS-NET-COUNT        PIC 99 VALUE 0.
+    05 WS-FRIEND-USER      PIC X(20) VALUE SPACES.
+    05 WS-FRIEND-IDX       PIC 9(3) VALUE 0.
 
 PROCEDURE DIVISION.
 
@@ -197,8 +230,17 @@ INIT-FILES.
        CLOSE PROF-FILE
     ELSE
         CLOSE PROF-FILE
-    END-IF.
+    END-IF
 
+    *> Jobs file: try read existing; if missing, create empty
+    OPEN INPUT JOB-FILE
+    IF WS-JOB-STATUS = "35"
+        CLOSE JOB-FILE
+        CALL "SYSTEM"
+            USING "printf '\n' > data/InCollege-Jobs.txt"
+    ELSE
+        CLOSE JOB-FILE
+    END-IF.
 
 LOAD-ACCOUNTS.
     MOVE 0 TO WS-ACC-COUNT
@@ -266,7 +308,6 @@ LOAD-PROFILES.
         END-READ
     END-PERFORM
     CLOSE PROF-FILE.
-
 
 MENU-LOOP.
     PERFORM UNTIL WS-DONE = "Y"
@@ -435,7 +476,7 @@ SAVE-ACCOUNTS.
 
 POST-LOGIN-MENU.
     MOVE SPACE TO WS-MENU-CHOICE
-    PERFORM UNTIL WS-MENU-CHOICE = "7"
+    PERFORM UNTIL WS-MENU-CHOICE = "8"
         MOVE "1. Create/edit my profile" TO WS-OUT-LINE
         PERFORM PRINT-LINE
         MOVE "2. View my profile" TO WS-OUT-LINE
@@ -448,7 +489,9 @@ POST-LOGIN-MENU.
         PERFORM PRINT-LINE
         MOVE "6. View My Pending Connection Requests" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "7. Logout" TO WS-OUT-LINE
+        MOVE "7. View My Network" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "8. Logout" TO WS-OUT-LINE
         PERFORM PRINT-LINE
 
         MOVE "Enter your choice:" TO WS-PROMPT
@@ -457,7 +500,7 @@ POST-LOGIN-MENU.
 
         PERFORM VALIDATE-MENU-1-7
         IF WS-VALID = "N"
-           MOVE "Error: Menu choice must be a single digit 1-7. Exiting program" to WS-OUT-LINE
+           MOVE "Error: Menu choice must be a single digit 1-8. Exiting program" TO WS-OUT-LINE
            PERFORM PRINT-LINE
            PERFORM CLOSE-FILES
            STOP RUN
@@ -471,8 +514,7 @@ POST-LOGIN-MENU.
             WHEN "2"
                PERFORM VIEW-PROFILE
             WHEN "3"
-                MOVE "Job search is under construction." TO WS-OUT-LINE
-                PERFORM PRINT-LINE
+                PERFORM JOB-MENU
             WHEN "4"
                 PERFORM SEARCH-USER
             WHEN "5"
@@ -480,12 +522,180 @@ POST-LOGIN-MENU.
             WHEN "6"
                 PERFORM VIEW-PENDING-REQUESTS
             WHEN "7"
+                PERFORM VIEW-NETWORK
+            WHEN "8"
                 EXIT PERFORM
             WHEN OTHER
-                MOVE "Invalid choice. Please enter 1-7." TO WS-OUT-LINE
+                MOVE "Invalid choice. Please enter 1-8." TO WS-OUT-LINE
                 PERFORM PRINT-LINE
         END-EVALUATE
     END-PERFORM.
+
+*> Epic 6 Focus Area 1
+JOB-MENU.
+    MOVE SPACE TO WS-MENU-CHOICE
+    PERFORM UNTIL WS-MENU-CHOICE = "3"
+        MOVE "Job/Internship Menu:" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "1. Post a Job/Internship" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "2. Browse Jobs/Internships" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "3. Back to Main Menu" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+
+        MOVE "Enter your choice:" TO WS-PROMPT
+        MOVE "M" TO WS-DEST-KIND
+        PERFORM PRINT-PROMPT-AND-READ
+
+        COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+        IF WS-LEN NOT = 1 OR WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "3"
+            MOVE "Invalid choice. Please enter 1-3." TO WS-OUT-LINE
+            PERFORM PRINT-LINE
+        ELSE
+            MOVE WS-TOKEN(1:1) TO WS-MENU-CHOICE
+            EVALUATE WS-MENU-CHOICE
+                WHEN "1"
+                    PERFORM POST-JOB
+                WHEN "2"
+                    MOVE "Browse Jobs/Internships is under construction." TO WS-OUT-LINE
+                    PERFORM PRINT-LINE
+                WHEN "3"
+                    EXIT PERFORM
+                WHEN OTHER
+                    MOVE "Invalid choice. Please enter 1-3." TO WS-OUT-LINE
+                    PERFORM PRINT-LINE
+            END-EVALUATE
+        END-IF
+    END-PERFORM.
+
+*> Epic 6 Focus Area 2
+POST-JOB.
+    MOVE SPACES TO WS-JOB-TITLE
+    MOVE SPACES TO WS-JOB-DESC
+    MOVE SPACES TO WS-JOB-EMPLOYER
+    MOVE SPACES TO WS-JOB-LOCATION
+    MOVE SPACES TO WS-JOB-SALARY
+
+    MOVE "Post a Job/Internship" TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+
+    MOVE "Enter Job Title: (Required)" TO WS-PROMPT
+    MOVE "X" TO WS-DEST-KIND
+    PERFORM PRINT-PROMPT-AND-READ
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN = 0
+        MOVE "Error: Job Title is required." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    MOVE WS-TOKEN TO WS-JOB-TITLE
+
+    MOVE "Enter Description: (Required)" TO WS-PROMPT
+    MOVE "X" TO WS-DEST-KIND
+    PERFORM PRINT-PROMPT-AND-READ
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN = 0
+        MOVE "Error: Description is required." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    MOVE WS-TOKEN TO WS-JOB-DESC
+
+    MOVE "Enter Employer: (Required)" TO WS-PROMPT
+    MOVE "X" TO WS-DEST-KIND
+    PERFORM PRINT-PROMPT-AND-READ
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN = 0
+        MOVE "Error: Employer is required." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    MOVE WS-TOKEN TO WS-JOB-EMPLOYER
+
+    MOVE "Enter Location: (Required)" TO WS-PROMPT
+    MOVE "X" TO WS-DEST-KIND
+    PERFORM PRINT-PROMPT-AND-READ
+    COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
+    IF WS-LEN = 0
+        MOVE "Error: Location is required." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    MOVE WS-TOKEN TO WS-JOB-LOCATION
+
+    MOVE "Enter Salary: (Optional)" TO WS-PROMPT
+    MOVE "X" TO WS-DEST-KIND
+    PERFORM PRINT-PROMPT-AND-READ
+    MOVE WS-TOKEN TO WS-JOB-SALARY
+
+    PERFORM SAVE-JOB-POSTING
+
+    MOVE "Job/Internship posted successfully." TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Title: " FUNCTION TRIM(WS-JOB-TITLE)
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Description: " FUNCTION TRIM(WS-JOB-DESC)
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Employer: " FUNCTION TRIM(WS-JOB-EMPLOYER)
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Location: " FUNCTION TRIM(WS-JOB-LOCATION)
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Salary: " FUNCTION TRIM(WS-JOB-SALARY)
+      INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE.
+
+SAVE-JOB-POSTING.
+    PERFORM FIND-NEXT-JOB-ID
+
+    OPEN EXTEND JOB-FILE
+
+    MOVE WS-NEXT-JOB-ID      TO JOB-ID
+    MOVE WS-CURR-USER        TO JOB-POSTER
+    MOVE WS-JOB-TITLE        TO JOB-TITLE-FILE
+    MOVE WS-JOB-DESC         TO JOB-DESC-FILE
+    MOVE WS-JOB-EMPLOYER     TO JOB-EMPLOYER-FILE
+    MOVE WS-JOB-LOCATION     TO JOB-LOCATION-FILE
+    MOVE WS-JOB-SALARY       TO JOB-SALARY-FILE
+
+    WRITE JOB-REC
+    CLOSE JOB-FILE.
+
+FIND-NEXT-JOB-ID.
+    MOVE 1 TO WS-NEXT-JOB-ID
+    MOVE "N" TO WS-JOB-EOF
+
+    OPEN INPUT JOB-FILE
+    PERFORM UNTIL WS-JOB-EOF = "Y"
+        READ JOB-FILE
+            AT END
+                MOVE "Y" TO WS-JOB-EOF
+            NOT AT END
+                IF JOB-ID >= WS-NEXT-JOB-ID
+                    COMPUTE WS-NEXT-JOB-ID = JOB-ID + 1
+                END-IF
+        END-READ
+    END-PERFORM
+    CLOSE JOB-FILE.
 
 LEARN-A-NEW-SKILL.
     MOVE SPACE TO WS-MENU-CHOICE
@@ -647,14 +857,12 @@ VALIDATE-MENU-1-7.
         EXIT PARAGRAPH
     END-IF
 
-    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "7"
+    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "8"
         MOVE "N" TO WS-VALID
         EXIT PARAGRAPH
     END-IF
 
     MOVE "Y" TO WS-VALID.
-
-
 
 CREATE-OR-EDIT-ACCOUNT.
 
@@ -756,7 +964,6 @@ CREATE-OR-EDIT-ACCOUNT.
 
     MOVE WS-TOKEN TO WS-PROF-MAJOR(WS-J)
 
-
     *> Graduation Year (YYYY)
     MOVE "Enter Graduation Year (YYYY): (Required)" TO WS-PROMPT
     MOVE "X" TO WS-DEST-KIND
@@ -786,10 +993,10 @@ CREATE-OR-EDIT-ACCOUNT.
     END-IF
 
     IF WS-TOKEN < "1900" OR WS-TOKEN > "2100"
-    MOVE "Error: Graduation Year must be between 1900 and 2100." TO WS-OUT-LINE
-    PERFORM PRINT-LINE
-    PERFORM CLOSE-FILES
-    STOP RUN
+       MOVE "Error: Graduation Year must be between 1900 and 2100." TO WS-OUT-LINE
+       PERFORM PRINT-LINE
+       PERFORM CLOSE-FILES
+       STOP RUN
     END-IF
 
     MOVE WS-TOKEN(1:4) TO WS-PROF-GRAD(WS-J)
@@ -822,10 +1029,9 @@ CREATE-OR-EDIT-ACCOUNT.
                EXIT PERFORM
            END-IF
 
-
            IF WS-TOKEN NOT = "ADD"
-           MOVE "Error: Enter ADD to add an experience or DONE to finish. Exiting program."
-               TO WS-OUT-LINE
+               MOVE "Error: Enter ADD to add an experience or DONE to finish. Exiting program."
+                   TO WS-OUT-LINE
                PERFORM PRINT-LINE
                PERFORM CLOSE-FILES
                STOP RUN
@@ -1094,7 +1300,6 @@ CREATE-OR-EDIT-ACCOUNT.
     PERFORM PRINT-LINE
 
     EXIT PARAGRAPH.
-
 
 VIEW-PROFILE.
     PERFORM FIND-PROFILE-IDX
@@ -1402,7 +1607,6 @@ AFTER-SEARCH-MENU.
                 PERFORM PRINT-LINE
         END-EVALUATE
     END-IF.
-
 
 PRINT-PROMPT-AND-READ.
     MOVE WS-PROMPT TO WS-OUT-LINE
