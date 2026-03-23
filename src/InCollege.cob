@@ -24,6 +24,10 @@ FILE-CONTROL.
     SELECT JOB-FILE ASSIGN TO "data/InCollege-Jobs.txt"
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-JOB-STATUS.
+   
+    SELECT APPLICATION-FILE ASSIGN TO "data/InCollege-Applications.txt"
+        ORGANIZATION IS LINE SEQUENTIAL
+        FILE STATUS IS WS-APP-STATUS.
 
 DATA DIVISION.
 FILE SECTION.
@@ -84,6 +88,12 @@ FD  JOB-FILE.
     05 JOB-LOCATION-FILE   PIC X(100).
     05 FILLER              PIC X VALUE "|".
     05 JOB-SALARY-FILE     PIC X(50).
+
+FD  APPLICATION-FILE.
+01  APPLICATION-REC.
+    05  APP-JOB-ID          PIC 9(4).
+    05  APP-APPLICANT-USER  PIC X(20).
+    05  APP-STATUS          PIC X(10) VALUE "APPLIED".
 
 WORKING-STORAGE SECTION.
 
@@ -197,6 +207,13 @@ WORKING-STORAGE SECTION.
     05 WS-NET-COUNT        PIC 99 VALUE 0.
     05 WS-FRIEND-USER      PIC X(20) VALUE SPACES.
     05 WS-FRIEND-IDX       PIC 9(3) VALUE 0.
+
+*> Browse jobs items
+01  WS-BROWSE-VARS.
+           05  WS-DISPLAY-COUNT    PIC 9(3) VALUE 0.
+           05  WS-USER-CHOICE      PIC 9(3) VALUE 0.
+           05  WS-CURRENT-COUNT    PIC 9(3) VALUE 0.
+           05  WS-JOB-EOF          PIC X    VALUE 'N'.
 
 PROCEDURE DIVISION.
 
@@ -1656,3 +1673,4 @@ CLOSE-FILES.
        COPY "src/ViewRequests.cob".
        COPY "src/SendRequest.cob".
        COPY "src/ViewNetwork.cob".
+       COPY "src/ApplyJob.cob"
