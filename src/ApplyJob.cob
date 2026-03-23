@@ -108,3 +108,4 @@ RECORD-APPLICATION.
                   " has been submitted." INTO WS-OUT-LINE
            END-STRING
            PERFORM PRINT-LINE.
+           
