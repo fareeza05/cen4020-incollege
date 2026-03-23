@@ -6,10 +6,10 @@ BROWSE-JOBS.
            PERFORM PRINT-LINE
            
            MOVE 0 TO WS-DISPLAY-COUNT
-           MOVE "N" TO WS-JOB-EOF
+           MOVE "N" TO WS-BROWSE-EOF
            
            OPEN INPUT JOB-FILE
-           PERFORM UNTIL WS-JOB-EOF = "Y"
+           PERFORM UNTIL WS-BROWSE-EOF = "Y"
                READ JOB-FILE
                    AT END
                        MOVE "Y" TO WS-JOB-EOF

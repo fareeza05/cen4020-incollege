@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
+    SELECT IN-FILE ASSIGN TO "tests/week7/fareeza/test-setup.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "tests/week7/fareeza/test-setup-out.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -213,7 +213,7 @@ WORKING-STORAGE SECTION.
            05  WS-DISPLAY-COUNT    PIC 9(3) VALUE 0.
            05  WS-USER-CHOICE      PIC 9(3) VALUE 0.
            05  WS-CURRENT-COUNT    PIC 9(3) VALUE 0.
-           05  WS-JOB-EOF          PIC X    VALUE 'N'.
+           05  WS-BROWSE-EOF          PIC X    VALUE 'N'.
 
 PROCEDURE DIVISION.
 
@@ -1672,4 +1672,4 @@ CLOSE-FILES.
        COPY "src/ViewRequests.cob".
        COPY "src/SendRequest.cob".
        COPY "src/ViewNetwork.cob".
-       COPY "src/ApplyJob.cob"
+       COPY "src/ApplyJob.cob".
