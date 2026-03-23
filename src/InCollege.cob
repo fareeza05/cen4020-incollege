@@ -575,8 +575,7 @@ JOB-MENU.
                 WHEN "1"
                     PERFORM POST-JOB
                 WHEN "2"
-                    MOVE "Browse Jobs/Internships is under construction." TO WS-OUT-LINE
-                    PERFORM PRINT-LINE
+                    PERFORM BROWSE-JOBS
                 WHEN "3"
                     EXIT PERFORM
                 WHEN OTHER
