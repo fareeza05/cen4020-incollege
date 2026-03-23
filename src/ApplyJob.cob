@@ -12,7 +12,7 @@ BROWSE-JOBS.
            PERFORM UNTIL WS-BROWSE-EOF = "Y"
                READ JOB-FILE
                    AT END
-                       MOVE "Y" TO WS-JOB-EOF
+                       MOVE "Y" TO WS-BROWSE-EOF
                    NOT AT END
                        ADD 1 TO WS-DISPLAY-COUNT
                        MOVE SPACES TO WS-OUT-LINE
@@ -108,4 +108,3 @@ RECORD-APPLICATION.
                   " has been submitted." INTO WS-OUT-LINE
            END-STRING
            PERFORM PRINT-LINE.
-           
