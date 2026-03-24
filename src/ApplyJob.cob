@@ -50,16 +50,19 @@ GET-SELECTION.
 VIEW-JOB-DETAILS.
            MOVE 0 TO WS-CURRENT-COUNT
            MOVE "N" TO WS-JOB-EOF
-           
            OPEN INPUT JOB-FILE
            PERFORM UNTIL WS-JOB-EOF = "Y" OR WS-CURRENT-COUNT = WS-USER-CHOICE
                READ JOB-FILE
-                   AT END 
-                       MOVE "Y" TO WS-JOB-EOF
+                   AT END MOVE "Y" TO WS-JOB-EOF
                    NOT AT END
                        ADD 1 TO WS-CURRENT-COUNT
-                       *> Only trigger the prompt if we found the matching row
                        IF WS-CURRENT-COUNT = WS-USER-CHOICE
+                           *> CAPTURE THE DATA HERE while the buffer is active
+                           MOVE JOB-ID            TO WS-SEL-ID
+                           MOVE JOB-TITLE-FILE    TO WS-SEL-TITLE
+                           MOVE JOB-EMPLOYER-FILE TO WS-SEL-EMPLOYER
+                           MOVE JOB-LOCATION-FILE TO WS-SEL-LOCATION
+                           
                            PERFORM APPLY-FOR-JOB-PROMPT
                        END-IF
                END-READ
@@ -88,23 +91,21 @@ APPLY-FOR-JOB-PROMPT.
 *> This is the core 'Simulated' process. 
 *> We link the current user to the specific job record currently in memory.
 RECORD-APPLICATION.
-    
            OPEN EXTEND APPLICATION-FILE
            
-           *> Transfer data from the JOB-FILE buffer to the APPLICATION-FILE buffer
-           MOVE JOB-ID              TO APP-JOB-ID
+           *> 2. Reset the buffer
+           INITIALIZE APPLICATION-REC
+
+           *> 3. Move data
+           MOVE WS-SEL-ID              TO APP-JOB-ID
            MOVE WS-CURR-USER        TO APP-APPLICANT-USER
-           MOVE JOB-TITLE-FILE      TO APP-JOB-TITLE
-           MOVE JOB-EMPLOYER-FILE   TO APP-EMPLOYER
-           MOVE JOB-LOCATION-FILE   TO APP-LOCATION
-           
+           MOVE WS-SEL-TITLE      TO APP-JOB-TITLE
+           MOVE WS-SEL-EMPLOYER  TO APP-EMPLOYER
+           MOVE "APPLIED"           TO APP-STATUS
+
+           *> 4. Write and Close
            WRITE APPLICATION-REC
            CLOSE APPLICATION-FILE
 
-           *> Requirements: Provide a confirmation message
-           MOVE SPACES TO WS-OUT-LINE
-           STRING "Your application for " FUNCTION TRIM(JOB-TITLE-FILE) 
-                  " at " FUNCTION TRIM(JOB-EMPLOYER-FILE)
-                  " has been submitted." INTO WS-OUT-LINE
-           END-STRING
+           MOVE "Application Submitted Successfully." TO WS-OUT-LINE
            PERFORM PRINT-LINE.

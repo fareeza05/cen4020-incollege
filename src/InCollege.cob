@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "tests/week7/fareeza/test-setup.txt"
+    SELECT IN-FILE ASSIGN TO "tests/week7/fareeza/test-application.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "tests/week7/fareeza/test-setup-out.txt"
+    SELECT OUT-FILE ASSIGN TO "tests/week7/fareeza/test-application-out.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -89,7 +89,7 @@ FD  JOB-FILE.
     05 FILLER              PIC X VALUE "|".
     05 JOB-SALARY-FILE     PIC X(50).
 
-FD  APPLICATION-FILE.
+FD APPLICATION-FILE.
 01  APPLICATION-REC.
     05  APP-JOB-ID          PIC 9(4).
     05  FILLER             PIC X VALUE "|".
@@ -101,10 +101,7 @@ FD  APPLICATION-FILE.
     05  FILLER             PIC X VALUE "|".
     05  APP-LOCATION         PIC X(100).
     05  FILLER             PIC X VALUE "|".
-    05  APP-SALARY           PIC X(20).
-    05 FILLER             PIC X VALUE "|".
     05  APP-STATUS          PIC X(20).
-    05 FILLER             PIC X VALUE "|".
 
 WORKING-STORAGE SECTION.
 
@@ -240,6 +237,12 @@ WORKING-STORAGE SECTION.
 
 01  WS-JOB-HELPER-VARS.
            05  WS-NEXT-JOB-ID      PIC 9(4) VALUE 1.
+
+01  WS-SELECTED-JOB-VARS.
+           05  WS-SEL-ID           PIC 9(4).
+           05  WS-SEL-TITLE        PIC X(100).
+           05  WS-SEL-EMPLOYER     PIC X(100).
+           05  WS-SEL-LOCATION     PIC X(100).
 
 PROCEDURE DIVISION.
 
