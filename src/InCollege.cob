@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "tests/week7/fareeza/test-application.txt"
+    SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "tests/week7/fareeza/test-application-out.txt"
+    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -90,18 +90,7 @@ FD  JOB-FILE.
     05 JOB-SALARY-FILE     PIC X(50).
 
 FD APPLICATION-FILE.
-01  APPLICATION-REC.
-    05  APP-JOB-ID          PIC 9(4).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-APPLICANT-USER  PIC X(20).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-JOB-TITLE        PIC X(100).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-EMPLOYER         PIC X(100).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-LOCATION         PIC X(100).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-STATUS          PIC X(20).
+01 APPLICATION-REC PIC X(200).
 
 WORKING-STORAGE SECTION.
 
@@ -243,6 +232,15 @@ WORKING-STORAGE SECTION.
            05  WS-SEL-TITLE        PIC X(100).
            05  WS-SEL-EMPLOYER     PIC X(100).
            05  WS-SEL-LOCATION     PIC X(100).
+
+*> Duplicate application finding helpers:
+01 WS-APP-FOUND        PIC X VALUE "N".
+01 WS-APP-EOF          PIC X VALUE "N".
+01 WS-APP-TEMP-REC     PIC X(200).
+
+01 WS-APP-TEMP-USER       PIC X(20).
+01 WS-APP-TEMP-TITLE      PIC X(40).
+01 WS-APP-TEMP-EMPLOYER   PIC X(40).
 
 PROCEDURE DIVISION.
 

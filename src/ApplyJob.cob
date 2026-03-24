@@ -38,11 +38,29 @@ GET-SELECTION.
            MOVE "Enter job number to view details, or 0 to go back:" TO WS-PROMPT
            MOVE "N" TO WS-DEST-KIND
            PERFORM PRINT-PROMPT-AND-READ
-           
-           MOVE FUNCTION NUMVAL(WS-TOKEN) TO WS-USER-CHOICE
 
-           IF WS-USER-CHOICE > 0 AND WS-USER-CHOICE <= WS-DISPLAY-COUNT
-               PERFORM VIEW-JOB-DETAILS
+           IF FUNCTION TEST-NUMVAL(WS-TOKEN) NOT = 0
+               MOVE "Invalid input. Please enter a number." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+           ELSE
+               MOVE FUNCTION NUMVAL(WS-TOKEN) TO WS-USER-CHOICE
+
+               IF WS-USER-CHOICE = 0
+                   CONTINUE
+               ELSE IF WS-USER-CHOICE < 0 OR WS-USER-CHOICE > WS-DISPLAY-COUNT
+                   MOVE SPACES TO WS-OUT-LINE
+                   STRING "Invalid choice. Enter a number between 0 and "
+                          DELIMITED BY SIZE
+                          WS-DISPLAY-COUNT
+                          DELIMITED BY SIZE
+                          "."
+                          DELIMITED BY SIZE
+                     INTO WS-OUT-LINE
+                   END-STRING
+                   PERFORM PRINT-LINE
+               ELSE
+                   PERFORM VIEW-JOB-DETAILS
+               END-IF
            END-IF.
 
 *> View job details and allow user to apply
@@ -82,30 +100,98 @@ APPLY-FOR-JOB-PROMPT.
            PERFORM PRINT-PROMPT-AND-READ
            
            IF WS-TOKEN = "1"
-               PERFORM RECORD-APPLICATION
-           ELSE
+               PERFORM APPLY-TO-JOB
+           ELSE IF WS-TOKEN = "2"
                MOVE "Returning to job list..." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+           ELSE
+               MOVE "Invalid choice. Please enter 1 or 2." TO WS-OUT-LINE
                PERFORM PRINT-LINE
            END-IF.
 
 *> This is the core 'Simulated' process. 
 *> We link the current user to the specific job record currently in memory.
-RECORD-APPLICATION.
-           OPEN EXTEND APPLICATION-FILE
-           
-           *> 2. Reset the buffer
-           INITIALIZE APPLICATION-REC
+APPLY-TO-JOB.
 
-           *> 3. Move data
-           MOVE WS-SEL-ID              TO APP-JOB-ID
-           MOVE WS-CURR-USER        TO APP-APPLICANT-USER
-           MOVE WS-SEL-TITLE      TO APP-JOB-TITLE
-           MOVE WS-SEL-EMPLOYER  TO APP-EMPLOYER
-           MOVE "APPLIED"           TO APP-STATUS
+    *> Step 0: Check if already applied
+    MOVE "N" TO WS-APP-FOUND
+    MOVE "N" TO WS-APP-EOF
 
-           *> 4. Write and Close
-           WRITE APPLICATION-REC
-           CLOSE APPLICATION-FILE
+    OPEN INPUT APPLICATION-FILE
 
-           MOVE "Application Submitted Successfully." TO WS-OUT-LINE
-           PERFORM PRINT-LINE.
+    IF WS-APP-STATUS = "00"
+        PERFORM UNTIL WS-APP-EOF = "Y"
+
+            READ APPLICATION-FILE INTO WS-APP-TEMP-REC
+                AT END
+                    MOVE "Y" TO WS-APP-EOF
+                NOT AT END
+
+                    *> Extract fields using positions
+                    MOVE WS-APP-TEMP-REC (1:20)   TO WS-APP-TEMP-USER
+                    MOVE WS-APP-TEMP-REC (22:40)  TO WS-APP-TEMP-TITLE
+                    MOVE WS-APP-TEMP-REC (65:40)  TO WS-APP-TEMP-EMPLOYER
+
+                    IF FUNCTION TRIM(WS-APP-TEMP-USER) = FUNCTION TRIM(WS-CURR-USER)
+                      AND FUNCTION TRIM(WS-APP-TEMP-TITLE) = FUNCTION TRIM(WS-SEL-TITLE)
+                      AND FUNCTION TRIM(WS-APP-TEMP-EMPLOYER) = FUNCTION TRIM(WS-SEL-EMPLOYER)
+                   
+                       MOVE "Y" TO WS-APP-FOUND
+                       MOVE "Y" TO WS-APP-EOF
+                   END-IF
+
+            END-READ
+
+        END-PERFORM
+
+        CLOSE APPLICATION-FILE
+    END-IF
+
+    *> If already applied → STOP
+    IF WS-APP-FOUND = "Y"
+        MOVE "You have already applied to this job." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+
+    *> Step 1: Open file (create if needed)
+    OPEN EXTEND APPLICATION-FILE
+
+    IF WS-APP-STATUS = "35"
+        OPEN OUTPUT APPLICATION-FILE
+        CLOSE APPLICATION-FILE
+        OPEN EXTEND APPLICATION-FILE
+    END-IF
+
+    IF WS-APP-STATUS NOT = "00"
+        MOVE "Error saving application." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+
+    *> Step 2: Clear record
+    MOVE SPACES TO APPLICATION-REC
+
+    *> Step 3: Place fields
+    MOVE WS-CURR-USER    TO APPLICATION-REC (1:20)
+    MOVE WS-SEL-TITLE    TO APPLICATION-REC (22:40)
+    MOVE WS-SEL-EMPLOYER TO APPLICATION-REC (65:40)
+    MOVE WS-SEL-LOCATION TO APPLICATION-REC (110:40)
+
+    *> Step 4: Write
+    WRITE APPLICATION-REC
+    CLOSE APPLICATION-FILE
+
+    *> Step 5: Confirmation
+    MOVE SPACES TO WS-OUT-LINE
+    STRING
+        "Your application for " DELIMITED BY SIZE
+        WS-SEL-TITLE DELIMITED BY SPACE
+        " at " DELIMITED BY SIZE
+        WS-SEL-EMPLOYER DELIMITED BY SPACE
+        " has been submitted." DELIMITED BY SIZE
+    INTO WS-OUT-LINE
+    END-STRING
+
+    PERFORM PRINT-LINE.
+    
