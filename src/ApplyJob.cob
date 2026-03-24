@@ -82,7 +82,7 @@ APPLY-FOR-JOB-PROMPT.
            PERFORM PRINT-PROMPT-AND-READ
            
            IF WS-TOKEN = "1"
-               PERFORM RECORD-APPLICATION
+               PERFORM APPLY-TO-JOB
            ELSE
                MOVE "Returning to job list..." TO WS-OUT-LINE
                PERFORM PRINT-LINE
@@ -90,22 +90,46 @@ APPLY-FOR-JOB-PROMPT.
 
 *> This is the core 'Simulated' process. 
 *> We link the current user to the specific job record currently in memory.
-RECORD-APPLICATION.
-           OPEN EXTEND APPLICATION-FILE
-           
-           *> 2. Reset the buffer
-           INITIALIZE APPLICATION-REC
+APPLY-TO-JOB.
 
-           *> 3. Move data
-           MOVE WS-SEL-ID              TO APP-JOB-ID
-           MOVE WS-CURR-USER        TO APP-APPLICANT-USER
-           MOVE WS-SEL-TITLE      TO APP-JOB-TITLE
-           MOVE WS-SEL-EMPLOYER  TO APP-EMPLOYER
-           MOVE "APPLIED"           TO APP-STATUS
+    *> Step 1: Open file (create if needed)
+    OPEN EXTEND APPLICATION-FILE
 
-           *> 4. Write and Close
-           WRITE APPLICATION-REC
-           CLOSE APPLICATION-FILE
+    IF WS-APP-STATUS = "35"
+        OPEN OUTPUT APPLICATION-FILE
+        CLOSE APPLICATION-FILE
+        OPEN EXTEND APPLICATION-FILE
+    END-IF
 
-           MOVE "Application Submitted Successfully." TO WS-OUT-LINE
-           PERFORM PRINT-LINE.
+    IF WS-APP-STATUS NOT = "00"
+        MOVE "Error saving application." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+
+    *> Step 2: Clear record
+    MOVE SPACES TO APPLICATION-REC
+
+    *> Step 3: Place fields (fixed positions)
+    MOVE WS-CURR-USER    TO APPLICATION-REC (1:20)
+    MOVE WS-SEL-TITLE    TO APPLICATION-REC (22:40)
+    MOVE WS-SEL-EMPLOYER TO APPLICATION-REC (65:40)
+    MOVE WS-SEL-LOCATION TO APPLICATION-REC (110:40)
+
+    *> Step 4: Write
+    WRITE APPLICATION-REC
+    CLOSE APPLICATION-FILE
+
+    *> Step 5: Confirmation message
+    MOVE SPACES TO WS-OUT-LINE
+    STRING
+        "Your application for " DELIMITED BY SIZE
+        WS-SEL-TITLE DELIMITED BY SPACE
+        " at " DELIMITED BY SIZE
+        WS-SEL-EMPLOYER DELIMITED BY SPACE
+        " has been submitted." DELIMITED BY SIZE
+    INTO WS-OUT-LINE
+    END-STRING
+
+    PERFORM PRINT-LINE.
+    

@@ -31,12 +31,12 @@ Enter your choice:
 002. Junior Web Developer at Creative Pulse Agency
 003. QA Testing Intern at AppVenture Labs
 Enter job number to view details, or 0 to go back:
-3
+2
 1. Apply for this Job
 2. Back to Job List
 Enter your choice:
 1
-Application Submitted Successfully.
+Your application for Junior at Creative has been submitted.
 Job/Internship Menu:
 1. Post a Job/Internship
 2. Browse Jobs/Internships

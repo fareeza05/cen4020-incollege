@@ -90,18 +90,7 @@ FD  JOB-FILE.
     05 JOB-SALARY-FILE     PIC X(50).
 
 FD APPLICATION-FILE.
-01  APPLICATION-REC.
-    05  APP-JOB-ID          PIC 9(4).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-APPLICANT-USER  PIC X(20).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-JOB-TITLE        PIC X(100).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-EMPLOYER         PIC X(100).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-LOCATION         PIC X(100).
-    05  FILLER             PIC X VALUE "|".
-    05  APP-STATUS          PIC X(20).
+01 APPLICATION-REC PIC X(200).
 
 WORKING-STORAGE SECTION.
 
