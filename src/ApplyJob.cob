@@ -38,11 +38,29 @@ GET-SELECTION.
            MOVE "Enter job number to view details, or 0 to go back:" TO WS-PROMPT
            MOVE "N" TO WS-DEST-KIND
            PERFORM PRINT-PROMPT-AND-READ
-           
-           MOVE FUNCTION NUMVAL(WS-TOKEN) TO WS-USER-CHOICE
 
-           IF WS-USER-CHOICE > 0 AND WS-USER-CHOICE <= WS-DISPLAY-COUNT
-               PERFORM VIEW-JOB-DETAILS
+           IF FUNCTION TEST-NUMVAL(WS-TOKEN) NOT = 0
+               MOVE "Invalid input. Please enter a number." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+           ELSE
+               MOVE FUNCTION NUMVAL(WS-TOKEN) TO WS-USER-CHOICE
+
+               IF WS-USER-CHOICE = 0
+                   CONTINUE
+               ELSE IF WS-USER-CHOICE < 0 OR WS-USER-CHOICE > WS-DISPLAY-COUNT
+                   MOVE SPACES TO WS-OUT-LINE
+                   STRING "Invalid choice. Enter a number between 0 and "
+                          DELIMITED BY SIZE
+                          WS-DISPLAY-COUNT
+                          DELIMITED BY SIZE
+                          "."
+                          DELIMITED BY SIZE
+                     INTO WS-OUT-LINE
+                   END-STRING
+                   PERFORM PRINT-LINE
+               ELSE
+                   PERFORM VIEW-JOB-DETAILS
+               END-IF
            END-IF.
 
 *> View job details and allow user to apply
@@ -76,11 +94,18 @@ APPLY-FOR-JOB-PROMPT.
            PERFORM PRINT-LINE
            MOVE "2. Back to Job List" TO WS-OUT-LINE
            PERFORM PRINT-LINE
-           
-           MOVE "Enter your choice:" TO WS-PROMPT
-           MOVE "N" TO WS-DEST-KIND
-           PERFORM PRINT-PROMPT-AND-READ
-           
+
+           PERFORM UNTIL WS-TOKEN = "1" OR WS-TOKEN = "2"
+               MOVE "Enter your choice:" TO WS-PROMPT
+               MOVE "N" TO WS-DEST-KIND
+               PERFORM PRINT-PROMPT-AND-READ
+
+               IF WS-TOKEN NOT = "1" AND WS-TOKEN NOT = "2"
+                   MOVE "Invalid choice. Please enter 1 or 2." TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+               END-IF
+           END-PERFORM
+
            IF WS-TOKEN = "1"
                PERFORM APPLY-TO-JOB
            ELSE
@@ -91,6 +116,47 @@ APPLY-FOR-JOB-PROMPT.
 *> This is the core 'Simulated' process. 
 *> We link the current user to the specific job record currently in memory.
 APPLY-TO-JOB.
+
+    *> Step 0: Check if already applied
+    MOVE "N" TO WS-APP-FOUND
+    MOVE "N" TO WS-APP-EOF
+
+    OPEN INPUT APPLICATION-FILE
+
+    IF WS-APP-STATUS = "00"
+        PERFORM UNTIL WS-APP-EOF = "Y"
+
+            READ APPLICATION-FILE INTO WS-APP-TEMP-REC
+                AT END
+                    MOVE "Y" TO WS-APP-EOF
+                NOT AT END
+
+                    *> Extract fields using positions
+                    MOVE WS-APP-TEMP-REC (1:20)   TO WS-APP-TEMP-USER
+                    MOVE WS-APP-TEMP-REC (22:40)  TO WS-APP-TEMP-TITLE
+                    MOVE WS-APP-TEMP-REC (65:40)  TO WS-APP-TEMP-EMPLOYER
+
+                    IF FUNCTION TRIM(WS-APP-TEMP-USER) = FUNCTION TRIM(WS-CURR-USER)
+                      AND FUNCTION TRIM(WS-APP-TEMP-TITLE) = FUNCTION TRIM(WS-SEL-TITLE)
+                      AND FUNCTION TRIM(WS-APP-TEMP-EMPLOYER) = FUNCTION TRIM(WS-SEL-EMPLOYER)
+                   
+                       MOVE "Y" TO WS-APP-FOUND
+                       MOVE "Y" TO WS-APP-EOF
+                   END-IF
+
+            END-READ
+
+        END-PERFORM
+
+        CLOSE APPLICATION-FILE
+    END-IF
+
+    *> If already applied → STOP
+    IF WS-APP-FOUND = "Y"
+        MOVE "You have already applied to this job." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
 
     *> Step 1: Open file (create if needed)
     OPEN EXTEND APPLICATION-FILE
@@ -110,7 +176,7 @@ APPLY-TO-JOB.
     *> Step 2: Clear record
     MOVE SPACES TO APPLICATION-REC
 
-    *> Step 3: Place fields (fixed positions)
+    *> Step 3: Place fields
     MOVE WS-CURR-USER    TO APPLICATION-REC (1:20)
     MOVE WS-SEL-TITLE    TO APPLICATION-REC (22:40)
     MOVE WS-SEL-EMPLOYER TO APPLICATION-REC (65:40)
@@ -120,7 +186,7 @@ APPLY-TO-JOB.
     WRITE APPLICATION-REC
     CLOSE APPLICATION-FILE
 
-    *> Step 5: Confirmation message
+    *> Step 5: Confirmation
     MOVE SPACES TO WS-OUT-LINE
     STRING
         "Your application for " DELIMITED BY SIZE

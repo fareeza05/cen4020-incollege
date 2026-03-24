@@ -36,7 +36,7 @@ Enter job number to view details, or 0 to go back:
 2. Back to Job List
 Enter your choice:
 1
-Your application for Junior at Creative has been submitted.
+You have already applied to this job.
 Job/Internship Menu:
 1. Post a Job/Internship
 2. Browse Jobs/Internships
