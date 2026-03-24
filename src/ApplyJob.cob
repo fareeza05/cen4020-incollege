@@ -94,22 +94,18 @@ APPLY-FOR-JOB-PROMPT.
            PERFORM PRINT-LINE
            MOVE "2. Back to Job List" TO WS-OUT-LINE
            PERFORM PRINT-LINE
-
-           PERFORM UNTIL WS-TOKEN = "1" OR WS-TOKEN = "2"
-               MOVE "Enter your choice:" TO WS-PROMPT
-               MOVE "N" TO WS-DEST-KIND
-               PERFORM PRINT-PROMPT-AND-READ
-
-               IF WS-TOKEN NOT = "1" AND WS-TOKEN NOT = "2"
-                   MOVE "Invalid choice. Please enter 1 or 2." TO WS-OUT-LINE
-                   PERFORM PRINT-LINE
-               END-IF
-           END-PERFORM
-
+           
+           MOVE "Enter your choice:" TO WS-PROMPT
+           MOVE "N" TO WS-DEST-KIND
+           PERFORM PRINT-PROMPT-AND-READ
+           
            IF WS-TOKEN = "1"
                PERFORM APPLY-TO-JOB
-           ELSE
+           ELSE IF WS-TOKEN = "2"
                MOVE "Returning to job list..." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+           ELSE
+               MOVE "Invalid choice. Please enter 1 or 2." TO WS-OUT-LINE
                PERFORM PRINT-LINE
            END-IF.
 
