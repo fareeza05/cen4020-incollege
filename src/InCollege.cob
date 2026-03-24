@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
+    SELECT IN-FILE ASSIGN TO "tests/week7/fareeza/test-application.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "tests/week7/fareeza/test-application-out.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -24,6 +24,10 @@ FILE-CONTROL.
     SELECT JOB-FILE ASSIGN TO "data/InCollege-Jobs.txt"
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-JOB-STATUS.
+   
+    SELECT APPLICATION-FILE ASSIGN TO "data/InCollege-Applications.txt"
+        ORGANIZATION IS LINE SEQUENTIAL
+        FILE STATUS IS WS-APP-STATUS.
 
 DATA DIVISION.
 FILE SECTION.
@@ -84,6 +88,20 @@ FD  JOB-FILE.
     05 JOB-LOCATION-FILE   PIC X(100).
     05 FILLER              PIC X VALUE "|".
     05 JOB-SALARY-FILE     PIC X(50).
+
+FD APPLICATION-FILE.
+01  APPLICATION-REC.
+    05  APP-JOB-ID          PIC 9(4).
+    05  FILLER             PIC X VALUE "|".
+    05  APP-APPLICANT-USER  PIC X(20).
+    05  FILLER             PIC X VALUE "|".
+    05  APP-JOB-TITLE        PIC X(100).
+    05  FILLER             PIC X VALUE "|".
+    05  APP-EMPLOYER         PIC X(100).
+    05  FILLER             PIC X VALUE "|".
+    05  APP-LOCATION         PIC X(100).
+    05  FILLER             PIC X VALUE "|".
+    05  APP-STATUS          PIC X(20).
 
 WORKING-STORAGE SECTION.
 
@@ -181,7 +199,7 @@ WORKING-STORAGE SECTION.
     05 WS-FULL-NAME        PIC X(120) VALUE SPACES.
     05 WS-SEARCH-IDX       PIC 9(3) VALUE 0.
 
-*> Epic 6 - Focus Areas 1 & 2 (no persistence yet)
+*> Epic 6 - job posting input buffer
 01  WS-JOB-DATA.
     05 WS-JOB-TITLE        PIC X(100) VALUE SPACES.
     05 WS-JOB-DESC         PIC X(200) VALUE SPACES.
@@ -191,12 +209,40 @@ WORKING-STORAGE SECTION.
 
 01  WS-JOB-STATUS          PIC XX VALUE "00".
 01  WS-JOB-EOF             PIC X VALUE "N".
-01  WS-NEXT-JOB-ID         PIC 9(4) VALUE 1.
+
+*> In-memory mirror of InCollege-Jobs.txt
+01  WS-JOBS.
+    05 WS-JOB-COUNT        PIC 9(2) VALUE 0.
+    05 WS-JOB-TABLE OCCURS 5 TIMES.
+        10 WS-JTBL-ID       PIC 9(4).
+        10 WS-JTBL-POSTER   PIC X(20).
+        10 WS-JTBL-TITLE    PIC X(100).
+        10 WS-JTBL-DESC     PIC X(200).
+        10 WS-JTBL-EMPLOYER PIC X(100).
+        10 WS-JTBL-LOCATION PIC X(100).
+        10 WS-JTBL-SALARY   PIC X(50).
 *> Network helper items
 01  WS-NETWORK.
     05 WS-NET-COUNT        PIC 99 VALUE 0.
     05 WS-FRIEND-USER      PIC X(20) VALUE SPACES.
     05 WS-FRIEND-IDX       PIC 9(3) VALUE 0.
+
+*> Browse jobs items
+01  WS-APP-STATUS           PIC XX VALUE "00".
+01  WS-BROWSE-VARS.
+           05  WS-DISPLAY-COUNT    PIC 9(3) VALUE 0.
+           05  WS-USER-CHOICE      PIC 9(3) VALUE 0.
+           05  WS-CURRENT-COUNT    PIC 9(3) VALUE 0.
+           05  WS-BROWSE-EOF          PIC X    VALUE 'N'.
+
+01  WS-JOB-HELPER-VARS.
+           05  WS-NEXT-JOB-ID      PIC 9(4) VALUE 1.
+
+01  WS-SELECTED-JOB-VARS.
+           05  WS-SEL-ID           PIC 9(4).
+           05  WS-SEL-TITLE        PIC X(100).
+           05  WS-SEL-EMPLOYER     PIC X(100).
+           05  WS-SEL-LOCATION     PIC X(100).
 
 PROCEDURE DIVISION.
 
@@ -204,6 +250,7 @@ MAIN.
     PERFORM INIT-FILES
     PERFORM LOAD-ACCOUNTS
     PERFORM LOAD-PROFILES
+    PERFORM LOAD-JOBS
     PERFORM MENU-LOOP
     PERFORM CLOSE-FILES
     STOP RUN.
@@ -232,12 +279,12 @@ INIT-FILES.
         CLOSE PROF-FILE
     END-IF
 
-    *> Jobs file: try read existing; if missing, create empty
+    *> Jobs file: ensure it exists; create empty if missing
     OPEN INPUT JOB-FILE
     IF WS-JOB-STATUS = "35"
         CLOSE JOB-FILE
-        CALL "SYSTEM"
-            USING "printf '\n' > data/InCollege-Jobs.txt"
+        OPEN OUTPUT JOB-FILE
+        CLOSE JOB-FILE
     ELSE
         CLOSE JOB-FILE
     END-IF.
@@ -308,6 +355,30 @@ LOAD-PROFILES.
         END-READ
     END-PERFORM
     CLOSE PROF-FILE.
+
+LOAD-JOBS.
+    MOVE 0 TO WS-JOB-COUNT
+    MOVE "N" TO WS-JOB-EOF
+
+    OPEN INPUT JOB-FILE
+    PERFORM UNTIL WS-JOB-EOF = "Y"
+        READ JOB-FILE
+            AT END
+                MOVE "Y" TO WS-JOB-EOF
+            NOT AT END
+                IF WS-JOB-COUNT < 5
+                    ADD 1 TO WS-JOB-COUNT
+                    MOVE JOB-ID            TO WS-JTBL-ID(WS-JOB-COUNT)
+                    MOVE JOB-POSTER        TO WS-JTBL-POSTER(WS-JOB-COUNT)
+                    MOVE JOB-TITLE-FILE    TO WS-JTBL-TITLE(WS-JOB-COUNT)
+                    MOVE JOB-DESC-FILE     TO WS-JTBL-DESC(WS-JOB-COUNT)
+                    MOVE JOB-EMPLOYER-FILE TO WS-JTBL-EMPLOYER(WS-JOB-COUNT)
+                    MOVE JOB-LOCATION-FILE TO WS-JTBL-LOCATION(WS-JOB-COUNT)
+                    MOVE JOB-SALARY-FILE   TO WS-JTBL-SALARY(WS-JOB-COUNT)
+                END-IF
+        END-READ
+    END-PERFORM
+    CLOSE JOB-FILE.
 
 MENU-LOOP.
     PERFORM UNTIL WS-DONE = "Y"
@@ -558,8 +629,7 @@ JOB-MENU.
                 WHEN "1"
                     PERFORM POST-JOB
                 WHEN "2"
-                    MOVE "Browse Jobs/Internships is under construction." TO WS-OUT-LINE
-                    PERFORM PRINT-LINE
+                    PERFORM BROWSE-JOBS
                 WHEN "3"
                     EXIT PERFORM
                 WHEN OTHER
@@ -665,30 +735,34 @@ POST-JOB.
     PERFORM PRINT-LINE.
 
 SAVE-JOB-POSTING.
-    PERFORM FIND-NEXT-JOB-ID
+           PERFORM FIND-NEXT-JOB-ID
+           
+           OPEN EXTEND JOB-FILE
+           
+           *> This fills the record with the "|" values defined in the FD
+           INITIALIZE JOB-REC 
+           
+           MOVE WS-NEXT-JOB-ID      TO JOB-ID
+           MOVE WS-CURR-USER        TO JOB-POSTER
+           MOVE WS-JOB-TITLE        TO JOB-TITLE-FILE
+           MOVE WS-JOB-DESC         TO JOB-DESC-FILE
+           MOVE WS-JOB-EMPLOYER     TO JOB-EMPLOYER-FILE
+           MOVE WS-JOB-LOCATION     TO JOB-LOCATION-FILE
+           MOVE WS-JOB-SALARY       TO JOB-SALARY-FILE
 
-    OPEN EXTEND JOB-FILE
-
-    MOVE WS-NEXT-JOB-ID      TO JOB-ID
-    MOVE WS-CURR-USER        TO JOB-POSTER
-    MOVE WS-JOB-TITLE        TO JOB-TITLE-FILE
-    MOVE WS-JOB-DESC         TO JOB-DESC-FILE
-    MOVE WS-JOB-EMPLOYER     TO JOB-EMPLOYER-FILE
-    MOVE WS-JOB-LOCATION     TO JOB-LOCATION-FILE
-    MOVE WS-JOB-SALARY       TO JOB-SALARY-FILE
-
-    WRITE JOB-REC
-    CLOSE JOB-FILE.
+           WRITE JOB-REC
+           CLOSE JOB-FILE.
 
 FIND-NEXT-JOB-ID.
     MOVE 1 TO WS-NEXT-JOB-ID
-    MOVE "N" TO WS-JOB-EOF
-
+    MOVE "N" TO WS-BROWSE-EOF  *> Use a unique EOF flag
+    
     OPEN INPUT JOB-FILE
-    PERFORM UNTIL WS-JOB-EOF = "Y"
+    *> If file doesn't exist yet (Status 35), COBOL skips the loop
+    PERFORM UNTIL WS-BROWSE-EOF = "Y"
         READ JOB-FILE
             AT END
-                MOVE "Y" TO WS-JOB-EOF
+                MOVE "Y" TO WS-BROWSE-EOF
             NOT AT END
                 IF JOB-ID >= WS-NEXT-JOB-ID
                     COMPUTE WS-NEXT-JOB-ID = JOB-ID + 1
@@ -1656,3 +1730,4 @@ CLOSE-FILES.
        COPY "src/ViewRequests.cob".
        COPY "src/SendRequest.cob".
        COPY "src/ViewNetwork.cob".
+       COPY "src/ApplyJob.cob".
