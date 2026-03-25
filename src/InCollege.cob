@@ -230,8 +230,10 @@ WORKING-STORAGE SECTION.
 01  WS-SELECTED-JOB-VARS.
            05  WS-SEL-ID           PIC 9(4).
            05  WS-SEL-TITLE        PIC X(100).
+           05  WS-SEL-DESC         PIC X(200).
            05  WS-SEL-EMPLOYER     PIC X(100).
            05  WS-SEL-LOCATION     PIC X(100).
+           05  WS-SEL-SALARY       PIC X(50).
 
 *> Duplicate application finding helpers:
 01 WS-APP-FOUND        PIC X VALUE "N".
@@ -603,14 +605,16 @@ POST-LOGIN-MENU.
 *> Epic 6 Focus Area 1
 JOB-MENU.
     MOVE SPACE TO WS-MENU-CHOICE
-    PERFORM UNTIL WS-MENU-CHOICE = "3"
+    PERFORM UNTIL WS-MENU-CHOICE = "4"
         MOVE "Job/Internship Menu:" TO WS-OUT-LINE
         PERFORM PRINT-LINE
         MOVE "1. Post a Job/Internship" TO WS-OUT-LINE
         PERFORM PRINT-LINE
         MOVE "2. Browse Jobs/Internships" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "3. Back to Main Menu" TO WS-OUT-LINE
+        MOVE "3. View My Applications" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "4. Back to Main Menu" TO WS-OUT-LINE
         PERFORM PRINT-LINE
 
         MOVE "Enter your choice:" TO WS-PROMPT
@@ -618,8 +622,8 @@ JOB-MENU.
         PERFORM PRINT-PROMPT-AND-READ
 
         COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
-        IF WS-LEN NOT = 1 OR WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "3"
-            MOVE "Invalid choice. Please enter 1-3." TO WS-OUT-LINE
+        IF WS-LEN NOT = 1 OR WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "4"
+            MOVE "Invalid choice. Please enter 1-4." TO WS-OUT-LINE
             PERFORM PRINT-LINE
         ELSE
             MOVE WS-TOKEN(1:1) TO WS-MENU-CHOICE
@@ -629,9 +633,11 @@ JOB-MENU.
                 WHEN "2"
                     PERFORM BROWSE-JOBS
                 WHEN "3"
+                    PERFORM VIEW-MY-APPLICATIONS
+                WHEN "4"
                     EXIT PERFORM
                 WHEN OTHER
-                    MOVE "Invalid choice. Please enter 1-3." TO WS-OUT-LINE
+                    MOVE "Invalid choice. Please enter 1-4." TO WS-OUT-LINE
                     PERFORM PRINT-LINE
             END-EVALUATE
         END-IF
