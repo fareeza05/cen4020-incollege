@@ -78,9 +78,11 @@ VIEW-JOB-DETAILS.
                            *> CAPTURE THE DATA HERE while the buffer is active
                            MOVE JOB-ID            TO WS-SEL-ID
                            MOVE JOB-TITLE-FILE    TO WS-SEL-TITLE
+                           MOVE JOB-DESC-FILE     TO WS-SEL-DESC
                            MOVE JOB-EMPLOYER-FILE TO WS-SEL-EMPLOYER
                            MOVE JOB-LOCATION-FILE TO WS-SEL-LOCATION
-                           
+                           MOVE JOB-SALARY-FILE   TO WS-SEL-SALARY
+
                            PERFORM APPLY-FOR-JOB-PROMPT
                        END-IF
                END-READ
@@ -90,6 +92,33 @@ VIEW-JOB-DETAILS.
 
 *> Apply for job prompt
 APPLY-FOR-JOB-PROMPT.
+           MOVE "--- Job Details ---" TO WS-OUT-LINE
+           PERFORM PRINT-LINE
+           MOVE SPACES TO WS-OUT-LINE
+           STRING "Title: " FUNCTION TRIM(WS-SEL-TITLE)
+               INTO WS-OUT-LINE
+           END-STRING
+           PERFORM PRINT-LINE
+           MOVE SPACES TO WS-OUT-LINE
+           STRING "Employer: " FUNCTION TRIM(WS-SEL-EMPLOYER)
+               INTO WS-OUT-LINE
+           END-STRING
+           PERFORM PRINT-LINE
+           MOVE SPACES TO WS-OUT-LINE
+           STRING "Location: " FUNCTION TRIM(WS-SEL-LOCATION)
+               INTO WS-OUT-LINE
+           END-STRING
+           PERFORM PRINT-LINE
+           MOVE SPACES TO WS-OUT-LINE
+           STRING "Salary: " FUNCTION TRIM(WS-SEL-SALARY)
+               INTO WS-OUT-LINE
+           END-STRING
+           PERFORM PRINT-LINE
+           MOVE SPACES TO WS-OUT-LINE
+           STRING "Description: " FUNCTION TRIM(WS-SEL-DESC)
+               INTO WS-OUT-LINE
+           END-STRING
+           PERFORM PRINT-LINE
            MOVE "1. Apply for this Job" TO WS-OUT-LINE
            PERFORM PRINT-LINE
            MOVE "2. Back to Job List" TO WS-OUT-LINE
