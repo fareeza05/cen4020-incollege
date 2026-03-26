@@ -5,7 +5,7 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "tests/week7/final/InCollege-Input.txt"
+    SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT OUT-FILE ASSIGN TO "tests/week7/final/InCollege-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
@@ -290,12 +290,12 @@ INIT-FILES.
         CLOSE PROF-FILE
     END-IF
 
-    *> Jobs file: ensure it exists; create empty if missing
+    *> Jobs file: ensure it exists; create with seed if missing
     OPEN INPUT JOB-FILE
     IF WS-JOB-STATUS = "35"
         CLOSE JOB-FILE
-        OPEN OUTPUT JOB-FILE
-        CLOSE JOB-FILE
+        CALL "SYSTEM"
+            USING "printf '\n' > data/InCollege-Jobs.txt"
     ELSE
         CLOSE JOB-FILE
     END-IF.

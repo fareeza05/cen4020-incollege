@@ -1,149 +1,174 @@
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
-2
-Create a username:
-poster7
-Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
-Abcdef1!
-Account created successfully.
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
-1
-Username:
-poster7
-Password:
-Abcdef1!
-You have successfully logged in
-Welcome, poster7!
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. View My Pending Connection Requests
-7. View My Network
-8. Logout
-Enter your choice:
-3
-Job/Internship Menu:
-1. Post a Job/Internship
-2. Browse Jobs/Internships
-3. Back to Main Menu
-Enter your choice:
-1
-Post a Job/Internship
-Enter Job Title: (Required)
-Cybersecurity Intern
-Enter Description: (Required)
-Support SOC workflows
-Enter Employer: (Required)
-SecureOps
-Enter Location: (Required)
-Tampa, FL
-Enter Salary: (Optional)
-27/hour
-Job/Internship posted successfully.
-Title: Cybersecurity Intern
-Description: Support SOC workflows
-Employer: SecureOps
-Location: Tampa, FL
-Salary: 27/hour
-Job/Internship Menu:
-1. Post a Job/Internship
-2. Browse Jobs/Internships
-3. Back to Main Menu
-Enter your choice:
-3
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. View My Pending Connection Requests
-7. View My Network
-8. Logout
-Enter your choice:
-8
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
-2
-Create a username:
-appuser2
-Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
-Abcdef1!
-Account created successfully.
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
-1
-Username:
-appuser2
-Password:
-Abcdef1!
-You have successfully logged in
-Welcome, appuser2!
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. View My Pending Connection Requests
-7. View My Network
-8. Logout
-Enter your choice:
-3
-Job/Internship Menu:
-1. Post a Job/Internship
-2. Browse Jobs/Internships
-3. Back to Main Menu
-Enter your choice:
-2
---- Available Job Listings ---
-No jobs available.
-Job/Internship Menu:
-1. Post a Job/Internship
-2. Browse Jobs/Internships
-3. Back to Main Menu
-Enter your choice:
-1
-Post a Job/Internship
-Enter Job Title: (Required)
-1
-Enter Description: (Required)
-2
-Enter Employer: (Required)
-1
-Enter Location: (Required)
-1
-Enter Salary: (Optional)
-3
-Job/Internship posted successfully.
-Title: 1
-Description: 2
-Employer: 1
-Location: 1
-Salary: 3
-Job/Internship Menu:
-1. Post a Job/Internship
-2. Browse Jobs/Internships
-3. Back to Main Menu
-Enter your choice:
-8
-Invalid choice. Please enter 1-3.
-Job/Internship Menu:
-1. Post a Job/Internship
-2. Browse Jobs/Internships
-3. Back to Main Menu
-Enter your choice:
-Input file ended. Exiting program.
+Welcome to InCollege                                                                                                                                                                                    
+Please choose an option:                                                                                                                                                                                
+1) Log In                                                                                                                                                                                               
+2) Create New Account                                                                                                                                                                                   
+Enter choice (1 or 2):                                                                                                                                                                                  
+2                                                                                                                                                                                                       
+Create a username:                                                                                                                                                                                      
+poster7                                                                                                                                                                                                 
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):                                                                                                                                        
+Abcdef1!                                                                                                                                                                                                
+Account created successfully.                                                                                                                                                                           
+Welcome to InCollege                                                                                                                                                                                    
+Please choose an option:                                                                                                                                                                                
+1) Log In                                                                                                                                                                                               
+2) Create New Account                                                                                                                                                                                   
+Enter choice (1 or 2):                                                                                                                                                                                  
+1                                                                                                                                                                                                       
+Username:                                                                                                                                                                                               
+poster7                                                                                                                                                                                                 
+Password:                                                                                                                                                                                               
+Abcdef1!                                                                                                                                                                                                
+You have successfully logged in                                                                                                                                                                         
+Welcome, poster7!                                                                                                                                                                                       
+1. Create/edit my profile                                                                                                                                                                               
+2. View my profile                                                                                                                                                                                      
+3. Search for a job                                                                                                                                                                                     
+4. Find someone you know                                                                                                                                                                                
+5. Learn a new skill                                                                                                                                                                                    
+6. View My Pending Connection Requests                                                                                                                                                                  
+7. View My Network                                                                                                                                                                                      
+8. Logout                                                                                                                                                                                               
+Enter your choice:                                                                                                                                                                                      
+3                                                                                                                                                                                                       
+Job/Internship Menu:                                                                                                                                                                                    
+1. Post a Job/Internship                                                                                                                                                                                
+2. Browse Jobs/Internships                                                                                                                                                                              
+3. View My Applications                                                                                                                                                                                 
+4. Back to Main Menu                                                                                                                                                                                    
+Enter your choice:                                                                                                                                                                                      
+1                                                                                                                                                                                                       
+Post a Job/Internship                                                                                                                                                                                   
+Enter Job Title: (Required)                                                                                                                                                                             
+Cybersecurity Intern                                                                                                                                                                                    
+Enter Description: (Required)                                                                                                                                                                           
+Support SOC workflows                                                                                                                                                                                   
+Enter Employer: (Required)                                                                                                                                                                              
+SecureOps                                                                                                                                                                                               
+Enter Location: (Required)                                                                                                                                                                              
+Tampa, FL                                                                                                                                                                                               
+Enter Salary: (Optional)                                                                                                                                                                                
+27/hour                                                                                                                                                                                                 
+Job/Internship posted successfully.                                                                                                                                                                     
+Title: Cybersecurity Intern                                                                                                                                                                             
+Description: Support SOC workflows                                                                                                                                                                      
+Employer: SecureOps                                                                                                                                                                                     
+Location: Tampa, FL                                                                                                                                                                                     
+Salary: 27/hour                                                                                                                                                                                         
+Job/Internship Menu:                                                                                                                                                                                    
+1. Post a Job/Internship                                                                                                                                                                                
+2. Browse Jobs/Internships                                                                                                                                                                              
+3. View My Applications                                                                                                                                                                                 
+4. Back to Main Menu                                                                                                                                                                                    
+Enter your choice:                                                                                                                                                                                      
+3                                                                                                                                                                                                       
+--- Your Job Applications ---                                                                                                                                                                           
+Application Summary for poster7                                                                                                                                                                         
+------------------------------                                                                                                                                                                          
+------------------------------                                                                                                                                                                          
+Total Applications:                                                                                                                                                                                     
+------------------------------                                                                                                                                                                          
+Job/Internship Menu:                                                                                                                                                                                    
+1. Post a Job/Internship                                                                                                                                                                                
+2. Browse Jobs/Internships                                                                                                                                                                              
+3. View My Applications                                                                                                                                                                                 
+4. Back to Main Menu                                                                                                                                                                                    
+Enter your choice:                                                                                                                                                                                      
+8                                                                                                                                                                                                       
+Invalid choice. Please enter 1-4.                                                                                                                                                                       
+Job/Internship Menu:                                                                                                                                                                                    
+1. Post a Job/Internship                                                                                                                                                                                
+2. Browse Jobs/Internships                                                                                                                                                                              
+3. View My Applications                                                                                                                                                                                 
+4. Back to Main Menu                                                                                                                                                                                    
+Enter your choice:                                                                                                                                                                                      
+2                                                                                                                                                                                                       
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+appuser2                                                                                                                                                                                                
+Invalid input. Please enter a number.                                                                                                                                                                   
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+Abcdef1!                                                                                                                                                                                                
+Invalid input. Please enter a number.                                                                                                                                                                   
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+1                                                                                                                                                                                                       
+--- Job Details ---                                                                                                                                                                                     
+Title: Cybersecurity Intern                                                                                                                                                                             
+Employer: SecureOps                                                                                                                                                                                     
+Location: Tampa, FL                                                                                                                                                                                     
+Salary: 27/hour                                                                                                                                                                                         
+Description: Support SOC workflows                                                                                                                                                                      
+1. Apply for this Job                                                                                                                                                                                   
+2. Back to Job List                                                                                                                                                                                     
+Enter your choice:                                                                                                                                                                                      
+appuser2                                                                                                                                                                                                
+Invalid choice. Please enter 1 or 2.                                                                                                                                                                    
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+Abcdef1!                                                                                                                                                                                                
+Invalid input. Please enter a number.                                                                                                                                                                   
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+3                                                                                                                                                                                                       
+Invalid choice. Enter a number between 0 and 001.                                                                                                                                                       
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+2                                                                                                                                                                                                       
+Invalid choice. Enter a number between 0 and 001.                                                                                                                                                       
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+1                                                                                                                                                                                                       
+--- Job Details ---                                                                                                                                                                                     
+Title: Cybersecurity Intern                                                                                                                                                                             
+Employer: SecureOps                                                                                                                                                                                     
+Location: Tampa, FL                                                                                                                                                                                     
+Salary: 27/hour                                                                                                                                                                                         
+Description: Support SOC workflows                                                                                                                                                                      
+1. Apply for this Job                                                                                                                                                                                   
+2. Back to Job List                                                                                                                                                                                     
+Enter your choice:                                                                                                                                                                                      
+1                                                                                                                                                                                                       
+Your application for Cybersecurity Intern at SecureOps has been submitted.                                                                                                                              
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+2                                                                                                                                                                                                       
+Invalid choice. Enter a number between 0 and 001.                                                                                                                                                       
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+1                                                                                                                                                                                                       
+--- Job Details ---                                                                                                                                                                                     
+Title: Cybersecurity Intern                                                                                                                                                                             
+Employer: SecureOps                                                                                                                                                                                     
+Location: Tampa, FL                                                                                                                                                                                     
+Salary: 27/hour                                                                                                                                                                                         
+Description: Support SOC workflows                                                                                                                                                                      
+1. Apply for this Job                                                                                                                                                                                   
+2. Back to Job List                                                                                                                                                                                     
+Enter your choice:                                                                                                                                                                                      
+1                                                                                                                                                                                                       
+You have already applied to this job.                                                                                                                                                                   
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+3                                                                                                                                                                                                       
+Invalid choice. Enter a number between 0 and 001.                                                                                                                                                       
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+8                                                                                                                                                                                                       
+Invalid choice. Enter a number between 0 and 001.                                                                                                                                                       
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cybersecurity Intern at SecureOps                                                                                                                                                                  
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+Input file ended. Exiting program.                                                                                                                                                                      
