@@ -224,3 +224,93 @@ APPLY-TO-JOB.
 
     PERFORM PRINT-LINE.
     
+VIEW-MY-APPLICATIONS.
+
+    MOVE 0 TO WS-APP-VIEW-COUNT
+    MOVE "N" TO WS-APP-VIEW-EOF
+
+    MOVE "--- Your Job Applications ---" TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+
+    MOVE SPACES TO WS-OUT-LINE
+    STRING "Application Summary for "
+           FUNCTION TRIM(WS-CURR-USER)
+        INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    MOVE "------------------------------" TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+
+    OPEN INPUT APPLICATION-FILE
+
+    IF WS-APP-STATUS = "35"
+        MOVE "No applications found." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        CLOSE APPLICATION-FILE
+        EXIT PARAGRAPH
+    END-IF
+
+    PERFORM UNTIL WS-APP-VIEW-EOF = "Y"
+
+        READ APPLICATION-FILE
+            AT END
+                MOVE "Y" TO WS-APP-VIEW-EOF
+
+            NOT AT END
+
+                *> Extract fields (based on your layout)
+                MOVE APPLICATION-REC (1:20)   TO WS-VIEW-USER
+                MOVE APPLICATION-REC (22:40)  TO WS-VIEW-TITLE
+                MOVE APPLICATION-REC (65:40)  TO WS-VIEW-EMPLOYER
+                MOVE APPLICATION-REC (110:40) TO WS-VIEW-LOCATION
+
+                IF FUNCTION TRIM(WS-VIEW-USER) = FUNCTION TRIM(WS-CURR-USER)
+
+                    ADD 1 TO WS-APP-VIEW-COUNT
+
+                    MOVE SPACES TO WS-OUT-LINE
+                    STRING "Job Title: "
+                           FUNCTION TRIM(WS-VIEW-TITLE)
+                        INTO WS-OUT-LINE
+                    END-STRING
+                    PERFORM PRINT-LINE
+
+                    MOVE SPACES TO WS-OUT-LINE
+                    STRING "Employer: "
+                           FUNCTION TRIM(WS-VIEW-EMPLOYER)
+                        INTO WS-OUT-LINE
+                    END-STRING
+                    PERFORM PRINT-LINE
+
+                    MOVE SPACES TO WS-OUT-LINE
+                    STRING "Location: "
+                           FUNCTION TRIM(WS-VIEW-LOCATION)
+                        INTO WS-OUT-LINE
+                    END-STRING
+                    PERFORM PRINT-LINE
+
+                    MOVE "---" TO WS-OUT-LINE
+                    PERFORM PRINT-LINE
+
+                END-IF
+
+        END-READ
+
+    END-PERFORM
+
+    CLOSE APPLICATION-FILE
+
+    MOVE "------------------------------" TO WS-OUT-LINE
+    PERFORM PRINT-LINE
+
+    MOVE SPACES TO WS-OUT-LINE
+    MOVE WS-APP-VIEW-COUNT TO WS-APP-VIEW-COUNT-DISPLAY
+    STRING "Total Applications: "
+           WS-APP-VIEW-COUNT-DISPLAY
+        INTO WS-OUT-LINE
+    END-STRING
+    PERFORM PRINT-LINE
+
+    MOVE "------------------------------" TO WS-OUT-LINE
+    PERFORM PRINT-LINE.
