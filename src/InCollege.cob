@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
+    SELECT IN-FILE ASSIGN TO "tests/week7/jawaad/SAP-EDGE-02.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "tests/week7/jawaad/SAP-EDGE-02-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -633,7 +633,7 @@ JOB-MENU.
                 WHEN "2"
                     PERFORM BROWSE-JOBS
                 WHEN "3"
-                    PERFORM VIEW-MY-APPLICATIONS
+                    *>PERFORM VIEW-MY-APPLICATIONS
                 WHEN "4"
                     EXIT PERFORM
                 WHEN OTHER
@@ -739,12 +739,24 @@ POST-JOB.
     PERFORM PRINT-LINE.
 
 SAVE-JOB-POSTING.
+
            PERFORM FIND-NEXT-JOB-ID
            
            OPEN EXTEND JOB-FILE
+
+           IF WS-JOB-STATUS = "35"
+               OPEN OUTPUT JOB-FILE
+               CLOSE JOB-FILE
+               OPEN EXTEND JOB-FILE
+           END-IF
+
+           IF WS-JOB-STATUS NOT = "00"
+               MOVE "Error saving job posting." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               EXIT PARAGRAPH
+           END-IF
            
-           *> This fills the record with the "|" values defined in the FD
-           INITIALIZE JOB-REC 
+           MOVE SPACES TO JOB-REC
            
            MOVE WS-NEXT-JOB-ID      TO JOB-ID
            MOVE WS-CURR-USER        TO JOB-POSTER
@@ -755,6 +767,12 @@ SAVE-JOB-POSTING.
            MOVE WS-JOB-SALARY       TO JOB-SALARY-FILE
 
            WRITE JOB-REC
+
+           IF WS-JOB-STATUS NOT = "00"
+               MOVE "Write failed for job posting." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+           END-IF
+
            CLOSE JOB-FILE.
 
 FIND-NEXT-JOB-ID.
@@ -1735,3 +1753,4 @@ CLOSE-FILES.
        COPY "src/SendRequest.cob".
        COPY "src/ViewNetwork.cob".
        COPY "src/ApplyJob.cob".
+       
