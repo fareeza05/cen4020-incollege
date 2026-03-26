@@ -43,8 +43,8 @@ Description: Support cloud deployment tasks
 1. Apply for this Job
 2. Back to Job List
 Enter your choice:
-2
-Returning to job list...
+1
+Your application for Cloud at SkyNet has been submitted.
 Job/Internship Menu:
 1. Post a Job/Internship
 2. Browse Jobs/Internships
@@ -53,6 +53,77 @@ Job/Internship Menu:
 Enter your choice:
 0
 Invalid choice. Please enter 1-4.
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. View My Applications
+4. Back to Main Menu
+Enter your choice:
+3
+--- Your Job Applications ---
+Application Summary for browseu1
+------------------------------
+Job Title: Cloud Intern
+Employer: SkyNet Systems
+Location: Remote
+---
+------------------------------
+Total Applications:    1
+------------------------------
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. View My Applications
+4. Back to Main Menu
+Enter your choice:
+2
+--- Available Job Listings ---
+001. Cloud Intern at SkyNet Systems
+002. Mobile App Intern at AppForge
+003. Cloud Intern at SkyNet Systems
+004. Mobile App Intern at AppForge
+Enter job number to view details, or 0 to go back:
+2
+--- Job Details ---
+Title: Mobile App Intern
+Employer: AppForge
+Location: Miami, FL
+Salary: 26/hour
+Description: Assist with app development
+1. Apply for this Job
+2. Back to Job List
+Enter your choice:
+1
+Your application for Mobile at AppForge has been submitted.
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. View My Applications
+4. Back to Main Menu
+Enter your choice:
+0
+Invalid choice. Please enter 1-4.
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. View My Applications
+4. Back to Main Menu
+Enter your choice:
+3
+--- Your Job Applications ---
+Application Summary for browseu1
+------------------------------
+Job Title: Cloud Intern
+Employer: SkyNet Systems
+Location: Remote
+---
+Job Title: Mobile App Intern
+Employer: AppForge
+Location: Miami, FL
+---
+------------------------------
+Total Applications:    2
+------------------------------
 Job/Internship Menu:
 1. Post a Job/Internship
 2. Browse Jobs/Internships
