@@ -1,0 +1,128 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+poster6
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Abcdef1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+poster6
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, poster6!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+3
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+1
+Post a Job/Internship
+Enter Job Title: (Required)
+Backend Intern
+Enter Description: (Required)
+Build APIs and services
+Enter Employer: (Required)
+ServerSide Inc
+Enter Location: (Required)
+Austin, TX
+Enter Salary: (Optional)
+28/hour
+Job/Internship posted successfully.
+Title: Backend Intern
+Description: Build APIs and services
+Employer: ServerSide Inc
+Location: Austin, TX
+Salary: 28/hour
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+3
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+8
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+appuser1
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Abcdef1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+appuser1
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, appuser1!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+3
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+2
+--- Available Job Listings ---
+No jobs available.
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+1
+Post a Job/Internship
+Enter Job Title: (Required)
+1
+Enter Description: (Required)
+3
+Enter Employer: (Required)
+8
+Enter Location: (Required)
+Input file ended. Exiting program.

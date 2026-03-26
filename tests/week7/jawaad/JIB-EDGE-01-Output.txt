@@ -1,0 +1,139 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+poster5
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Abcdef1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+poster5
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, poster5!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+3
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+1
+Post a Job/Internship
+Enter Job Title: (Required)
+Systems Intern
+Enter Description: (Required)
+Help with system scripts
+Enter Employer: (Required)
+InfraCorp
+Enter Location: (Required)
+Orlando, FL
+Enter Salary: (Optional)
+23/hour
+Job/Internship posted successfully.
+Title: Systems Intern
+Description: Help with system scripts
+Employer: InfraCorp
+Location: Orlando, FL
+Salary: 23/hour
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+3
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+8
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+viewer5
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Abcdef1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+viewer5
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, viewer5!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+3
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+2
+--- Available Job Listings ---
+001. Perform manual and automated regression testing. Do at San Francisco, CA
+002. Develop tools for testing at New York, NY
+003. Systems Intern at InfraCorp
+Enter job number to view details, or 0 to go back:
+0
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+3
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+8
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Input file ended. Exiting program.
