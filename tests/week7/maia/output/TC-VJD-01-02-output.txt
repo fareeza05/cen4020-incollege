@@ -1,0 +1,91 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+username1
+Password:
+Password1!
+You have successfully logged in
+Welcome, username1!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+3
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. View My Applications
+4. Back to Main Menu
+Enter your choice:
+2
+--- Available Job Listings ---
+001. Software Intern at Google
+002. Junior Web Developer at Creative Pulse Agency
+003. QA Testing Intern at AppVenture Labs
+Enter job number to view details, or 0 to go back:
+1
+1. Apply for this Job
+2. Back to Job List
+Enter your choice:
+2
+Returning to job list...
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. View My Applications
+4. Back to Main Menu
+Enter your choice:
+3
+View My Applications - Under Construction
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. View My Applications
+4. Back to Main Menu
+Enter your choice:
+2
+--- Available Job Listings ---
+001. Software Intern at Google
+002. Junior Web Developer at Creative Pulse Agency
+003. QA Testing Intern at AppVenture Labs
+Enter job number to view details, or 0 to go back:
+0
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. View My Applications
+4. Back to Main Menu
+Enter your choice:
+4
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+8
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+
+Invalid selection. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Input file ended. Exiting program.
