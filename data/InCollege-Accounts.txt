@@ -1,4 +1,5 @@
-username1           Password1!
-username2           Password2!
-username3           Password3!
-MaiaTest            #Software1
+browseu1            Abcdef1!
+
+poster2             Abcdef1!
+viewer2             Abcdef1!
+TestJobUser         Password12!
