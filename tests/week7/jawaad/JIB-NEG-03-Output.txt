@@ -1,0 +1,142 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+poster4
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Abcdef1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+poster4
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, poster4!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+3
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+1
+Post a Job/Internship
+Enter Job Title: (Required)
+Web Developer Intern
+Enter Description: (Required)
+Build front-end pages
+Enter Employer: (Required)
+WebCo
+Enter Location: (Required)
+Remote
+Enter Salary: (Optional)
+22/hour
+Job/Internship posted successfully.
+Title: Web Developer Intern
+Description: Build front-end pages
+Employer: WebCo
+Location: Remote
+Salary: 22/hour
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+3
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+8
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+viewer4
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Abcdef1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+viewer4
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, viewer4!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+3
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+2
+--- Available Job Listings ---
+No jobs available.
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+5
+Invalid choice. Please enter 1-3.
+Job/Internship Menu:
+1. Post a Job/Internship
+2. Browse Jobs/Internships
+3. Back to Main Menu
+Enter your choice:
+3
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Logout
+Enter your choice:
+8
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Input file ended. Exiting program.
