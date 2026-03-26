@@ -1,0 +1,26 @@
+2
+TestJobUser
+Password12!
+1
+TestJobUser
+Password12!
+3
+1
+Cloud Intern
+Support cloud deployment tasks
+SkyNet Systems
+Remote
+30/hour
+1
+Mobile App Intern
+Assist with app development
+AppForge
+Miami, FL
+26/hour
+2
+1
+1
+2
+2
+1
+3
