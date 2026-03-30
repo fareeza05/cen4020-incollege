@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "tests/week8/fareeza/menu_test.txt"
+    SELECT IN-FILE ASSIGN TO "tests/week8/fareeza/send_test.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "tests/week8/fareeza/menu_test-out.txt"
+    SELECT OUT-FILE ASSIGN TO "tests/week8/fareeza/send_test_out.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -564,7 +564,7 @@ SAVE-ACCOUNTS.
 
 POST-LOGIN-MENU.
     MOVE SPACE TO WS-MENU-CHOICE
-    PERFORM UNTIL WS-MENU-CHOICE = "8"
+    PERFORM UNTIL WS-MENU-CHOICE = "9"
         MOVE "1. Create/edit my profile" TO WS-OUT-LINE
         PERFORM PRINT-LINE
         MOVE "2. View my profile" TO WS-OUT-LINE
@@ -974,7 +974,7 @@ VALIDATE-MENU-1-7.
         EXIT PARAGRAPH
     END-IF
 
-    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "8"
+    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "9"
         MOVE "N" TO WS-VALID
         EXIT PARAGRAPH
     END-IF
