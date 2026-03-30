@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "tests/week7/final/InCollege-Input.txt"
+    SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "tests/week7/final/InCollege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -254,6 +254,12 @@ WORKING-STORAGE SECTION.
 01 WS-VIEW-LOCATION       PIC X(100).
 
 01 WS-APP-VIEW-COUNT-DISPLAY PIC Z(4).
+
+*> For Messaging menu
+01  WS-MESSAGING-UI-VARS.
+           05  WS-EXIT-MSG-MENU    PIC X VALUE "N".
+           05  WS-MSG-RECIPIENT    PIC X(20).
+           05  WS-CONNECTION-FOUND PIC X VALUE "N".
 
 PROCEDURE DIVISION.
 
@@ -558,7 +564,7 @@ SAVE-ACCOUNTS.
 
 POST-LOGIN-MENU.
     MOVE SPACE TO WS-MENU-CHOICE
-    PERFORM UNTIL WS-MENU-CHOICE = "8"
+    PERFORM UNTIL WS-MENU-CHOICE = "9"
         MOVE "1. Create/edit my profile" TO WS-OUT-LINE
         PERFORM PRINT-LINE
         MOVE "2. View my profile" TO WS-OUT-LINE
@@ -573,7 +579,9 @@ POST-LOGIN-MENU.
         PERFORM PRINT-LINE
         MOVE "7. View My Network" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "8. Logout" TO WS-OUT-LINE
+        MOVE "8. Messages" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "9. Logout" TO WS-OUT-LINE
         PERFORM PRINT-LINE
 
         MOVE "Enter your choice:" TO WS-PROMPT
@@ -606,6 +614,8 @@ POST-LOGIN-MENU.
             WHEN "7"
                 PERFORM VIEW-NETWORK
             WHEN "8"
+                PERFORM MESSAGING-MENU
+            WHEN "9"
                 EXIT PERFORM
             WHEN OTHER
                 MOVE "Invalid choice. Please enter 1-8." TO WS-OUT-LINE
@@ -964,7 +974,7 @@ VALIDATE-MENU-1-7.
         EXIT PARAGRAPH
     END-IF
 
-    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "8"
+    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "9"
         MOVE "N" TO WS-VALID
         EXIT PARAGRAPH
     END-IF
@@ -1764,4 +1774,5 @@ CLOSE-FILES.
        COPY "src/SendRequest.cob".
        COPY "src/ViewNetwork.cob".
        COPY "src/ApplyJob.cob".
+       COPY "src/SendMessage.cob".
        

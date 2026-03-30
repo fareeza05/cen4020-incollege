@@ -1,0 +1,152 @@
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+ConnTester
+That username already exists. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+Password2!
+Invalid selection. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+ConnTester
+Password:
+Password2!
+You have successfully logged in
+Welcome, ConnTester!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+George
+Enter Last Name: (Required)
+Smith
+Enter University/College Attended: (Required)
+Example University
+Enter Major: (Required)
+Computer Science
+Enter Graduation Year (YYYY): (Required)
+2026
+Enter About (short bio): (Optional)
+Aspiring engineer
+Add Experience (optional, enter DONE to finish):
+DONE
+Add Education (optional, enter DONE to finish):
+DONE
+Profile saved.
+Press 'X' to return to menu.
+X
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+9
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+MenuTester
+Password:
+Password1!
+You have successfully logged in
+Welcome, MenuTester!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+4
+Enter the full name of the person you are looking for:
+George Smith
+--- Found User Profile ---
+Name: George Smith
+University: Example University
+Major: Computer Science
+Graduation Year: 2026
+About Me: Aspiring engineer
+Experience: None
+Education: None
+------------------------
+1. Send Connection Request
+2. Back to Main Menu
+Enter your choice:
+1
+You are already connected with this user.
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+9
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+ConnTester
+Password:
+Password2!
+You have successfully logged in
+Welcome, ConnTester!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+8
+Enter your choice:
+1
+Enter recipient's username (must be a connection):
+
+MenuTester
+User is able to send a message to a connection.
+Enter your choice:
+Input file ended. Exiting program.

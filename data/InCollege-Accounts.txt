@@ -1,5 +1,3 @@
-browseu1            Abcdef1!
 
-poster2             Abcdef1!
-viewer2             Abcdef1!
-TestJobUser         Password12!
+MenuTester          Password1!
+ConnTester          Password2!
