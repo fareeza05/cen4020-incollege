@@ -684,6 +684,16 @@ POST-JOB.
         PERFORM PRINT-LINE
         EXIT PARAGRAPH
     END-IF
+    IF WS-LEN > 100
+        MOVE "Error: Job Title cannot exceed 100 characters." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    IF FUNCTION TRIM(WS-TOKEN, TRAILING) IS NUMERIC
+        MOVE "Error: Job Title cannot be purely numeric." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
     MOVE WS-TOKEN TO WS-JOB-TITLE
 
     MOVE "Enter Description: (Required)" TO WS-PROMPT

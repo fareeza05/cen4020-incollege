@@ -57,7 +57,28 @@ SEND-MESSAGE-FLOW.
            
            MOVE " " TO WS-PROMPT.
            PERFORM PRINT-PROMPT-AND-READ.
+           *> Reject blank username
+           IF FUNCTION TRIM(WS-TOKEN, TRAILING) = SPACES
+               MOVE "Error: Username cannot be blank." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               EXIT PARAGRAPH
+           END-IF.
+
+           *> Reject input longer than 20 characters (overflow guard)
+           IF FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN, TRAILING)) > 20
+               MOVE "Error: Username cannot exceed 20 characters." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               EXIT PARAGRAPH
+           END-IF.
+
            MOVE WS-TOKEN TO WS-MSG-RECIPIENT.
+
+           *> Reject purely numeric usernames
+           IF FUNCTION TRIM(WS-MSG-RECIPIENT, TRAILING) IS NUMERIC
+               MOVE "Error: Username cannot be purely numeric." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               EXIT PARAGRAPH
+           END-IF.
 
            *> Trigger the Gatekeeper
            PERFORM CHECK-CONNECTION-VALIDITY.

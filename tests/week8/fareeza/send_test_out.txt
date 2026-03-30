@@ -147,6 +147,6 @@ Enter your choice:
 Enter recipient's username (must be a connection):
 
 MenuTester
-User is able to send a message to a connection.
+User is able to send a message to this connection.
 Enter your choice:
 Input file ended. Exiting program.
