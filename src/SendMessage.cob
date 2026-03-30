@@ -84,11 +84,59 @@ SEND-MESSAGE-FLOW.
            PERFORM CHECK-CONNECTION-VALIDITY.
 
            IF WS-CONNECTION-FOUND = "Y"
-               *> Feature 3: This is where you'd call the content input
-               MOVE "User is able to send a message to this connection." TO WS-OUT-LINE
-               PERFORM PRINT-LINE
-               *>PERFORM GET-MESSAGE-CONTENT
+               PERFORM GET-MESSAGE-CONTENT
            ELSE
                MOVE "Error: You can only message users you are connected with." TO WS-OUT-LINE
                PERFORM PRINT-LINE
            END-IF.
+
+GET-MESSAGE-CONTENT.
+           MOVE "Enter your message (max 200 chars):" TO WS-PROMPT
+           MOVE "X" TO WS-DEST-KIND
+           PERFORM PRINT-PROMPT-AND-READ
+
+           IF FUNCTION TRIM(WS-TOKEN, TRAILING) = SPACES
+               MOVE "Error: Message cannot be blank." TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               EXIT PARAGRAPH
+           END-IF
+
+           MOVE WS-TOKEN TO WS-MSG-CONTENT
+           PERFORM SAVE-MESSAGE
+
+           MOVE SPACES TO WS-OUT-LINE
+           STRING "Message sent to "
+                  FUNCTION TRIM(WS-MSG-RECIPIENT)
+                  " successfully!"
+             INTO WS-OUT-LINE
+           END-STRING
+           PERFORM PRINT-LINE.
+
+SAVE-MESSAGE.
+           MOVE FUNCTION CURRENT-DATE TO WS-RAW-DATE
+
+           MOVE SPACES TO WS-MSG-TIMESTAMP
+           STRING WS-RAW-DATE(1:4) "-"
+                  WS-RAW-DATE(5:2) "-"
+                  WS-RAW-DATE(7:2) " "
+                  WS-RAW-DATE(9:2) ":"
+                  WS-RAW-DATE(11:2) ":"
+                  WS-RAW-DATE(13:2)
+             INTO WS-MSG-TIMESTAMP
+           END-STRING
+
+           OPEN EXTEND MESSAGE-FILE
+
+           MOVE SPACES TO MESSAGE-REC
+           STRING WS-CURR-USER DELIMITED BY SIZE
+                  "|" DELIMITED BY SIZE
+                  WS-MSG-RECIPIENT DELIMITED BY SIZE
+                  "|" DELIMITED BY SIZE
+                  WS-MSG-CONTENT DELIMITED BY SIZE
+                  "|" DELIMITED BY SIZE
+                  WS-MSG-TIMESTAMP DELIMITED BY SIZE
+             INTO MESSAGE-REC
+           END-STRING
+
+           WRITE MESSAGE-REC
+           CLOSE MESSAGE-FILE.

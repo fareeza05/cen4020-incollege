@@ -29,6 +29,10 @@ FILE-CONTROL.
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-APP-STATUS.
 
+    SELECT MESSAGE-FILE ASSIGN TO "data/InCollege-Messages.txt"
+        ORGANIZATION IS LINE SEQUENTIAL
+        FILE STATUS IS WS-MSG-STATUS.
+
 DATA DIVISION.
 FILE SECTION.
 
@@ -91,6 +95,9 @@ FD  JOB-FILE.
 
 FD APPLICATION-FILE.
 01 APPLICATION-REC PIC X(200).
+
+FD  MESSAGE-FILE.
+01  MESSAGE-REC                PIC X(263).
 
 WORKING-STORAGE SECTION.
 
@@ -261,6 +268,12 @@ WORKING-STORAGE SECTION.
            05  WS-MSG-RECIPIENT    PIC X(20).
            05  WS-CONNECTION-FOUND PIC X VALUE "N".
 
+*> For message persistence
+01  WS-MSG-STATUS              PIC XX VALUE "00".
+01  WS-MSG-CONTENT             PIC X(200) VALUE SPACES.
+01  WS-RAW-DATE                PIC X(21) VALUE SPACES.
+01  WS-MSG-TIMESTAMP           PIC X(20) VALUE SPACES.
+
 PROCEDURE DIVISION.
 
 MAIN.
@@ -294,6 +307,16 @@ INIT-FILES.
        CLOSE PROF-FILE
     ELSE
         CLOSE PROF-FILE
+    END-IF
+
+    *> Messages file: ensure it exists; create with seed if missing
+    OPEN INPUT MESSAGE-FILE
+    IF WS-MSG-STATUS = "35"
+        CLOSE MESSAGE-FILE
+        CALL "SYSTEM" USING
+            "printf '%263s\n' '' > data/InCollege-Messages.txt"
+    ELSE
+        CLOSE MESSAGE-FILE
     END-IF
 
     *> Jobs file: ensure it exists; create empty if missing
