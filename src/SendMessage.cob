@@ -1,25 +1,34 @@
 MESSAGING-MENU.
            MOVE "N" TO WS-EXIT-MSG-MENU.
-           
+
            PERFORM UNTIL WS-EXIT-MSG-MENU = "Y"
-               DISPLAY " "
-               DISPLAY "--- Messages Menu ---"
-               DISPLAY "1. Send a New Message"
-               DISPLAY "2. View My Messages"
-               DISPLAY "3. Back to Main Menu"
-               
+               MOVE " " TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               MOVE "--- Messages Menu ---" TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               MOVE "1. Send a New Message" TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               MOVE "2. View My Messages" TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+               MOVE "3. Back to Main Menu" TO WS-OUT-LINE
+               PERFORM PRINT-LINE
+
                MOVE "Enter your choice: " TO WS-PROMPT
                PERFORM PRINT-PROMPT-AND-READ
-               
+
                EVALUATE WS-TOKEN
                    WHEN "1"
                        PERFORM SEND-MESSAGE-FLOW
                    WHEN "2"
-                       DISPLAY "View My Messages is under construction."
+                       MOVE "View My Messages is under construction."
+                           TO WS-OUT-LINE
+                       PERFORM PRINT-LINE
                    WHEN "3"
                        MOVE "Y" TO WS-EXIT-MSG-MENU
                    WHEN OTHER
-                       DISPLAY "Invalid choice. Please enter 1, 2, or 3."
+                       MOVE "Invalid choice. Please enter 1, 2, or 3."
+                           TO WS-OUT-LINE
+                       PERFORM PRINT-LINE
                END-EVALUATE
            END-PERFORM.
 
