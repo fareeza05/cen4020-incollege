@@ -1,1 +1,2 @@
-MenuTester          |ConnTester          |ACCEPTED
+sender5             |recv5               |ACCEPTED
+sender6             |recv6               |ACCEPTED
