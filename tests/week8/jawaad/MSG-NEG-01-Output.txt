@@ -5,7 +5,18 @@ Please choose an option:
 Enter choice (1 or 2):
 2
 Create a username:
-msgneg1
+sender6
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Abcdef1!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+2
+Create a username:
+recv6
 Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
 Abcdef1!
 Account created successfully.
@@ -16,11 +27,158 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-msgneg1
+recv6
 Password:
 Abcdef1!
 You have successfully logged in
-Welcome, msgneg1!
+Welcome, recv6!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
+Rec
+Enter Last Name: (Required)
+Six
+Enter University/College Attended: (Required)
+USF
+Enter Major: (Required)
+Eng
+Enter Graduation Year (YYYY): (Required)
+2029
+Enter About (short bio): (Optional)
+
+Add Experience (optional, enter DONE to finish):
+DONE
+Add Education (optional, enter DONE to finish):
+DONE
+Profile saved.
+Press 'X' to return to menu.
+X
+-------------------
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+9
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+sender6
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, sender6!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+4
+Enter the full name of the person you are looking for:
+Rec Six
+--- Found User Profile ---
+Name: Rec Six
+University: USF
+Major: Eng
+Graduation Year: 2029
+About Me:
+Experience: None
+Education: None
+------------------------
+1. Send Connection Request
+2. Back to Main Menu
+Enter your choice:
+1
+Connection request sent to Rec Six.
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+9
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+recv6
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, recv6!
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+6
+--- Pending Connection Requests ---
+
+Request from: sender6
+1. Accept
+2. Reject
+Enter your choice for sender6:
+1
+Connection request from sender6 accepted.
+1. Create/edit my profile
+2. View my profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. View My Pending Connection Requests
+7. View My Network
+8. Messages
+9. Logout
+Enter your choice:
+9
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
+1
+Username:
+sender6
+Password:
+Abcdef1!
+You have successfully logged in
+Welcome, sender6!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -32,19 +190,12 @@ Welcome, msgneg1!
 9. Logout
 Enter your choice:
 8
-
---- Messages Menu ---
-1. Send a New Message
-2. View My Messages
-3. Back to Main Menu
 Enter your choice:
-5
-Invalid choice. Please enter 1, 2, or 3.
+1
+Enter recipient's username (must be a connection):
 
---- Messages Menu ---
-1. Send a New Message
-2. View My Messages
-3. Back to Main Menu
+123456
+Error: Username cannot be purely numeric.
 Enter your choice:
 3
 1. Create/edit my profile
