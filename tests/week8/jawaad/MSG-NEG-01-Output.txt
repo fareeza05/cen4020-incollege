@@ -32,8 +32,19 @@ Welcome, msgneg1!
 9. Logout
 Enter your choice:
 8
+
+--- Messages Menu ---
+1. Send a New Message
+2. View My Messages
+3. Back to Main Menu
 Enter your choice:
 5
+Invalid choice. Please enter 1, 2, or 3.
+
+--- Messages Menu ---
+1. Send a New Message
+2. View My Messages
+3. Back to Main Menu
 Enter your choice:
 3
 1. Create/edit my profile
