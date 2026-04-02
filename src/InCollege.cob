@@ -323,8 +323,8 @@ INIT-FILES.
     OPEN INPUT JOB-FILE
     IF WS-JOB-STATUS = "35"
         CLOSE JOB-FILE
-        OPEN OUTPUT JOB-FILE
-        CLOSE JOB-FILE
+        CALL "SYSTEM"
+            USING "printf '\n' > data/InCollege-Jobs.txt"
     ELSE
         CLOSE JOB-FILE
     END-IF.

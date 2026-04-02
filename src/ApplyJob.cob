@@ -2,36 +2,44 @@
 
 *> Browse jobs feature: display all jobs and allow user to select one for details
 BROWSE-JOBS.
-           MOVE "--- Available Job Listings ---" TO WS-OUT-LINE
-           PERFORM PRINT-LINE
-           
-           MOVE 0 TO WS-DISPLAY-COUNT
-           MOVE "N" TO WS-BROWSE-EOF
-           
-           OPEN INPUT JOB-FILE
-           PERFORM UNTIL WS-BROWSE-EOF = "Y"
-               READ JOB-FILE
-                   AT END
-                       MOVE "Y" TO WS-BROWSE-EOF
-                   NOT AT END
-                       ADD 1 TO WS-DISPLAY-COUNT
-                       MOVE SPACES TO WS-OUT-LINE
-                       STRING WS-DISPLAY-COUNT ". " 
-                              FUNCTION TRIM(JOB-TITLE-FILE) " at " 
-                              FUNCTION TRIM(JOB-EMPLOYER-FILE)
-                         INTO WS-OUT-LINE
-                       END-STRING
-                       PERFORM PRINT-LINE
-               END-READ
-           END-PERFORM
-           CLOSE JOB-FILE
-
-           IF WS-DISPLAY-COUNT = 0
-               MOVE "No jobs available." TO WS-OUT-LINE
+           MOVE 1 TO WS-USER-CHOICE
+           PERFORM UNTIL WS-USER-CHOICE = 0
+               MOVE "--- Available Job Listings ---" TO WS-OUT-LINE
                PERFORM PRINT-LINE
-           ELSE
-               PERFORM GET-SELECTION
-           END-IF.
+
+               MOVE 0 TO WS-DISPLAY-COUNT
+               MOVE "N" TO WS-BROWSE-EOF
+
+               OPEN INPUT JOB-FILE
+               PERFORM UNTIL WS-BROWSE-EOF = "Y"
+                   READ JOB-FILE
+                       AT END
+                           MOVE "Y" TO WS-BROWSE-EOF
+                       NOT AT END
+                         IF JOB-ID NOT = 0
+                           ADD 1 TO WS-DISPLAY-COUNT
+                           MOVE SPACES TO WS-OUT-LINE
+                           STRING WS-DISPLAY-COUNT ". "
+                                  FUNCTION TRIM(JOB-TITLE-FILE) " at "
+                                  FUNCTION TRIM(JOB-EMPLOYER-FILE)
+                                  " (" FUNCTION TRIM(JOB-LOCATION-FILE)
+                                  ")"
+                             INTO WS-OUT-LINE
+                           END-STRING
+                           PERFORM PRINT-LINE
+                         END-IF
+                   END-READ
+               END-PERFORM
+               CLOSE JOB-FILE
+
+               IF WS-DISPLAY-COUNT = 0
+                   MOVE "No jobs available." TO WS-OUT-LINE
+                   PERFORM PRINT-LINE
+                   MOVE 0 TO WS-USER-CHOICE
+               ELSE
+                   PERFORM GET-SELECTION
+               END-IF
+           END-PERFORM.
 
 *> Helper function for browse jobs that prompts user to select a job for details
 GET-SELECTION.
@@ -73,18 +81,18 @@ VIEW-JOB-DETAILS.
                READ JOB-FILE
                    AT END MOVE "Y" TO WS-JOB-EOF
                    NOT AT END
+                     IF JOB-ID NOT = 0
                        ADD 1 TO WS-CURRENT-COUNT
                        IF WS-CURRENT-COUNT = WS-USER-CHOICE
-                           *> CAPTURE THE DATA HERE while the buffer is active
                            MOVE JOB-ID            TO WS-SEL-ID
                            MOVE JOB-TITLE-FILE    TO WS-SEL-TITLE
                            MOVE JOB-DESC-FILE     TO WS-SEL-DESC
                            MOVE JOB-EMPLOYER-FILE TO WS-SEL-EMPLOYER
                            MOVE JOB-LOCATION-FILE TO WS-SEL-LOCATION
                            MOVE JOB-SALARY-FILE   TO WS-SEL-SALARY
-
                            PERFORM APPLY-FOR-JOB-PROMPT
                        END-IF
+                     END-IF
                END-READ
            END-PERFORM
            CLOSE JOB-FILE.
@@ -217,9 +225,9 @@ APPLY-TO-JOB.
     MOVE SPACES TO WS-OUT-LINE
     STRING
         "Your application for " DELIMITED BY SIZE
-        WS-SEL-TITLE DELIMITED BY SPACE
+        FUNCTION TRIM(WS-SEL-TITLE) DELIMITED BY SIZE
         " at " DELIMITED BY SIZE
-        WS-SEL-EMPLOYER DELIMITED BY SPACE
+        FUNCTION TRIM(WS-SEL-EMPLOYER) DELIMITED BY SIZE
         " has been submitted." DELIMITED BY SIZE
     INTO WS-OUT-LINE
     END-STRING

@@ -71,5 +71,22 @@ Where to find the result:
 Console output, and also in out/InCollege-Output.txt
 Search in the output file for the “View My Profile” section to verify formatting and completeness.
 
-2) Find S
+2) Find Someone You Know
+Search for users by name. If a match is found, you can send a connection request.
 
+New Functionality: Job Board (Week 6-7)
+1) Post a Job/Internship
+From the main menu select "Search for a job" then "Post a Job/Internship". Enter title, description, employer, location, and optional salary. Jobs are saved to data/InCollege-Jobs.txt.
+
+2) Browse Jobs/Internships
+View all available job listings. Select a job number to view full details (title, description, employer, location, salary). From the details screen you can apply or go back to the listing.
+
+3) Apply for a Job
+When viewing job details select "Apply for this Job". The application is saved to data/InCollege-Applications.txt and a confirmation message is displayed.
+
+4) View My Applications
+From the Job/Internship Menu select "View My Applications" to see a report of all jobs you have applied for including a total count.
+
+data/InCollege-Jobs.txt – stores posted job/internship listings
+
+data/InCollege-Applications.txt – stores job application records

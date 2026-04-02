@@ -4,21 +4,11 @@ Please choose an option:
 2) Create New Account
 Enter choice (1 or 2):
 2
-All permitted accounts have been created, please come back later
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
+Create a username:
 TestJobUser
-Invalid selection. Please try again.
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
 Password12!
-Invalid selection. Please try again.
+Account created successfully.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -111,14 +101,7 @@ Description: Support cloud deployment tasks
 2. Back to Job List
 Enter your choice:
 1
-Your application for Cloud at SkyNet has been submitted.
-Job/Internship Menu:
-1. Post a Job/Internship
-2. Browse Jobs/Internships
-3. View My Applications
-4. Back to Main Menu
-Enter your choice:
-2
+Your application for Cloud Intern at SkyNet Systems has been submitted.
 --- Available Job Listings ---
 001. Cloud Intern at SkyNet Systems
 002. Mobile App Intern at AppForge
@@ -133,19 +116,15 @@ Description: Assist with app development
 1. Apply for this Job
 2. Back to Job List
 Enter your choice:
+2
+Returning to job list...
+--- Available Job Listings ---
+001. Cloud Intern at SkyNet Systems
+002. Mobile App Intern at AppForge
+Enter job number to view details, or 0 to go back:
 1
-Your application for Mobile at AppForge has been submitted.
-Job/Internship Menu:
-1. Post a Job/Internship
-2. Browse Jobs/Internships
-3. View My Applications
-4. Back to Main Menu
-Enter your choice:
-3
---- Your Job Applications ---
-Application Summary for TestJobUser
-------------------------------
-Job Title: Cloud Intern
+--- Job Details ---
+Title: Cloud Intern
 Employer: SkyNet Systems
 Location: Remote
 ---
@@ -161,3 +140,128 @@ Total Applications:    2
 002. Mobile App Intern at AppForge
 Enter job number to view details, or 0 to go back:
 Input file ended. Exiting program.
+                                                                                                                                                                                
+Username:                                                                                                                                                                                               
+TestJobUser                                                                                                                                                                                             
+Password:                                                                                                                                                                                               
+Password12!                                                                                                                                                                                             
+You have successfully logged in                                                                                                                                                                         
+Welcome, TestJobUser!                                                                                                                                                                                   
+1. Create/edit my profile                                                                                                                                                                               
+2. View my profile                                                                                                                                                                                      
+3. Search for a job                                                                                                                                                                                     
+4. Find someone you know                                                                                                                                                                                
+5. Learn a new skill                                                                                                                                                                                    
+6. View My Pending Connection Requests                                                                                                                                                                  
+7. View My Network                                                                                                                                                                                      
+8. Logout                                                                                                                                                                                               
+Enter your choice:                                                                                                                                                                                      
+3                                                                                                                                                                                                       
+Job/Internship Menu:                                                                                                                                                                                    
+1. Post a Job/Internship                                                                                                                                                                                
+2. Browse Jobs/Internships                                                                                                                                                                              
+3. View My Applications                                                                                                                                                                                 
+4. Back to Main Menu                                                                                                                                                                                    
+Enter your choice:                                                                                                                                                                                      
+1                                                                                                                                                                                                       
+Post a Job/Internship                                                                                                                                                                                   
+Enter Job Title: (Required)                                                                                                                                                                             
+Cloud Intern                                                                                                                                                                                            
+Enter Description: (Required)                                                                                                                                                                           
+Support cloud deployment tasks                                                                                                                                                                          
+Enter Employer: (Required)                                                                                                                                                                              
+SkyNet Systems                                                                                                                                                                                          
+Enter Location: (Required)                                                                                                                                                                              
+Remote                                                                                                                                                                                                  
+Enter Salary: (Optional)                                                                                                                                                                                
+30/hour                                                                                                                                                                                                 
+Job/Internship posted successfully.                                                                                                                                                                     
+Title: Cloud Intern                                                                                                                                                                                     
+Description: Support cloud deployment tasks                                                                                                                                                             
+Employer: SkyNet Systems                                                                                                                                                                                
+Location: Remote                                                                                                                                                                                        
+Salary: 30/hour                                                                                                                                                                                         
+Job/Internship Menu:                                                                                                                                                                                    
+1. Post a Job/Internship                                                                                                                                                                                
+2. Browse Jobs/Internships                                                                                                                                                                              
+3. View My Applications                                                                                                                                                                                 
+4. Back to Main Menu                                                                                                                                                                                    
+Enter your choice:                                                                                                                                                                                      
+1                                                                                                                                                                                                       
+Post a Job/Internship                                                                                                                                                                                   
+Enter Job Title: (Required)                                                                                                                                                                             
+Mobile App Intern                                                                                                                                                                                       
+Enter Description: (Required)                                                                                                                                                                           
+Assist with app development                                                                                                                                                                             
+Enter Employer: (Required)                                                                                                                                                                              
+AppForge                                                                                                                                                                                                
+Enter Location: (Required)                                                                                                                                                                              
+Miami, FL                                                                                                                                                                                               
+Enter Salary: (Optional)                                                                                                                                                                                
+26/hour                                                                                                                                                                                                 
+Job/Internship posted successfully.                                                                                                                                                                     
+Title: Mobile App Intern                                                                                                                                                                                
+Description: Assist with app development                                                                                                                                                                
+Employer: AppForge                                                                                                                                                                                      
+Location: Miami, FL                                                                                                                                                                                     
+Salary: 26/hour                                                                                                                                                                                         
+Job/Internship Menu:                                                                                                                                                                                    
+1. Post a Job/Internship                                                                                                                                                                                
+2. Browse Jobs/Internships                                                                                                                                                                              
+3. View My Applications                                                                                                                                                                                 
+4. Back to Main Menu                                                                                                                                                                                    
+Enter your choice:                                                                                                                                                                                      
+2                                                                                                                                                                                                       
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cloud Intern at SkyNet Systems                                                                                                                                                                     
+002. Mobile App Intern at AppForge                                                                                                                                                                      
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+1                                                                                                                                                                                                       
+--- Job Details ---                                                                                                                                                                                     
+Title: Cloud Intern                                                                                                                                                                                     
+Employer: SkyNet Systems                                                                                                                                                                                
+Location: Remote                                                                                                                                                                                        
+Salary: 30/hour                                                                                                                                                                                         
+Description: Support cloud deployment tasks                                                                                                                                                             
+1. Apply for this Job                                                                                                                                                                                   
+2. Back to Job List                                                                                                                                                                                     
+Enter your choice:                                                                                                                                                                                      
+1                                                                                                                                                                                                       
+Your application for Cloud Intern at SkyNet Systems has been submitted.                                                                                                                                 
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cloud Intern at SkyNet Systems                                                                                                                                                                     
+002. Mobile App Intern at AppForge                                                                                                                                                                      
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+2                                                                                                                                                                                                       
+--- Job Details ---                                                                                                                                                                                     
+Title: Mobile App Intern                                                                                                                                                                                
+Employer: AppForge                                                                                                                                                                                      
+Location: Miami, FL                                                                                                                                                                                     
+Salary: 26/hour                                                                                                                                                                                         
+Description: Assist with app development                                                                                                                                                                
+1. Apply for this Job                                                                                                                                                                                   
+2. Back to Job List                                                                                                                                                                                     
+Enter your choice:                                                                                                                                                                                      
+2                                                                                                                                                                                                       
+Returning to job list...                                                                                                                                                                                
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cloud Intern at SkyNet Systems                                                                                                                                                                     
+002. Mobile App Intern at AppForge                                                                                                                                                                      
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+1                                                                                                                                                                                                       
+--- Job Details ---                                                                                                                                                                                     
+Title: Cloud Intern                                                                                                                                                                                     
+Employer: SkyNet Systems                                                                                                                                                                                
+Location: Remote                                                                                                                                                                                        
+Salary: 30/hour                                                                                                                                                                                         
+Description: Support cloud deployment tasks                                                                                                                                                             
+1. Apply for this Job                                                                                                                                                                                   
+2. Back to Job List                                                                                                                                                                                     
+Enter your choice:                                                                                                                                                                                      
+3                                                                                                                                                                                                       
+Invalid choice. Please enter 1 or 2.                                                                                                                                                                    
+--- Available Job Listings ---                                                                                                                                                                          
+001. Cloud Intern at SkyNet Systems                                                                                                                                                                     
+002. Mobile App Intern at AppForge                                                                                                                                                                      
+Enter job number to view details, or 0 to go back:                                                                                                                                                      
+Input file ended. Exiting program.                                                                                                                                                                      
