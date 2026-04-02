@@ -6,9 +6,14 @@ Enter choice (1 or 2):
 2
 Create a username:
 ReceivingUser
-Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+That username already exists. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
 Password1!
-Account created successfully.
+Invalid selection. Please try again.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -44,7 +49,7 @@ Computer Science
 Enter Graduation Year (YYYY): (Required)
 2026
 Enter About (short bio): (Optional)
-
+DONE
 Add Experience (optional, enter DONE to finish):
 DONE
 Add Education (optional, enter DONE to finish):
@@ -72,9 +77,14 @@ Enter choice (1 or 2):
 2
 Create a username:
 SendingUser
-Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+That username already exists. Please try again.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
 Password2!
-Account created successfully.
+Invalid selection. Please try again.
 Welcome to InCollege
 Please choose an option:
 1) Log In
@@ -105,7 +115,7 @@ Name: Receiving User
 University: USF
 Major: Computer Science
 Graduation Year: 2026
-About Me:
+About Me: DONE
 Experience: None
 Education: None
 ------------------------
@@ -113,7 +123,7 @@ Education: None
 2. Back to Main Menu
 Enter your choice:
 1
-Connection request sent to Receiving User.
+You are already connected with this user.
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -150,12 +160,8 @@ Enter your choice:
 6
 --- Pending Connection Requests ---
 
-Request from: SendingUser
-1. Accept
-2. Reject
-Enter your choice for SendingUser:
-1
-Connection request from SendingUser accepted.
+You have no pending connection requests.
+
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -166,66 +172,16 @@ Connection request from SendingUser accepted.
 8. Messages
 9. Logout
 Enter your choice:
+1
+----- CREATE/EDIT PROFILE -----
+Enter First Name: (Required)
 9
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
+Enter Last Name: (Required)
 1
-Username:
+Enter University/College Attended: (Required)
 SendingUser
-Password:
+Enter Major: (Required)
 Password2!
-You have successfully logged in
-Welcome, SendingUser!
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. View My Pending Connection Requests
-7. View My Network
-8. Messages
-9. Logout
-Enter your choice:
+Enter Graduation Year (YYYY): (Required)
 8
-
---- Messages Menu ---
-1. Send a New Message
-2. View My Messages
-3. Back to Main Menu
-Enter your choice:
-1
-Enter recipient's username (must be a connection):
-
-ReceivingUser
-Enter your message (max 200 chars):
-Hello Receiving User
-Message sent to ReceivingUser successfully!
-
---- Messages Menu ---
-1. Send a New Message
-2. View My Messages
-3. Back to Main Menu
-Enter your choice:
-2
-View My Messages is under construction.
-
---- Messages Menu ---
-1. Send a New Message
-2. View My Messages
-3. Back to Main Menu
-Enter your choice:
-3
-1. Create/edit my profile
-2. View my profile
-3. Search for a job
-4. Find someone you know
-5. Learn a new skill
-6. View My Pending Connection Requests
-7. View My Network
-8. Messages
-9. Logout
-Enter your choice:
-Input file ended. Exiting program.
+Error: Graduation year must be exactly 4 digits (YYYY). Exiting program.
