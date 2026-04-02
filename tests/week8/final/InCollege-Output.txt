@@ -5,20 +5,9 @@ Please choose an option:
 Enter choice (1 or 2):
 2
 Create a username:
-sender6
+ReceivingUser
 Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
-Abcdef1!
-Account created successfully.
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
-2
-Create a username:
-recv6
-Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
-Abcdef1!
+Password1!
 Account created successfully.
 Welcome to InCollege
 Please choose an option:
@@ -27,11 +16,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-recv6
+ReceivingUser
 Password:
-Abcdef1!
+Password1!
 You have successfully logged in
-Welcome, recv6!
+Welcome, ReceivingUser!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -45,15 +34,15 @@ Enter your choice:
 1
 ----- CREATE/EDIT PROFILE -----
 Enter First Name: (Required)
-Rec
+Receiving
 Enter Last Name: (Required)
-Six
+User
 Enter University/College Attended: (Required)
 USF
 Enter Major: (Required)
-Eng
+Computer Science
 Enter Graduation Year (YYYY): (Required)
-2029
+2026
 Enter About (short bio): (Optional)
 
 Add Experience (optional, enter DONE to finish):
@@ -80,13 +69,24 @@ Please choose an option:
 1) Log In
 2) Create New Account
 Enter choice (1 or 2):
+2
+Create a username:
+SendingUser
+Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
+Password2!
+Account created successfully.
+Welcome to InCollege
+Please choose an option:
+1) Log In
+2) Create New Account
+Enter choice (1 or 2):
 1
 Username:
-sender6
+SendingUser
 Password:
-Abcdef1!
+Password2!
 You have successfully logged in
-Welcome, sender6!
+Welcome, SendingUser!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -99,12 +99,12 @@ Welcome, sender6!
 Enter your choice:
 4
 Enter the full name of the person you are looking for:
-Rec Six
+Receiving User
 --- Found User Profile ---
-Name: Rec Six
+Name: Receiving User
 University: USF
-Major: Eng
-Graduation Year: 2029
+Major: Computer Science
+Graduation Year: 2026
 About Me:
 Experience: None
 Education: None
@@ -113,7 +113,7 @@ Education: None
 2. Back to Main Menu
 Enter your choice:
 1
-Connection request sent to Rec Six.
+Connection request sent to Receiving User.
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -132,11 +132,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-recv6
+ReceivingUser
 Password:
-Abcdef1!
+Password1!
 You have successfully logged in
-Welcome, recv6!
+Welcome, ReceivingUser!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -150,12 +150,12 @@ Enter your choice:
 6
 --- Pending Connection Requests ---
 
-Request from: sender6
+Request from: SendingUser
 1. Accept
 2. Reject
-Enter your choice for sender6:
+Enter your choice for SendingUser:
 1
-Connection request from sender6 accepted.
+Connection request from SendingUser accepted.
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -174,11 +174,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-sender6
+SendingUser
 Password:
-Abcdef1!
+Password2!
 You have successfully logged in
-Welcome, sender6!
+Welcome, SendingUser!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -190,12 +190,32 @@ Welcome, sender6!
 9. Logout
 Enter your choice:
 8
+
+--- Messages Menu ---
+1. Send a New Message
+2. View My Messages
+3. Back to Main Menu
 Enter your choice:
 1
 Enter recipient's username (must be a connection):
 
-123456
-Error: Username cannot be purely numeric.
+ReceivingUser
+Enter your message (max 200 chars):
+Hello Receiving User
+Message sent to ReceivingUser successfully!
+
+--- Messages Menu ---
+1. Send a New Message
+2. View My Messages
+3. Back to Main Menu
+Enter your choice:
+2
+View My Messages is under construction.
+
+--- Messages Menu ---
+1. Send a New Message
+2. View My Messages
+3. Back to Main Menu
 Enter your choice:
 3
 1. Create/edit my profile
@@ -208,10 +228,4 @@ Enter your choice:
 8. Messages
 9. Logout
 Enter your choice:
-9
-Welcome to InCollege
-Please choose an option:
-1) Log In
-2) Create New Account
-Enter choice (1 or 2):
 Input file ended. Exiting program.

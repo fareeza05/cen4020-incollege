@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
+    SELECT IN-FILE ASSIGN TO "tests/week8/final/InCollege-Input.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "tests/week7/final/InCollege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "tests/week8/final/InCollege-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -28,6 +28,10 @@ FILE-CONTROL.
     SELECT APPLICATION-FILE ASSIGN TO "data/InCollege-Applications.txt"
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-APP-STATUS.
+
+    SELECT MESSAGE-FILE ASSIGN TO "data/InCollege-Messages.txt"
+        ORGANIZATION IS LINE SEQUENTIAL
+        FILE STATUS IS WS-MSG-STATUS.
 
 DATA DIVISION.
 FILE SECTION.
@@ -91,6 +95,9 @@ FD  JOB-FILE.
 
 FD APPLICATION-FILE.
 01 APPLICATION-REC PIC X(200).
+
+FD  MESSAGE-FILE.
+01  MESSAGE-REC                PIC X(263).
 
 WORKING-STORAGE SECTION.
 
@@ -255,6 +262,18 @@ WORKING-STORAGE SECTION.
 
 01 WS-APP-VIEW-COUNT-DISPLAY PIC Z(4).
 
+*> For Messaging menu
+01  WS-MESSAGING-UI-VARS.
+           05  WS-EXIT-MSG-MENU    PIC X VALUE "N".
+           05  WS-MSG-RECIPIENT    PIC X(20).
+           05  WS-CONNECTION-FOUND PIC X VALUE "N".
+
+*> For message persistence
+01  WS-MSG-STATUS              PIC XX VALUE "00".
+01  WS-MSG-CONTENT             PIC X(200) VALUE SPACES.
+01  WS-RAW-DATE                PIC X(21) VALUE SPACES.
+01  WS-MSG-TIMESTAMP           PIC X(20) VALUE SPACES.
+
 PROCEDURE DIVISION.
 
 MAIN.
@@ -290,7 +309,17 @@ INIT-FILES.
         CLOSE PROF-FILE
     END-IF
 
-    *> Jobs file: ensure it exists; create with seed if missing
+    *> Messages file: ensure it exists; create with seed if missing
+    OPEN INPUT MESSAGE-FILE
+    IF WS-MSG-STATUS = "35"
+        CLOSE MESSAGE-FILE
+        CALL "SYSTEM" USING
+            "printf '%263s\n' '' > data/InCollege-Messages.txt"
+    ELSE
+        CLOSE MESSAGE-FILE
+    END-IF
+
+    *> Jobs file: ensure it exists; create empty if missing
     OPEN INPUT JOB-FILE
     IF WS-JOB-STATUS = "35"
         CLOSE JOB-FILE
@@ -558,7 +587,7 @@ SAVE-ACCOUNTS.
 
 POST-LOGIN-MENU.
     MOVE SPACE TO WS-MENU-CHOICE
-    PERFORM UNTIL WS-MENU-CHOICE = "8"
+    PERFORM UNTIL WS-MENU-CHOICE = "9"
         MOVE "1. Create/edit my profile" TO WS-OUT-LINE
         PERFORM PRINT-LINE
         MOVE "2. View my profile" TO WS-OUT-LINE
@@ -573,7 +602,9 @@ POST-LOGIN-MENU.
         PERFORM PRINT-LINE
         MOVE "7. View My Network" TO WS-OUT-LINE
         PERFORM PRINT-LINE
-        MOVE "8. Logout" TO WS-OUT-LINE
+        MOVE "8. Messages" TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        MOVE "9. Logout" TO WS-OUT-LINE
         PERFORM PRINT-LINE
 
         MOVE "Enter your choice:" TO WS-PROMPT
@@ -606,6 +637,8 @@ POST-LOGIN-MENU.
             WHEN "7"
                 PERFORM VIEW-NETWORK
             WHEN "8"
+                PERFORM MESSAGING-MENU
+            WHEN "9"
                 EXIT PERFORM
             WHEN OTHER
                 MOVE "Invalid choice. Please enter 1-8." TO WS-OUT-LINE
@@ -671,6 +704,16 @@ POST-JOB.
     COMPUTE WS-LEN = FUNCTION LENGTH(FUNCTION TRIM(WS-TOKEN))
     IF WS-LEN = 0
         MOVE "Error: Job Title is required." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    IF WS-LEN > 100
+        MOVE "Error: Job Title cannot exceed 100 characters." TO WS-OUT-LINE
+        PERFORM PRINT-LINE
+        EXIT PARAGRAPH
+    END-IF
+    IF FUNCTION TRIM(WS-TOKEN, TRAILING) IS NUMERIC
+        MOVE "Error: Job Title cannot be purely numeric." TO WS-OUT-LINE
         PERFORM PRINT-LINE
         EXIT PARAGRAPH
     END-IF
@@ -964,7 +1007,7 @@ VALIDATE-MENU-1-7.
         EXIT PARAGRAPH
     END-IF
 
-    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "8"
+    IF WS-TOKEN(1:1) < "1" OR WS-TOKEN(1:1) > "9"
         MOVE "N" TO WS-VALID
         EXIT PARAGRAPH
     END-IF
@@ -1764,4 +1807,5 @@ CLOSE-FILES.
        COPY "src/SendRequest.cob".
        COPY "src/ViewNetwork.cob".
        COPY "src/ApplyJob.cob".
+       COPY "src/SendMessage.cob".
        

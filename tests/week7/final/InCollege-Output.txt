@@ -127,13 +127,14 @@ Enter job number to view details, or 0 to go back:
 Title: Cloud Intern
 Employer: SkyNet Systems
 Location: Remote
-Salary: 30/hour
-Description: Support cloud deployment tasks
-1. Apply for this Job
-2. Back to Job List
-Enter your choice:
-3
-Invalid choice. Please enter 1 or 2.
+---
+Job Title: Mobile App Intern
+Employer: AppForge
+Location: Miami, FL
+---
+------------------------------
+Total Applications:    2
+------------------------------
 --- Available Job Listings ---
 001. Cloud Intern at SkyNet Systems
 002. Mobile App Intern at AppForge

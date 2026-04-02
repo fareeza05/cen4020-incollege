@@ -140,10 +140,12 @@ APPLY-FOR-JOB-PROMPT.
                PERFORM APPLY-TO-JOB
            ELSE IF WS-TOKEN = "2"
                MOVE "Returning to job list..." TO WS-OUT-LINE
+               PERFORM BROWSE-JOBS
                PERFORM PRINT-LINE
            ELSE
                MOVE "Invalid choice. Please enter 1 or 2." TO WS-OUT-LINE
                PERFORM PRINT-LINE
+               PERFORM BROWSE-JOBS
            END-IF.
 
 *> This is the core 'Simulated' process. 
@@ -321,4 +323,7 @@ VIEW-MY-APPLICATIONS.
     PERFORM PRINT-LINE
 
     MOVE "------------------------------" TO WS-OUT-LINE
-    PERFORM PRINT-LINE.
+    PERFORM PRINT-LINE
+
+    PERFORM BROWSE-JOBS.
+

@@ -1,0 +1,30 @@
+2
+ConnTester
+Password2!
+1
+ConnTester
+Password2!
+1
+George
+Smith
+Example University
+Computer Science
+2026
+Aspiring engineer
+DONE
+DONE
+X
+9
+1
+MenuTester
+Password1!
+4
+George Smith
+1
+9
+1
+ConnTester
+Password2!
+8
+1
+MenuTester

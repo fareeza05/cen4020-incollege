@@ -5,7 +5,7 @@ Please choose an option:
 Enter choice (1 or 2):
 2
 Create a username:
-sender6
+sender1
 Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
 Abcdef1!
 Account created successfully.
@@ -16,7 +16,7 @@ Please choose an option:
 Enter choice (1 or 2):
 2
 Create a username:
-recv6
+recv1
 Create a password (8-12 chars, 1 uppercase, 1 digit, 1 special):
 Abcdef1!
 Account created successfully.
@@ -27,11 +27,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-recv6
+recv1
 Password:
 Abcdef1!
 You have successfully logged in
-Welcome, recv6!
+Welcome, recv1!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -47,13 +47,13 @@ Enter your choice:
 Enter First Name: (Required)
 Rec
 Enter Last Name: (Required)
-Six
+One
 Enter University/College Attended: (Required)
 USF
 Enter Major: (Required)
-Eng
+CS
 Enter Graduation Year (YYYY): (Required)
-2029
+2026
 Enter About (short bio): (Optional)
 
 Add Experience (optional, enter DONE to finish):
@@ -82,11 +82,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-sender6
+sender1
 Password:
 Abcdef1!
 You have successfully logged in
-Welcome, sender6!
+Welcome, sender1!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -99,12 +99,12 @@ Welcome, sender6!
 Enter your choice:
 4
 Enter the full name of the person you are looking for:
-Rec Six
+Rec One
 --- Found User Profile ---
-Name: Rec Six
+Name: Rec One
 University: USF
-Major: Eng
-Graduation Year: 2029
+Major: CS
+Graduation Year: 2026
 About Me:
 Experience: None
 Education: None
@@ -113,7 +113,7 @@ Education: None
 2. Back to Main Menu
 Enter your choice:
 1
-Connection request sent to Rec Six.
+Connection request sent to Rec One.
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -132,11 +132,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-recv6
+recv1
 Password:
 Abcdef1!
 You have successfully logged in
-Welcome, recv6!
+Welcome, recv1!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -150,12 +150,12 @@ Enter your choice:
 6
 --- Pending Connection Requests ---
 
-Request from: sender6
+Request from: sender1
 1. Accept
 2. Reject
-Enter your choice for sender6:
+Enter your choice for sender1:
 1
-Connection request from sender6 accepted.
+Connection request from sender1 accepted.
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -174,11 +174,11 @@ Please choose an option:
 Enter choice (1 or 2):
 1
 Username:
-sender6
+sender1
 Password:
 Abcdef1!
 You have successfully logged in
-Welcome, sender6!
+Welcome, sender1!
 1. Create/edit my profile
 2. View my profile
 3. Search for a job
@@ -194,8 +194,10 @@ Enter your choice:
 1
 Enter recipient's username (must be a connection):
 
-123456
-Error: Username cannot be purely numeric.
+recv1
+Enter your message (max 200 chars):
+Hello recv1 from sender1
+Message sent to recv1 successfully!
 Enter your choice:
 3
 1. Create/edit my profile

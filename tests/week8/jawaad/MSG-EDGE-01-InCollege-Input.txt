@@ -1,10 +1,9 @@
 2
-msgneg1
+msgedge1
 Abcdef1!
 1
-msgneg1
+msgedge1
 Abcdef1!
 8
-5
 3
 9
