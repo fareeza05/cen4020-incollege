@@ -1,1 +1,3 @@
 msgneg1             Abcdef1!
+ReceivingUser       Password1!
+SendingUser         Password2!
