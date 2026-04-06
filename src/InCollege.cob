@@ -5,9 +5,9 @@ PROGRAM-ID. InCollege.
 ENVIRONMENT DIVISION.
 INPUT-OUTPUT SECTION.
 FILE-CONTROL.
-    SELECT IN-FILE ASSIGN TO "tests/week8/final/InCollege-Input.txt"
+    SELECT IN-FILE ASSIGN TO "data/InCollege-Input.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
-    SELECT OUT-FILE ASSIGN TO "tests/week8/final/InCollege-Output.txt"
+    SELECT OUT-FILE ASSIGN TO "out/InCollege-Output.txt"
         ORGANIZATION IS LINE SEQUENTIAL.
     SELECT ACC-FILE ASSIGN TO "data/InCollege-Accounts.txt"
         ORGANIZATION IS LINE SEQUENTIAL
@@ -24,7 +24,7 @@ FILE-CONTROL.
     SELECT JOB-FILE ASSIGN TO "data/InCollege-Jobs.txt"
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-JOB-STATUS.
-   
+
     SELECT APPLICATION-FILE ASSIGN TO "data/InCollege-Applications.txt"
         ORGANIZATION IS LINE SEQUENTIAL
         FILE STATUS IS WS-APP-STATUS.
@@ -803,7 +803,7 @@ POST-JOB.
 SAVE-JOB-POSTING.
 
            PERFORM FIND-NEXT-JOB-ID
-           
+
            OPEN EXTEND JOB-FILE
 
            IF WS-JOB-STATUS = "35"
@@ -817,9 +817,9 @@ SAVE-JOB-POSTING.
                PERFORM PRINT-LINE
                EXIT PARAGRAPH
            END-IF
-           
+
            MOVE SPACES TO JOB-REC
-           
+
            MOVE WS-NEXT-JOB-ID      TO JOB-ID
            MOVE WS-CURR-USER        TO JOB-POSTER
            MOVE WS-JOB-TITLE        TO JOB-TITLE-FILE
@@ -840,7 +840,7 @@ SAVE-JOB-POSTING.
 FIND-NEXT-JOB-ID.
     MOVE 1 TO WS-NEXT-JOB-ID
     MOVE "N" TO WS-BROWSE-EOF  *> Use a unique EOF flag
-    
+
     OPEN INPUT JOB-FILE
     *> If file doesn't exist yet (Status 35), COBOL skips the loop
     PERFORM UNTIL WS-BROWSE-EOF = "Y"
@@ -1816,4 +1816,4 @@ CLOSE-FILES.
        COPY "src/ViewNetwork.cob".
        COPY "src/ApplyJob.cob".
        COPY "src/SendMessage.cob".
-       
+       COPY "src/ViewMessages.cob".
