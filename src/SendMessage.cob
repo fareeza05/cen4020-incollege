@@ -142,6 +142,8 @@ SAVE-MESSAGE.
                   WS-MSG-CONTENT DELIMITED BY SIZE
                   "|" DELIMITED BY SIZE
                   WS-MSG-TIMESTAMP DELIMITED BY SIZE
+                  "|" DELIMITED BY SIZE
+                  "NEW " DELIMITED BY SIZE
              INTO MESSAGE-REC
            END-STRING
 
