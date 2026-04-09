@@ -1,1 +1,2 @@
 SendingUser         |ReceivingUser       |ACCEPTED
+anotherUser         |ReceivingUser       |ACCEPTED
