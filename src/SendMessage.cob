@@ -20,9 +20,7 @@ MESSAGING-MENU.
                    WHEN "1"
                        PERFORM SEND-MESSAGE-FLOW
                    WHEN "2"
-                       MOVE "View My Messages is under construction."
-                           TO WS-OUT-LINE
-                       PERFORM PRINT-LINE
+                       PERFORM VIEW-MY-MESSAGES
                    WHEN "3"
                        MOVE "Y" TO WS-EXIT-MSG-MENU
                    WHEN OTHER
@@ -144,6 +142,8 @@ SAVE-MESSAGE.
                   WS-MSG-CONTENT DELIMITED BY SIZE
                   "|" DELIMITED BY SIZE
                   WS-MSG-TIMESTAMP DELIMITED BY SIZE
+                  "|" DELIMITED BY SIZE
+                  "NEW " DELIMITED BY SIZE
              INTO MESSAGE-REC
            END-STRING
 

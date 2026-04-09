@@ -1,0 +1,71 @@
+1
+SendingUser
+Password2!
+8
+1
+ReceivingUser
+message 1
+1
+ReceivingUser
+message 2
+1
+ReceivingUser
+message 3
+1
+ReceivingUser
+message 4
+1
+ReceivingUser
+message 5
+1
+ReceivingUser
+message 6
+1
+ReceivingUser
+message 7
+1
+ReceivingUser
+message 8
+1
+ReceivingUser
+message 9
+1
+ReceivingUser
+message 10
+1
+ReceivingUser
+message 11
+1
+ReceivingUser
+message 12
+1
+ReceivingUser
+message 13
+1
+ReceivingUser
+message 14
+1
+ReceivingUser
+message 15
+1
+ReceivingUser
+message 16
+1
+ReceivingUser
+message 17
+1
+ReceivingUser
+message 18
+1
+ReceivingUser
+message 19
+1
+ReceivingUser
+message 20 - end of limit check
+3
+9
+1
+ReceivingUser
+Password1!
+8
+2
